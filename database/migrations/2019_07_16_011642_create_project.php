@@ -17,7 +17,7 @@ class CreateProject extends Migration
         Schema::create('goods', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',128)->default('')->comment("商品名称");
-            $table->text('describe')->default('')->comment('商品描述');
+            $table->text('describe')->comment('商品描述');
             $table->string('list_img',255)->default('')->comment("列表图片");
             $table->decimal("amount",11,2)->unsigned()->default(0.00)->comment('销售价格');
             $table->softDeletes();
@@ -206,7 +206,7 @@ class CreateProject extends Migration
             $table->increments('id');
             $table->string('title',64)->default('')->comment("新闻标题");
             $table->unsignedTinyInteger('type')->comment('分类');
-            $table->text('content')->default('')->comment('内容');
+            $table->text('content')->comment('内容');
             $table->unsignedTinyInteger('is_recommend')->default(0)->comment('是否推荐 0 否 1是');
             $table->softDeletes();
             $table->timestamps();
