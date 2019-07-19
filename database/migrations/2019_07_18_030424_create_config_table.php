@@ -21,7 +21,8 @@ class CreateConfigTable extends Migration
             $table->string('name',32)->default('')->comment('字段名称');
             $table->string('desc',128)->default('')->comment('字段描述');
             $table->unsignedInteger('sort')->default(0)->comment('排序');
-            $table->unsignedTinyInteger('text_type')->default(1)->comment('1 普通输入框 2图片 3文本 4 富文本 5 密码 6 下拉玄奘');
+            $table->string('text_type',32)->default('text')->comment('text select fileupload kindeditor password');
+            $table->string('text_value',32)->default('')->comment("{1:'名称',2:'名称'}多选框 多选值");
             $table->softDeletes();
             $table->timestamps();
         });
