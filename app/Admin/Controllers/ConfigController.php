@@ -120,11 +120,21 @@ class ConfigController extends AdminController
     }
 
 
-    public function getKvbyTypeId(Content $content)
+    public function getKvbyTypeId(Content $content,int $id)
     {
-        $iType = request()->input('type');
-        $iType = 3;
-        $aConfig = Config::select('id','k','name','desc','v','text_type','text_value')->where('type',$iType)->get();
+
+        $form = $this->form2($id);
+        $form->setAction(route('admin.postKvbyTypeId',['id'=>$id]));
+        return $content
+            ->title($this->getType()[$id])
+            ->description($this->getType()[$id])
+            ->body($form);
+        return $form;
+    }
+
+    public function form2(int $id)
+    {
+        $aConfig = Config::select('id','k','name','desc','v','text_type','text_value')->where('type',$id)->get();
         $form = new Form(new Config);
         foreach ($aConfig as $key => $value) {
             $oForm = call_user_func_array([$form,$value['text_type']],[$value['k'],__($value['name'])])->default($value['v']);
@@ -135,17 +145,19 @@ class ConfigController extends AdminController
                 $oForm->options(explode(',',$value['text_value']));
             }
         }
-       // $form->setAction(route('admin.postKvbyTypeId'));
-        return $content
-            ->title($this->getType()[$iType])
-            ->description($this->getType()[$iType])
-            ->body($form);
         return $form;
     }
 
-    public function postKvbyTypeId()
+
+    public function postKvbyTypeId(int $id,Config $config)
     {
-        dump(request()->input());exit;
+        $aParam = request()->input();
+        foreach ($aParam as $key=>$value) {
+            $config->where([['type',$id],['k',$key]])->update(['v' => $value ?? '']);
+        }
+        admin_toastr('修改配置成功！');
+        return redirect(route('admin.getKvbyTypeId',['id'=> $id]));
+
     }
 
 }
