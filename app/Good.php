@@ -9,6 +9,6 @@ class Good extends Model
     //
     public function goodsimgs()
     {
-        return $this->belongsToMany(GoodsImg::class);
+        return $this->hasMany(GoodsImg::class,'goods_id');
     }
 }

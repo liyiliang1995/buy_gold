@@ -67,13 +67,17 @@ class GoodController extends AdminController
      */
     protected function form()
     {
+//        dd(request()->input());
         $form = new Form(new Good);
 
         $form->text('name', __('名称'));
         $form->kindeditor('describe', __('描述'));
         $form->fileupload('list_img', __('图片'));
+        $form->hasMany('goodsimgs',function(Form\NestedForm $form){
+            $form->image('img');
+        });
+        //$form->multipleImage('img')->sortable();
         $form->decimal('amount', __('Amount'))->default(0.00);
-
         return $form;
     }
 }
