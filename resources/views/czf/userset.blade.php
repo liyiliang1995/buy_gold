@@ -7,7 +7,7 @@
 'js' => [
         'js/fastclick.js',
         'https://cdnjs.cloudflare.com/ajax/libs/jquery-weui/1.2.1/js/jquery-weui.js',
-        'http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js'
+
     ]
 ])
 @section('content')
@@ -30,7 +30,6 @@
     </div>
 
     <!--设置-->
-    <form action="#" method="GET" id="userset">
     <div class="weui-cells weui-cells_form" id="set_value">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
@@ -89,6 +88,5 @@
     <div class="weui-flex" style="margin-top: 20px;">
         <div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">修改</a></div>
     </div>
-    </form>
     </body>
 @endsection
