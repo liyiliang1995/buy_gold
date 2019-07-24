@@ -62,8 +62,7 @@
                 <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">登录</a>
             </div>
             <label for="weuiAgree" class="weui-agree">
-            <span class="weui-agree__text"><a href="javascript:void(0);">忘记密码？</a>
-      </span>
+            <a href="{{ route('password.request') }}"><span class="weui-agree__text">忘记密码？  </span></a>
             </label>
         </div>
         </form>
@@ -114,12 +113,12 @@
             function settime(obj) {
                 if (countdown == 0) {
                     obj.html("获取验证码");
-                    obj.css('background','red');
+                    obj.css('background','rgb(255, 255, 255)');
                     login.flag = 0;
                     countdown = 60;
                     return;
                 } else {
-                    obj.css('background','#666');
+                    obj.css('background','#fff');
                     obj.html("重新发送(" + countdown + ")");
                     login.flag = 1;
                     countdown--;
