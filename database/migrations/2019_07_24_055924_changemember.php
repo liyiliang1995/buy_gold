@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeUserTable extends Migration
+class Changemember extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class ChangeUserTable extends Migration
     public function up()
     {
         Schema::table('member', function (Blueprint $table) {
-            $table->string('password',64)->default('')->comment('用户密码');
+            $table->unsignedInteger('parent_user_id')->default(0)->comment('上级代理用户id')->change();
+            $table->unsignedSmallInteger('child_user_num')->default(0)->comment('下线用户个数')->change();
         });
     }
 

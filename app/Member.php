@@ -10,6 +10,6 @@ class Member extends Model
 
     public function setPasswordAttribute($value)
     {
-        return Hash::make($value);
+        $this->attributes['password'] = Hash::make($value);
     }
 }
