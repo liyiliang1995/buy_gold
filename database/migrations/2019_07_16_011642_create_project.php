@@ -33,7 +33,7 @@ class CreateProject extends Migration
             $table->timestamps();
         });
         // 3 用户表
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',128)->default('')->comment("用户名称");
             $table->char('phone',11)->default('')->comment("手机号码");

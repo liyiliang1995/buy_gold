@@ -12,6 +12,12 @@
         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
     ]
 ])
+<style>
+    .weui-cell__bd{
+        padding-left: 10px;
+        font-size: 14px;
+    }
+</style>
 @section('content')
     <body class="login-page">
 
