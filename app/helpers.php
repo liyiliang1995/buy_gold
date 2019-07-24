@@ -100,3 +100,23 @@ if (!function_exists('phoneVerif')) {
         return empty($mobile) ? false : true;
     }
 }
+
+if (!function_exists('comparisonCode' )) {
+    /**
+     * @param string $code
+     * @param string $key
+     * @return bool
+     * @see 手机验证码比对
+     */
+    function comparisonCode(string $code,string $key = null):bool
+    {
+        $bData = false;
+        $sCodeKey = config('czf.redis_key.s3') . $key;
+        $sRedisCode = Redis::get($sCodeKey);
+        if (!empty($sRedisCode) && $sRedisCode == $code) {
+            Redis::del($sCodeKey);
+            $bData = true;
+        }
+        return $bData;
+    }
+}

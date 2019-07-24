@@ -6,7 +6,8 @@
     ],
 'js' => [
         'js/fastclick.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/jquery-weui/1.2.1/js/jquery-weui.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/jquery-weui/1.2.1/js/jquery-weui.js',
+        'http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js'
     ]
 ])
 @section('content')
@@ -29,6 +30,7 @@
     </div>
 
     <!--设置-->
+    <form action="#" method="GET" id="userset">
     <div class="weui-cells weui-cells_form" id="set_value">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
@@ -37,45 +39,39 @@
             </div>
         </div>
         <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
-            <div class="weui-cell__bd">
-                <input class="weui-input" type="text"  placeholder="请输入昵称" value="昵称">
-            </div>
-        </div>
-        <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">真实姓名</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text"  placeholder="请输入真实姓名" value="真实姓名">
+                <input class="weui-input" type="text"   placeholder="请输入真实姓名" value="真实姓名">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">我的手机号</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="tel" placeholder="请输入手机号"  value="手机号">
+                <input class="weui-input" name="phone" type="tel" placeholder="请输入手机号"  value="手机号">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">联系微信</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入微信号">
+                <input class="weui-input" name="wechat" type="text" placeholder="请输入微信号">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">联系手机</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="tel"  placeholder="请输入手机号" value="手机号">
+                <input class="weui-input" name="phone2" type="tel"  placeholder="请输入手机号" value="手机号">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">修改密码</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="password"  placeholder="请输入密码">
+                <input class="weui-input" name="password1" type="password"  placeholder="请输入密码">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="password"  placeholder="请输入密码">
+                <input class="weui-input" name="password2" type="password"  placeholder="请输入密码">
             </div>
         </div>
 
@@ -93,10 +89,6 @@
     <div class="weui-flex" style="margin-top: 20px;">
         <div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">修改</a></div>
     </div>
+    </form>
     </body>
-    <script>
-        $(function () {
-            FastClick.attach(document.body);
-        });
-    </script>
 @endsection

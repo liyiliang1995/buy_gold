@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -36,4 +38,80 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function username()
+    {
+        return 'phone';
+    }
+
+    public function showLoginForm()
+    {
+        return view('czf.login');
+    }
+
+    /**
+     * @param Request $request
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate(
+            [
+                'phone' => 'required|string',
+                'password' => 'required|string',
+                'code' => 'required|string',
+            ],
+            [
+                "phone.required" => "手机号不能为空！",
+                "password.required"  => "密码不能为空",
+                "code.required" => '验证码不能为空！'
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+        $phone = $request->post('phone');
+        $code = $request->post('code');
+        if (false == comparisonCode( $code,$phone)) {
+            return $this->sendCodeErrResponse($request);
+        }
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function sendCodeErrResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'code' => ["手机验证码输入不正确！"],
+        ]);
+    }
+
 }
