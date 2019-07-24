@@ -64,4 +64,9 @@
         </div>
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
     </div>
+    <script>
+        $("#showTooltips").click(function () {
+            $.toast("纯文本", "text");
+        });
+    </script>
 @endsection
