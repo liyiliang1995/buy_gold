@@ -14,6 +14,7 @@ class MemberController extends Controller
 
     public function getUserSet()
     {
+        dd(config('czf.test'));
         return view('czf.userset');
     }
 }
