@@ -87,19 +87,18 @@ class MemberController extends AdminController
     {
         $form = new Form(new Member);
 
-        $form->text('name', __('Name'));
-        $form->mobile('phone', __('Phone'));
-        $form->text('phone2', __('Phone2'));
-        $form->decimal('gold', __('Gold'))->default(0.00);
-        $form->decimal('energy', __('Energy'))->default(0.00);
-        $form->decimal('integral', __('Integral'))->default(0.00);
-        $form->number('parent_user_id', __('Parent user id'));
-        $form->number('child_user_num', __('Child user num'));
-        $form->text('wechat', __('Wechat'));
-        $form->switch('status', __('Status'));
-        $form->switch('is_admin', __('Is admin'));
-        $form->text('ship_address', __('Ship address'));
-        $form->password('password', __('Password'));
+        $form->text('name', __('名称'));
+        $form->mobile('phone', __('手机号码'));
+        $form->text('phone2', __('联系手机'));
+        $form->decimal('gold', __('金币'))->default(0.00);
+        $form->decimal('energy', __('能量值'))->default(0.00);
+        $form->decimal('integral', __('积分值'))->default(0.00);
+//        $form->number('parent_user_id', __('Parent user id'));
+//        $form->number('child_user_num', __('Child user num'));
+        $form->text('wechat', __('微信'));
+        $form->select('is_admin', __('是否股东'))->options([0 => '否',1 => '是'])->default(0);
+        $form->text('ship_address', __('收获地址'));
+        $form->password('password', __('密码'));
 
         return $form;
     }

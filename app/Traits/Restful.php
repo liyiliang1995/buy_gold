@@ -24,13 +24,13 @@ trait Restful
      * @param array $aData
      * @return \Illuminate\Http\JsonResponse
      */
-    public function restful_result(int $iCode,string $sMessage,array $aData):\Illuminate\Http\JsonResponse
+    public function restful_result(int $iCode,string $sMessage,array $aData = null):\Illuminate\Http\JsonResponse
     {
         $aResult = [
             'code' => $iCode,
             'message' => $sMessage,
-            'data' => $aData
         ];
+        $aData && $aResult['data'] = $aData;
         return response()->json($aResult);
     }
 
