@@ -9,10 +9,6 @@ class MemberController extends Controller
 {
     use \App\Traits\Restful;
 
-    public function getlogin()
-    {
-        return view('czf.login');
-    }
 
     public function getUserSet()
     {

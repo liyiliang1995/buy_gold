@@ -18,7 +18,12 @@ Route::get('/', function () {
 Route::group([],function($router){
     $router->namespace('\\App\\Http\\Controllers\\Czf')->group(function ($router) {
         $router->get('login','MemberController@getLogin')->name('login');
+        $router->post('postlogin','MemberController@postLogin')->name('postlogin');
         $router->get('userset','MemberController@getUserSet')->name('userset');
-        $router->get('sendMsg','MemberController@sendMsg')->name('sendMsg');
+        $router->post('sendMsg','MemberController@sendMsg')->name('sendMsg');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

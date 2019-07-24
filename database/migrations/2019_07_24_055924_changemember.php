@@ -14,6 +14,7 @@ class Changemember extends Migration
     public function up()
     {
         Schema::table('member', function (Blueprint $table) {
+            $table->string('remember_token', 100)->default('');
             $table->unsignedInteger('parent_user_id')->default(0)->comment('上级代理用户id')->change();
             $table->unsignedSmallInteger('child_user_num')->default(0)->comment('下线用户个数')->change();
         });
