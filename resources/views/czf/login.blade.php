@@ -64,4 +64,43 @@
         </div>
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
     </div>
+    <script>
+        var login = {
+            countdown : 60,
+            settime:function (obj) {
+                if (this.countdown == 0) {
+                    obj.html("获取验证码");
+                    obj.css('background','#FF9800');
+                    obj.attr('disabled',"true");
+                    countdown = 60;
+                    return;
+                } else {
+                    obj.css('background','#666');
+                    obj.html("重新发送(" + this.countdown + ")");
+                    obj.removeAttr("disabled");
+                    this.countdown --;
+                }
+                setTimeout(function(){this.settime(obj)},1000)
+            },
+            ajaxGetCode:function (phone) {
+                $.ajax({
+                    url: "{{route('sendmsg')}}",
+                    type:'post',
+                    dataType: "json",
+                    data:{ id:1,rphone:phone,_method:'post' ,_token:"{{csrf_token()}}"},
+                    error:function(data){
+                        alert("服务器繁忙, 请联系管理员！");
+                        return;
+                    },
+                    success:function(result){
+                        if(result.code == 200){
+                            settime($(".code"));
+                        } else {
+                            alert(result.message)
+                        }
+                    },
+                })
+            }
+        }
+    </script>
 @endsection
