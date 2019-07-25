@@ -61,9 +61,7 @@
             <div class="weui-btn-area">
                 <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">登录</a>
             </div>
-            <label for="weuiAgree" class="weui-agree">
-            <a href="{{ route('password.request') }}"><span class="weui-agree__text">忘记密码？  </span></a>
-            </label>
+            <a href="{{ route('password.request') }}" class="weui-agree weui-agree__text">忘记密码？  </a>
         </div>
         </form>
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>

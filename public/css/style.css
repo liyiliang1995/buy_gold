@@ -37,8 +37,9 @@
     background-color: #176d43;
 }
 
-.login-page .weui-agree .weui-agree__text {
+.login-page .weui-agree__text {
     float: right;
+    text-align: right;
 }
 
 /* 首页 */
