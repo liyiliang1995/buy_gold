@@ -79,9 +79,9 @@ class LoginController extends Controller
         $phone = $request->post('phone');
         $code = $request->post('code');
 
-        if (false == comparisonCode( $code,$phone)) {
-            return $this->sendCodeErrResponse($request);
-        }
+//        if (false == comparisonCode( $code,$phone)) {
+//            return $this->sendCodeErrResponse($request);
+//        }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -94,6 +94,9 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+            if ($this->guard()->user()['status'] == 0) {
+                $this->redirectTo = route('userset');
+            }
             return $this->sendLoginResponse($request);
         }
 
@@ -114,5 +117,6 @@ class LoginController extends Controller
             'code' => ["手机验证码输入不正确！"],
         ]);
     }
+
 
 }

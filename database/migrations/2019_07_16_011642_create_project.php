@@ -44,7 +44,7 @@ class CreateProject extends Migration
             $table->unsignedInteger('parent_user_id')->comment('上级代理用户id');
             $table->unsignedSmallInteger('child_user_num')->comment('下线用户个数');
             $table->string('wechat',64)->default('')->comment("微信号");
-            $table->unsignedTinyInteger('status')->default(0)->comment('状态 0 正常 1出售金币 2购买金币');
+            $table->unsignedTinyInteger('status')->default(0)->comment('状态 0 未激活 1已激活 2出售金币 3购买金币');
             $table->unsignedTinyInteger('is_admin')->default(0)->comment('是否管理员 0否 1是');
             $table->string('ship_address',255)->default('')->comment("收货地址");
             $table->index('phone');

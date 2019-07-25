@@ -120,3 +120,10 @@ if (!function_exists('comparisonCode' )) {
         return $bData;
     }
 }
+if (!function_exists('userId')) {
+
+    function userId()
+    {
+        return Auth::guard()->id();
+    }
+}

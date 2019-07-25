@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Czf;
 use App\Member;
+use App\AgentRegister;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +16,7 @@ class MemberController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('getUserSet','sendMsg');
+        $this->middleware('auth')->except('sendMsg');
     }
 
     /**
@@ -51,8 +52,26 @@ class MemberController extends Controller
     /**
      * @see 我的伙伴
      */
-    public function myPartner()
+    public function myPartner(Member $member)
     {
-        return view('czf.partner');
+        $oPartner = $member->where('parent_user_id',userId())->orderBy('id', 'desc')->get();
+        $dSum = array_sum(array_column($oPartner->toArray(),'gold'));
+        return view('czf.partner',compact('oPartner','dSum'));
     }
+
+    /**
+     * @see 代理注册
+     */
+    public function agentRegister(AgentRegister $agentRegister,Request $request)
+    {
+        $aParam['user_id'] = userId();
+        $aParam['phone'] = $request->post('phone');
+        if (self::getLogic($agentRegister)->agentRegisterLogic($aParam)) {
+            return $this->success('注册成功');
+        } else {
+            return $this->params_error('注册失败');
+        }
+    }
+
+
 }

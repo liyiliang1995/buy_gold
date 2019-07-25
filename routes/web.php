@@ -20,6 +20,7 @@ Route::group([],function($router){
         $router->get('userset','MemberController@getUserSet')->name('userset');
         $router->post('sendMsg','MemberController@sendMsg')->name('sendMsg');
         $router->get('myPartner','MemberController@myPartner')->name('myPartner');
+        $router->post('agentRegister','MemberController@agentRegister')->name('agentRegister');
     });
 });
 
