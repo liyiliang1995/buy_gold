@@ -132,7 +132,7 @@
                 $.toast("密码必须6位以上", "text");
                 return false;
             }
-            if (reg.test(pw1)) {
+            if (!reg.test(pw1)) {
                 $.toast("密码必须包含数字和字母", "text");
                 return false;
             }
