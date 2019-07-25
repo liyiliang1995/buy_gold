@@ -92,34 +92,35 @@
     <div class="weui-flex" style="margin-top: 20px;">
         <div class="weui-flex__item"><a href="javascript:;" id="sub_but" class="weui-btn weui-btn_primary">修改</a></div>
     </div>
+
     <script>
         $('#sub_but').click(function () {
 // 验证姓名
-//             var name = $('#name').val();
-//             if (name == '') {
-//                 $.toast("真实姓名不能为空", "text");
-//                 return false;
-//             }
-//
-//             // 验证手机号
-//             var phone = $('#phone').val();
-//             if (!(/^1[3456789]\d{9}$/.test(phone))) {
-//                 $.toast("我的手机号有误", "text");
-//                 return false;
-//             }
-//
-//             var phone2 = $('#phone2').val();
-//             if (!(/^1[3456789]\d{9}$/.test(phone2))) {
-//                 $.toast("联系手机有误", "text");
-//                 return false;
-//             }
-//
-//             // 验证联系微信
-//             var wechat = $('#wechat').val();
-//             if (wechat == '') {
-//                 $.toast("联系微信不能为空", "text");
-//                 return false;
-//             }
+            var name = $('#name').val();
+            if (name == '') {
+                $.toast("真实姓名不能为空", "text");
+                return false;
+            }
+
+            // 验证手机号
+            var phone = $('#phone').val();
+            if (!(/^1[3456789]\d{9}$/.test(phone))) {
+                $.toast("我的手机号有误", "text");
+                return false;
+            }
+
+            var phone2 = $('#phone2').val();
+            if (!(/^1[3456789]\d{9}$/.test(phone2))) {
+                $.toast("联系手机有误", "text");
+                return false;
+            }
+
+            // 验证联系微信
+            var wechat = $('#wechat').val();
+            if (wechat == '') {
+                $.toast("联系微信不能为空", "text");
+                return false;
+            }
             // 验证码密码
             var pw1 = $('#password1').val();
             var pw2 = $('#password2').val();
