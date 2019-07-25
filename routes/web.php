@@ -19,6 +19,7 @@ Route::group([],function($router){
     $router->namespace('\\App\\Http\\Controllers\\Czf')->group(function ($router) {
         $router->get('userset','MemberController@getUserSet')->name('userset');
         $router->post('sendMsg','MemberController@sendMsg')->name('sendMsg');
+        $router->get('myPartner','MemberController@myPartner')->name('myPartner');
     });
 });
 

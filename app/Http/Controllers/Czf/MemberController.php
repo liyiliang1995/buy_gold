@@ -9,7 +9,19 @@ class MemberController extends Controller
 {
     use \App\Traits\Restful;
 
+    /**
+     * MemberController constructor.
+     * @see 权限检测
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('getUserSet','sendMsg');
+    }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 获取用户设置
+     */
     public function getUserSet()
     {
         return view('czf.userset');
@@ -34,6 +46,13 @@ class MemberController extends Controller
         } catch (\Exception $e) {
             return $this->params_error($e->getMessage());
         }
+    }
 
+    /**
+     * @see 我的伙伴
+     */
+    public function myPartner()
+    {
+        return view('czf.partner');
     }
 }
