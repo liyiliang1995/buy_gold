@@ -78,6 +78,7 @@ class LoginController extends Controller
         $this->validateLogin($request);
         $phone = $request->post('phone');
         $code = $request->post('code');
+
         if (false == comparisonCode( $code,$phone)) {
             return $this->sendCodeErrResponse($request);
         }

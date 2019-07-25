@@ -16,6 +16,7 @@ trait Restful
         'unautherror' => 401,
         'paramserror' => 400,
         'servererror' => 500,
+        'notfounderror' => 404
         ];
 
     /**
@@ -69,6 +70,15 @@ trait Restful
     public function server_error(string $sMessage = ''):\Illuminate\Http\JsonResponse
     {
         return $this->restful_result($this->HttpCode['servererror'],$sMessage ?: "服务器内部错误！");
+    }
+
+    /**
+     * @param string $sMessage
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function notfound_error(string $sMessage = ''):\Illuminate\Http\JsonResponse
+    {
+        return $this->restful_result($this->HttpCode['notfounderror'],$sMessage ?: "未找到查询结果！");
     }
 
 }

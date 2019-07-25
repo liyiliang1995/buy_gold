@@ -10,6 +10,18 @@
         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
         'js/swiper.min.js',
         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
+    ],
+'script' => [
+        "var swiper = new Swiper('.swiper-container', {
+            zoom: false,
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });"
     ]
 ])
 @section('content')
@@ -153,17 +165,5 @@
             </a>
         </div>
     </div>
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            zoom: false,
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-    </script>
     </body>
 @endsection

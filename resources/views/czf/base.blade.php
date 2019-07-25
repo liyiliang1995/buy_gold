@@ -15,4 +15,11 @@
 @foreach($js as $j)
     <script src="{{ asset ("$j") }}?version=1.01"></script>
 @endforeach
+<script type="text/javascript">
+    $(function(){
+        @foreach($script as $s)
+        {!! $s !!}
+        @endforeach
+    })
+</script>
 </html>
