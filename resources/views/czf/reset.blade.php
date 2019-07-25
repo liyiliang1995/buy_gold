@@ -138,6 +138,11 @@
 
             $("#showTooltips").on('click',function () {
                 var phone = $('input[name="phone"]').val().trim();
+                var code = $('input[name="code"]').val().trim();
+                if (!code) {
+                    $.toast("验证码不能为空！", 'text');
+                    return;
+                }
                 if (login.isPhoneNo(phone)) {
                     $("#reset").submit();
                 } else {
