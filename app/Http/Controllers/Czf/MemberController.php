@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Czf;
 use App\Member;
 use App\AgentRegister;
+use App\Logics\MemberLogic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,7 @@ class MemberController extends Controller
      * MemberController constructor.
      * @see 权限检测
      */
+
     public function __construct()
     {
         $this->middleware('auth')->except('sendMsg');
@@ -66,11 +68,21 @@ class MemberController extends Controller
     {
         $aParam['user_id'] = userId();
         $aParam['phone'] = $request->post('phone');
-        if (self::getLogic($agentRegister)->agentRegisterLogic($aParam)) {
+        if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
             return $this->success('注册成功');
         } else {
             return $this->params_error('注册失败');
         }
+    }
+
+    /**
+     * @param MemberLogic $memberLogic
+     * @param $oMdel
+     * @see 获取逻辑
+     */
+    public function Logic($oModel)
+    {
+        return new MemberLogic($oModel);
     }
 
 

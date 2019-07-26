@@ -9,21 +9,4 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    /**
-     * @var
-     * @see 逻辑对象
-     */
-    protected static $oLogic;
-
-    /**
-     * @param Member $member
-     * @return MemberLogic
-     */
-    public static function getLogic(object $oModel)
-    {
-        if(!(self::$oLogic instanceof MemberLogic)) {
-            self::$oLogic = new MemberLogic($oModel);
-        }
-        return self::$oLogic;
-    }
 }

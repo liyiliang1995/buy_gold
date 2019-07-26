@@ -32,7 +32,7 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="swiper-zoom-container">
-                        <img src="http://lorempixel.com/800/400/sports/2/">
+                        <img src="{{$aConfig['banner']}}">
                     </div>
                 </div>
             </div>
@@ -53,96 +53,23 @@
     </div>
     <div class="weui-flex">
         <div class="weui-row">
+           @foreach($aGoods as $value)
             <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
+                <div class="weui-col__hd"><img src="{{$value['list_img']}}" width="100%"></div>
                 <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
+                    <p class="title">{{$value['name']}}</p>
                 </div>
                 <div class="weui-col__ft">
                     <div class="weui-cell">
                         <div class="weui-cell__hd">
                             <em>¥</em>
-                            <span>2400.00</span>
+                            <span>{{$value['amount']}}</span>
                         </div>
                         <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
                     </div>
                 </div>
             </div>
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>2400.00</span>
-                        </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>2400.00</span>
-                        </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>2400.00</span>
-                        </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>2400.00</span>
-                        </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="images/product-1.jpg" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">标题文字</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>2400.00</span>
-                        </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
-                    </div>
-                </div>
-            </div>
+           @endforeach
         </div>
     </div>
 

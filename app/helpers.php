@@ -127,3 +127,16 @@ if (!function_exists('userId')) {
         return Auth::guard()->id();
     }
 }
+
+if (!function_exists('getConfig')) {
+    /**
+     * @param int $iType
+     * @param \App\Config $config
+     * @return array
+     * @see 根据类型获取不同配置
+     */
+    function getConfigByType(int $iType):array
+    {
+        return \App\Config::getConfigByType($iType) ?: [];
+    }
+}

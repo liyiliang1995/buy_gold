@@ -94,9 +94,6 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            if ($this->guard()->user()['status'] == 0) {
-                $this->redirectTo = route('userset');
-            }
             return $this->sendLoginResponse($request);
         }
 
