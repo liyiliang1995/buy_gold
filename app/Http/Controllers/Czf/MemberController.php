@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Czf;
+
 use App\Member;
 use App\AgentRegister;
 use App\Logics\MemberLogic;
@@ -27,17 +28,27 @@ class MemberController extends Controller
      */
     public function getUserSet()
     {
-        return view('czf.userset');
+        $member = \Auth::guard()->user();
+        return view('czf.userset', compact('member'));
+    }
+
+
+    /**
+     * 用户设置
+     */
+    public function setUser()
+    {
+        return $this->success('注册成功');
     }
 
     /**
      * @return \Illuminate\Http\JsonResponse
      * @see 发送短信验证码
      */
-    public function sendMsg(Request $request,Member $member)
+    public function sendMsg(Request $request, Member $member)
     {
         $to = $request->post('phone');
-        if(
+        if (
             !empty($request->post('is_check'))
             && !$member->isExistsPhone($to)
         ) {
@@ -56,15 +67,15 @@ class MemberController extends Controller
      */
     public function myPartner(Member $member)
     {
-        $oPartner = $member->where('parent_user_id',userId())->orderBy('id', 'desc')->get();
-        $dSum = array_sum(array_column($oPartner->toArray(),'gold'));
-        return view('czf.partner',compact('oPartner','dSum'));
+        $oPartner = $member->where('parent_user_id', userId())->orderBy('id', 'desc')->get();
+        $dSum     = array_sum(array_column($oPartner->toArray(), 'gold'));
+        return view('czf.partner', compact('oPartner', 'dSum'));
     }
 
     /**
      * @see 代理注册
      */
-    public function agentRegister(AgentRegister $agentRegister,Request $request)
+    public function agentRegister(AgentRegister $agentRegister, Request $request)
     {
         $aParam['user_id'] = userId();
         $aParam['phone'] = $request->post('phone');

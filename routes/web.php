@@ -21,6 +21,7 @@ Route::group([],function($router){
         $router->post('sendMsg','MemberController@sendMsg')->name('sendMsg');
         $router->get('myPartner','MemberController@myPartner')->name('myPartner');
         $router->post('agentRegister','MemberController@agentRegister')->name('agentRegister');
+        $router->post('setUser','MemberController@setUser')->name('setUser');
     });
 });
 
