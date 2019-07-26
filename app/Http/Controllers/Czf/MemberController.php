@@ -36,9 +36,32 @@ class MemberController extends Controller
     /**
      * 用户设置
      */
-    public function setUser()
+    public function setUser(Request $request,Member $member)
     {
-        return $this->success('注册成功');
+        $aData = [];
+        $aData['name'] = $request->post('name');
+        $aData['phone'] = $request->post('phone');
+        $aData['phone2'] = $request->post('phone2');
+        $aData['wechat'] = $request->post('wechat');
+        if (!empty($request->post('pw1'))){
+            $aData['password'] = $request->post('pw1');
+        }
+        $res = $this->Logic($member)->update(userId(),$aData);
+
+        if ($res){
+            echo '1';
+        }else{
+            echo '2';
+        }
+
+
+
+//        if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
+//            return $this->success('注册成功');
+//        } else {
+//            return $this->params_error('注册失败');
+//        }
+
     }
 
     /**

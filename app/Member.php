@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use App\Exceptions\CzfException;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
@@ -8,9 +10,9 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Member extends Model implements AuthenticatableContract,CanResetPasswordContract
+class Member extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable,CanResetPassword;
+    use Authenticatable, CanResetPassword;
     /**
      * @var string
      */
@@ -18,7 +20,7 @@ class Member extends Model implements AuthenticatableContract,CanResetPasswordCo
     /**
      * @var array
      */
-    protected $fillable = ['name','password','phone','parent_user_id'];
+    protected $fillable = ['name', 'password', 'phone', 'parent_user_id'];
 
     /**
      * @param $value
@@ -33,9 +35,9 @@ class Member extends Model implements AuthenticatableContract,CanResetPasswordCo
      * @return int
      * @see 检测手机号码是否存在
      */
-    public function isExistsPhone(string $phone):int
+    public function isExistsPhone(string $phone): int
     {
-        return $this->where('phone',$phone)->count() ?? 0;
+        return $this->where('phone', $phone)->count() ?? 0;
     }
 
     /**
@@ -44,7 +46,7 @@ class Member extends Model implements AuthenticatableContract,CanResetPasswordCo
      */
     public function agent_register()
     {
-        return $this->hasOne('App\AgentRegister','user_id');
+        return $this->hasOne('App\AgentRegister', 'user_id');
     }
 
     /**
@@ -63,7 +65,7 @@ class Member extends Model implements AuthenticatableContract,CanResetPasswordCo
      */
     public function addChildUserNum(int $iNum = 1)
     {
-        $this->find(userId())->increment('child_user_num',$iNum);
+        $this->find(userId())->increment('child_user_num', $iNum);
     }
 
     /**
@@ -72,20 +74,43 @@ class Member extends Model implements AuthenticatableContract,CanResetPasswordCo
      */
     public function beforeInsert(array $aData)
     {
-        dd($aData);
+        dd('222');
     }
+
+    /**
+     * @param object $oData
+     * @更新
+     */
+    public function beforeUpdate(object $oData)
+    {
+
+    }
+
+    /**
+     * @param array $aData
+     * @验证
+     */
+    public function userVerify(array $aData)
+    {
+        phoneVerif($aData['phone1']);
+    }
+
 
     /**
      * @return string
      */
-    public function getStatAttribute():string
+    public function getStatAttribute(): string
     {
-        if ($this->status == 0)
+        if ($this->status == 0) {
             $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #9E9E9E">未注册</a>';
-        else if($this->status == 1)
-            $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #07C160">正常</a>';
-        else
-            $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #F44336">锁定</a>';
+        } else {
+            if ($this->status == 1) {
+                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #07C160">正常</a>';
+            } else {
+                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #F44336">锁定</a>';
+            }
+        }
         return $sRes;
     }
+
 }

@@ -22,4 +22,6 @@ class MemberLogic extends BaseLogic
         }
         return $bRes;
     }
+
+
 }
