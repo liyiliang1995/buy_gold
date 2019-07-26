@@ -136,7 +136,7 @@
                         },
                         success: function (result) {
 
-                            $.toast("OK", 'text');
+                            $.toast(result, 'text');
                         },
                     })
 

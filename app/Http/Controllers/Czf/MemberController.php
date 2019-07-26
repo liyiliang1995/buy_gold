@@ -34,9 +34,18 @@ class MemberController extends Controller
     /**
      * 用户设置
      */
-    public function setUser()
+    public function setUser(Request $request)
     {
-        return $this->success('注册成功');
+        $member['user_id'] = userId();
+        $member['name'] = $request->post('name');
+        $member['phone'] = $request->post('phone');
+        $member['phone2'] = $request->post('phone2');
+        $member['wechat'] = $request->post('wechat');
+        if (empty($request->post('pw1'))){
+            $member['password'] = $request->post('pw1');
+        }
+
+
     }
 
     /**
