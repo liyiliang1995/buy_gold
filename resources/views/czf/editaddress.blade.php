@@ -28,7 +28,7 @@
     <div class="weui-flex__item">编辑地址</div>
 </div>
 
-<form action="{{ route("postEditAddress")}}" method="post" id="address">
+<form action="{{ route("postEditAddress",['url'=>request()->input('url') ?? ''])}}" method="post" id="address">
 <div class="weui-cells weui-cells_form" style="margin-top: 0">
     {{--<div class="weui-cell">--}}
         {{--<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>--}}
@@ -66,6 +66,16 @@
 </body>
 <script>
     $(function () {
+        @if($errors->has('address1'))
+            @foreach($errors->get('address1') as $message)
+                $.toast("{{$message}}", 'text');
+            @endforeach
+        @endif
+            @if($errors->has('address2'))
+            @foreach($errors->get('address2') as $message)
+            $.toast("{{$message}}", 'text');
+        @endforeach
+        @endif
         $("#sb").on('click', function () {
             var address2 =  $('input[name="address2"]').val().trim();
             if(!address2) {

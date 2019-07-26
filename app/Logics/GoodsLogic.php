@@ -12,11 +12,11 @@ class GoodsLogic extends BaseLogic
     /**
      * @see 修改收货地址
      */
-    public function editShipAddress(array $aParam)
+    public function editShipAddress(array $aParam):bool
     {
         $this->validateEditShipAddress();
-        $bRes = $this->update(userId(),$aParam);
-        dd($bRes);
+        $bRes = $this->update(userId(),['ship_address'=>implode(" | ",$aParam)]);
+        return $bRes;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Czf;
 use App\Good;
+use App\Member;
 use App\Logics\GoodsLogic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,8 +32,9 @@ class GoodsController extends Controller
     public function confirmOrder(int $goodsId,Good $good)
     {
         $bRes = $this->Logic($good)->userHasExistsAddress();
-        if (!$bRes)
-            return redirect(route('getEditAddress'));
+        if (!$bRes) {
+            return redirect(route('getEditAddress',['url'=>url()->full()]));
+        }
         $oGoods = $good->findOrFail($goodsId);
         $oUser = \Auth::user();
         return view('czf.confirmorder',compact('oGoods','oUser'));
@@ -49,11 +51,18 @@ class GoodsController extends Controller
     /**
      * @see 修改地址
      */
-    public function postEditAddress(Good $good)
+    public function postEditAddress(Member $member)
     {
+        $sUrl = request()->input('url');
         $aParam['address1'] = request()->post('address1');
         $aParam['address2'] = request()->post('address2');
-        $this->Logic($good)->editShipAddress($aParam);
+        $bRes = $this->Logic($member)->editShipAddress($aParam);
+        if ($bRes) {
+            return  $sUrl ? redirect($sUrl) : redirect(route('home'));
+        } else {
+            abort(500);
+        }
+
     }
     /**
      * @param MemberLogic $memberLogic

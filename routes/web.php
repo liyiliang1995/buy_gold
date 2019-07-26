@@ -24,9 +24,8 @@ Route::group([],function($router){
         $router->get('confirm/order/{goodsId}','GoodsController@confirmOrder')->name('confirmOrder');
         $router->get('address/edit','GoodsController@getEditAddress')->name('getEditAddress');
         $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
+        $router->get('/', 'HomeController@index')->name('home');
     });
 });
-
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@index')->name('home');
+
