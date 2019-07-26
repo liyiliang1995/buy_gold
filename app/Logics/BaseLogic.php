@@ -198,7 +198,7 @@ class BaseLogic {
      */
     protected function prepare($aData = [])
     {
-
+        return $aData;
     }
 
     /**
