@@ -53,15 +53,6 @@ class MemberController extends Controller
         }else{
             echo '2';
         }
-
-
-
-//        if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
-//            return $this->success('注册成功');
-//        } else {
-//            return $this->params_error('注册失败');
-//        }
-
     }
 
     /**
