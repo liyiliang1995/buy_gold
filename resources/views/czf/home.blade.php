@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>'首页 - 翠竹坊',
 'css' => [
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',

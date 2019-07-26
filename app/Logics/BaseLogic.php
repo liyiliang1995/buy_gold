@@ -233,6 +233,23 @@ class BaseLogic {
         return $page;
     }
 
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement __call() method.
+        if (method_exists($this->model,$name)) {
+            $jResult = call_user_func([$this->model, $name],...$arguments);
+            return $jResult;
+        } else {
+            abort(404);
+        }
+
+    }
+
 
 
 

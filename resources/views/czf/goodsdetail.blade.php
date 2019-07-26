@@ -67,7 +67,7 @@
     <div class="weui-footer_fixed-bottom">
 
         <div class="weui-tabbar">
-            <a href="http://www.baidu.com" class="weui-btn">
+            <a href="{{route('confirmOrder',['goodsId'=>$oGoods->id])}}" class="weui-btn">
                 立即购买
             </a>
         </div>

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::group([],function($router){
     $router->namespace('\\App\\Http\\Controllers\\Czf')->group(function ($router) {
@@ -23,8 +21,12 @@ Route::group([],function($router){
         $router->post('agentRegister','MemberController@agentRegister')->name('agentRegister');
         $router->post('setUser','MemberController@setUser')->name('setUser');
         $router->get('goods/detail/{id}','GoodsController@goodsDetail')->name('goodsDetail');
+        $router->get('confirm/order/{goodsId}','GoodsController@confirmOrder')->name('confirmOrder');
+        $router->get('address/edit','GoodsController@getEditAddress')->name('getEditAddress');
+        $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
     });
 });
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');

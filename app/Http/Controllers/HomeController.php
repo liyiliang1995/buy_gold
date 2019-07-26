@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index(Good $good)
     {
-        if (\Auth::guard()->user()->status == 0)
+        if (\Auth::user()->status == 0)
             return redirect('/userset');
         else {
             $aConfig = getConfigByType(1);
