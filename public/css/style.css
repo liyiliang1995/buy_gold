@@ -133,6 +133,9 @@
     margin-top: 0;
     border-top: none;
 }
+.details-page .good-detail img{
+    width: 100%;
+}
 
 .details-page .goods-info .weui-panel__bd .weui-media-box__bd {
     margin: .5rem;

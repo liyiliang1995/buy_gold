@@ -56,7 +56,7 @@
     <!-- Details -->
     <div class="weui-panel weui-panel_access">
         <div class="weui-panel__hd">商品详情</div>
-        <div class="weui-panel__bd">
+        <div class="weui-panel__bd good-detail">
             {!!  $oGoods->describe !!}
         </div>
         <div class="weui-panel__ft">
