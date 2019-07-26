@@ -140,3 +140,16 @@ if (!function_exists('getConfig')) {
         return \App\Config::getConfigByType($iType) ?: [];
     }
 }
+
+if(!function_exists('czf_asset')) {
+    /**
+     * @param string $sPath
+     * @param string $tmpPath
+     * @return string
+     * @see 上传图片路径
+     */
+    function czf_asset(string $sPath,$tmpPath = 'storage/'):string
+    {
+        return asset($tmpPath.$sPath);
+    }
+}

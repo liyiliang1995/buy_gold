@@ -22,9 +22,9 @@ Route::group([],function($router){
         $router->get('myPartner','MemberController@myPartner')->name('myPartner');
         $router->post('agentRegister','MemberController@agentRegister')->name('agentRegister');
         $router->post('setUser','MemberController@setUser')->name('setUser');
+        $router->get('goods/detail/{id}','GoodsController@goodsDetail')->name('goodsDetail');
     });
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

@@ -55,7 +55,7 @@
         <div class="weui-row">
            @foreach($aGoods as $value)
             <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="{{$value['list_img']}}" width="100%"></div>
+                <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>
                 <div class="weui-col__bd">
                     <p class="title">{{$value['name']}}</p>
                 </div>
@@ -65,7 +65,7 @@
                             <em>¥</em>
                             <span>{{$value['amount']}}</span>
                         </div>
-                        <a href="javascript:;" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
+                        <a href="{{route('goodsDetail',['id'=>$value['id']])}}" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
                     </div>
                 </div>
             </div>
