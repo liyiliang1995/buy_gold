@@ -136,7 +136,14 @@
                         },
                         success: function (result) {
 
-                            $.toast(result, 'text');
+                            if (result == 1){
+                                $.toast("操作成功！", 'text');
+                                return;
+                            } else{
+                                $.toast("操作失败！", 'text');
+                                return;
+                            }
+
                         },
                     })
 
