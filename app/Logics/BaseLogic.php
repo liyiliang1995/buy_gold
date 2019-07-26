@@ -201,6 +201,38 @@ class BaseLogic {
 
     }
 
+    /**
+     * @param array $aWhereData
+     * @return object
+     */
+    public function query(array $aWhereData = []):object
+    {
+        $where   = $this->getWhere($aWhereData);
+        $orWhere = $this->getOrWhere($aWhereData);
+        if (!empty($aWhereData['_sort'])) {
+            $aOrder =  explode(',', $aWhereData['_sort']);
+        } else {
+            $aOrder = ['id','desc'];
+        }
+//        DB::enableQueryLog();
+        $aData = $this->model->where($where)->where($orWhere)->orderBy($aOrder[0],$aOrder[1])->paginate($this->getPage());
+//        dd((DB::getQueryLog()));
+        return $aData;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage():int
+    {
+        if (property_exists($this->model,'query_page')) {
+            $page = $this->model->query_page;
+        } else {
+            $page = config("czf.page.default");
+        }
+        return $page;
+    }
+
 
 
 
