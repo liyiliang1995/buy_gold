@@ -25,7 +25,7 @@
         <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">注册新用户</div>
     </div>
 
-    <form action="">
+
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -42,7 +42,7 @@
             <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary"
                                             style="width: 90%;margin-top: 30px;">注册</a></div>
         </div>
-    </form>
+
 
     <div class="weui-flex">
         <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">我的伙伴</div>

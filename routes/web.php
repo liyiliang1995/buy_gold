@@ -16,14 +16,16 @@
 Route::group([],function($router){
     $router->namespace('\\App\\Http\\Controllers\\Czf')->group(function ($router) {
         $router->get('userset','MemberController@getUserSet')->name('userset');
-        $router->post('sendMsg','MemberController@sendMsg')->name('sendMsg');
-        $router->get('myPartner','MemberController@myPartner')->name('myPartner');
-        $router->post('agentRegister','MemberController@agentRegister')->name('agentRegister');
-        $router->post('setUser','MemberController@setUser')->name('setUser');
+        $router->post('send_msg','MemberController@sendMsg')->name('sendMsg');
+        $router->get('my_partner','MemberController@myPartner')->name('myPartner');
+        $router->post('agent_register','MemberController@agentRegister')->name('agentRegister');
+        $router->post('set_user','MemberController@setUser')->name('setUser');
         $router->get('goods/detail/{id}','GoodsController@goodsDetail')->name('goodsDetail');
         $router->get('confirm/order/{goodsId}','GoodsController@confirmOrder')->name('confirmOrder');
         $router->get('address/edit','GoodsController@getEditAddress')->name('getEditAddress');
         $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
+        $router->get('trade_center', 'TradeController@index')->name('trade_center');
+        $router->post('buy_gold', 'TradeController@buyGold')->name('buy_gold');
         $router->get('/', 'HomeController@index')->name('home');
     });
 });

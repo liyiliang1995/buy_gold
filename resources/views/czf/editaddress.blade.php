@@ -30,19 +30,19 @@
 
 <form action="{{ route("postEditAddress",['url'=>request()->input('url') ?? ''])}}" method="post" id="address">
 <div class="weui-cells weui-cells_form" style="margin-top: 0">
-    {{--<div class="weui-cell">--}}
-        {{--<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>--}}
-        {{--<div class="weui-cell__bd">--}}
-            {{--<input class="weui-input" type="text" name="" placeholder="请输入姓名">--}}
-        {{--</div>--}}
-    {{--</div>--}}
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">收货人</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" name="name" value="{{$oUser->name}}" placeholder="请输入收货人姓名">
+        </div>
+    </div>
 
-    {{--<div class="weui-cell">--}}
-        {{--<div class="weui-cell__hd"><label class="weui-label">电话</label></div>--}}
-        {{--<div class="weui-cell__bd">--}}
-            {{--<input class="weui-input" type="tel" placeholder="请输入电话">--}}
-        {{--</div>--}}
-    {{--</div>--}}
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="number" name="phone" value="{{$oUser->phone}}" placeholder="请输入联系电话">
+        </div>
+    </div>
 
     <div class="weui-cell">
         <div class="weui-cell__hd"><label for="name" class="weui-label">地区</label></div>
@@ -65,6 +65,42 @@
 </form>
 </body>
 <script>
+    var check = {
+        address_value:'',
+        phone_value:'',
+        name_value:'',
+        phone:function () {
+            var pattern = /^1[349578]\d{9}$/;
+            if (!pattern.test(this.phone_value)) {
+                $.toast("手机号码格式不正确！", 'text');
+                return;
+            } else {
+                return this.phone_value;
+            }
+
+        },
+        address:function () {
+            if(!this.address_value) {
+                $.toast("详细地址不能为空！", 'text');
+                return;
+            } else {
+                return this.address_value;
+            }
+        },
+        name:function () {
+            if (!this.name_value) {
+                $.toast("收货人不能为空！", 'text');
+                return;
+            } else {
+                return this.name_value;
+            }
+        },
+        submit_address:function () {
+            if (this.address() && this.phone() && this.name()) {
+                $("#address").submit();
+            }
+        }
+    }
     $(function () {
         @if($errors->has('address1'))
             @foreach($errors->get('address1') as $message)
@@ -77,12 +113,10 @@
         @endforeach
         @endif
         $("#sb").on('click', function () {
-            var address2 =  $('input[name="address2"]').val().trim();
-            if(!address2) {
-                $.toast("详细地址不能为空！", 'text');
-                return;
-            }
-            $("#address").submit();
+             check.address_value = $('input[name="address2"]').val().trim();
+             check.phone_value = $('input[name="phone"]').val().trim();
+             check.name_value = $('input[name="name"]').val().trim();
+             check.submit_address();
         })
     })
 </script>

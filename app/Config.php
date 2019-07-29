@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Config extends Model
 {
+
+    use SoftDeletes;
+    /**
+     * @var string
+     */
     protected $table = 'config';
 
     /**

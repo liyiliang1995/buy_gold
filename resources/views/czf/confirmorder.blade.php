@@ -37,16 +37,16 @@
         <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <a class="weui-cell weui-cell_access" href="{{route('getEditAddress',['url'=>url()->full()])}}">
                         <div class="weui-cell__hd">
                             <i class="iconfont icon-location"></i>
                         </div>
                         <div class="weui-cell__bd weui-cell_primary">
                             <div class="weui-flex">
-                                <div class="weui-flex__item contact_name">收货人：{{$oUser->name}}</div>
-                                <div class="weui-flex__item contact_tel">{{$oUser->phone}}</div>
+                                <div class="weui-flex__item contact_name">收货人：{{$oUser->ship_address->name}}</div>
+                                <div class="weui-flex__item contact_tel">{{$oUser->ship_address->phone}}</div>
                             </div>
-                            <p class="contact_address">收货地址：{{$oUser->ship_address}}</p>
+                            <p class="contact_address">收货地址：{{$oUser->ship_address->ship_address}}</p>
                         </div>
                         <span class="weui-cell__ft"></span>
                     </a>

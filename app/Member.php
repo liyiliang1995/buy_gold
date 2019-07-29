@@ -6,13 +6,14 @@ use App\Exceptions\CzfException;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class Member extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword;
+    use Authenticatable, CanResetPassword,SoftDeletes;
     /**
      * @var string
      */
@@ -47,6 +48,14 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     public function agent_register()
     {
         return $this->hasOne('App\AgentRegister', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function ship_address()
+    {
+        return $this->hasOne('App\MemberShipAddress', 'member_id');
     }
 
     /**

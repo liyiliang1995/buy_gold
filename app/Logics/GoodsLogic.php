@@ -6,7 +6,8 @@
  * Time: 10:04 AM
  */
 namespace App\Logics;
-
+use App\Member;
+use App\MemberShipAddress;
 class GoodsLogic extends BaseLogic
 {
     /**
@@ -15,7 +16,19 @@ class GoodsLogic extends BaseLogic
     public function editShipAddress(array $aParam):bool
     {
         $this->validateEditShipAddress();
-        $bRes = $this->update(userId(),['ship_address'=>implode(" | ",$aParam)]);
+        $member = Member::find(userId());
+        if ($member->ship_address) {
+            $member->ship_address->name = $aParam['name'];
+            $member->ship_address->ship_address = $aParam['address1']." | ".$aParam['address2'];
+            $member->ship_address->phone = $aParam['phone'];
+            $bRes = $member->ship_address->save();
+        } else {
+            $member_ship_address = new MemberShipAddress;
+            $member_ship_address->name = $aParam['name'];
+            $member_ship_address->ship_address = $aParam['address1']." | ".$aParam['address2'];
+            $member_ship_address->phone = $aParam['phone'];
+            $bRes = $member->ship_address()->save($member_ship_address) ? true :false;
+        }
         return $bRes;
     }
 

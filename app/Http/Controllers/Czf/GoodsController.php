@@ -45,7 +45,8 @@ class GoodsController extends Controller
      */
     public function getEditAddress()
     {
-        return view('czf.editaddress');
+        $oUser = \Auth::user();
+        return view('czf.editaddress',compact('oUser'));
     }
 
     /**
@@ -56,6 +57,8 @@ class GoodsController extends Controller
         $sUrl = request()->input('url');
         $aParam['address1'] = request()->post('address1');
         $aParam['address2'] = request()->post('address2');
+        $aParam['name'] = request()->post('name');
+        $aParam['phone'] = request()->post('phone');
         $bRes = $this->Logic($member)->editShipAddress($aParam);
         if ($bRes) {
             return  $sUrl ? redirect($sUrl) : redirect(route('home'));
