@@ -19,7 +19,7 @@ class MemberController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('sendMsg');
+        $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet']);
     }
 
     /**

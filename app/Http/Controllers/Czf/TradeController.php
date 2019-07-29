@@ -8,12 +8,15 @@ use App\Http\Controllers\Controller;
 
 class TradeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','checkmbr']);
+    }
     /**
      * @see 交易中心
      */
     public function index(BuyGold $buyGold)
     {
-//        dd($this->Logic(null)->getGuidancePrice(9));
         $aBuyGold = $this->Logic($buyGold)->query(['_sort'=>'price,desc']);
         return view('czf.tradecenter',compact('aBuyGold'));
     }
@@ -27,6 +30,16 @@ class TradeController extends Controller
         $aParams['price'] = round(request()->post('price'),2);
         $this->Logic($buyGold)->buyGold($aParams);
         return redirect()->route("buy_gold");
+    }
+
+    /**
+     * @param BuyGold $buyGold
+     * @see 出售金币
+     */
+    public function sellGold(int $id,BuyGold $buyGold)
+    {
+        $oBuyGoldDetail = $this->Logic($buyGold)->find($id);
+        return view('czf.sellgold',compact('oBuyGoldDetail'));
     }
 
     /**

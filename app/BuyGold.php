@@ -24,6 +24,8 @@ class BuyGold extends Model
      */
     public function beforeInsert(array $aData)
     {
+        if (\Auth::user()->isNormalMember() == false)
+            throw ValidationException::withMessages(['gold'=>["请检查当前用户是否处于未激活或者冻结状态！"]]);
         if ($this->isExistsBuyGold())
             throw ValidationException::withMessages(['gold'=>["当前用户还有一笔求购金币订单交易未完成"]]);
     }
@@ -36,6 +38,33 @@ class BuyGold extends Model
     {
         $iRes = $this->where(['user_id' => userId(),'status' => 0,'is_show' => 1])->count();
         return $iRes ? true : false;
+    }
+
+    /**
+     * @param $value
+     * @see 燃烧金币
+     */
+    public function getBurnGoldAttribute():string
+    {
+        return bcmul($this->gold,0.05,2);
+    }
+
+    /**
+     * @return float
+     * @see 消耗积分
+     */
+    public function getConsumeIntegralAttribute():string
+    {
+        return (int)$this->gold;
+    }
+
+    /**
+     * @return string
+     * @see 合计金币
+     */
+    public function getSumGoldAttribute():string
+    {
+        return bcadd($this->gold,$this->burn_gold,2);
     }
 
 

@@ -33,14 +33,14 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">收货人</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" type="text" name="name" value="{{$oUser->name}}" placeholder="请输入收货人姓名">
+            <input class="weui-input" type="text" name="name" value="{{$oUser->ship_address->name ?? $oUser->name}}" placeholder="请输入收货人姓名">
         </div>
     </div>
 
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" type="number" name="phone" value="{{$oUser->phone}}" placeholder="请输入联系电话">
+            <input class="weui-input" type="number" name="phone" value="{{$oUser->ship_address->phone ?? $oUser->phone}}" placeholder="请输入联系电话">
         </div>
     </div>
 
@@ -54,7 +54,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" name="address2" type="text" placeholder="请输入地址">
+            <input class="weui-input" name="address2" type="text" value="{{explode(" | ",$oUser->ship_address->ship_address)[1] ?? ''}}" placeholder="请输入地址">
         </div>
     </div>
     @csrf

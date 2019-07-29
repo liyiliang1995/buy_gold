@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','checkmbr']);
     }
     /**
      * Show the application dashboard.
@@ -22,13 +22,9 @@ class HomeController extends Controller
      */
     public function index(Good $good)
     {
-        if (\Auth::user()->status == 0)
-            return redirect('/userset');
-        else {
-            $aConfig = getConfigByType(1);
-            $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
-            return view('czf.home',compact('aConfig','aGoods'));
-        }
+        $aConfig = getConfigByType(1);
+        $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
+        return view('czf.home',compact('aConfig','aGoods'));
     }
 
     /**

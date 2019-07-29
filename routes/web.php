@@ -26,6 +26,7 @@ Route::group([],function($router){
         $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
         $router->get('trade_center', 'TradeController@index')->name('trade_center');
         $router->post('buy_gold', 'TradeController@buyGold')->name('buy_gold');
+        $router->get('sell_gold/{id}', 'TradeController@sellGold')->name('sell_gold');
         $router->get('/', 'HomeController@index')->name('home');
     });
 });

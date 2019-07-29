@@ -122,4 +122,13 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $sRes;
     }
 
+    /**
+     * @return bool
+     * @see 查看用户状态是否正常
+     */
+    public function isNormalMember():bool
+    {
+        return $this->status == 1;
+    }
+
 }

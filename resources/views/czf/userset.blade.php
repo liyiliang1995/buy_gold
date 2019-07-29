@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="add_edit.html">
+            <a class="weui-cell weui-cell_access" href="{{route('getEditAddress',['url'=>url()->full()])}}">
                 <div class="weui-cell__bd">
                     <p>收货地址</p>
                 </div>
@@ -93,6 +93,8 @@
     </div>
 
     <script>
+        $(function () {
+
             $('#sub_but').click(function () {
                 // 验证姓名
                 var name = $('#name').val();
@@ -114,41 +116,50 @@
                 } else if (wechat == '') { // 验证联系微信
                     $.toast("联系微信不能为空", "text");
                     return false;
-                } else if (pw1.length < 6 && pw1 !='') {
+                } else if (pw1.length < 6 && pw1 != '') {
                     $.toast("密码必须6位以上", "text");
                     return false;
-                } else if (!reg.test(pw1) && pw1 !='') {
+                } else if (!reg.test(pw1) && pw1 != '') {
                     $.toast("密码必须包含数字和字母", "text");
                     return false;
                 } else if (pw1 != pw2) {
                     $.toast("输入密码不一致", "text");
                     return false;
                 }
-                    // 递交数据
-                    $.ajax({
-                        url: "{{route('setUser')}}",
-                        type: 'post',
-                        dataType: "json",
-                        data: {name: name,phone:phone,phone2:phone2,wechat:wechat,pw1:pw1, _method: 'post', _token: "{{csrf_token()}}"},
-                        error: function (data) {
-                            $.toast("服务器繁忙, 请联系管理员！", 'text');
+                // 递交数据
+                $.ajax({
+                    url: "{{route('setUser')}}",
+                    type: 'post',
+                    dataType: "json",
+                    data: {
+                        name: name,
+                        phone: phone,
+                        phone2: phone2,
+                        wechat: wechat,
+                        pw1: pw1,
+                        _method: 'post',
+                        _token: "{{csrf_token()}}"
+                    },
+                    error: function (data) {
+                        $.toast("服务器繁忙, 请联系管理员！", 'text');
+                        return;
+                    },
+                    success: function (result) {
+
+                        if (result == 1) {
+                            $.toast("操作成功！", 'text');
                             return;
-                        },
-                        success: function (result) {
+                        } else {
+                            $.toast("操作失败！", 'text');
+                            return;
+                        }
 
-                            if (result == 1){
-                                $.toast("操作成功！", 'text');
-                                return;
-                            } else{
-                                $.toast("操作失败！", 'text');
-                                return;
-                            }
-
-                        },
-                    })
+                    },
+                })
 
 
             });
+        })
     </script>
 
     </body>
