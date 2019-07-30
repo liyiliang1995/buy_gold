@@ -28,6 +28,7 @@ Route::group([],function($router){
         $router->post('buy_gold', 'TradeController@buyGold')->name('buy_gold');
         $router->get('sell_gold/{id}', 'TradeController@sellGold')->name('sell_gold');
         $router->get('sell_gold_order/{id}', 'TradeController@sellGoldOrder')->name('sell_gold_order');
+        $router->get('trade/record','TradeController@tradeRecord')->name('trade_record');
         $router->get('/', 'HomeController@index')->name('home');
     });
 });

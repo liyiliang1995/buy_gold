@@ -55,6 +55,14 @@ class TradeController extends Controller
     }
 
     /**
+     * @see 交易记录
+     */
+    public function tradeRecord()
+    {
+        return view('czf.traderecord');
+    }
+
+    /**
      * @param object|null $oModel
      * @return TradeLogic
      */
