@@ -32,7 +32,7 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="swiper-zoom-container">
-                        <img src="{{$aConfig['banner']}}">
+                        <img src="{{$aConfig['banner'] ?? ''}}">
                     </div>
                 </div>
             </div>
