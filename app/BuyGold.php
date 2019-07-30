@@ -20,6 +20,24 @@ class BuyGold extends Model
     public $query_page = 10;
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @see 一对购买金币多订单详情
+     */
+    public function buy_gold_details()
+    {
+        return $this->hasMany('App\BuyGoldDetail');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo('App\Member','user_id');
+    }
+
+
+    /**
      * @param array $aData
      */
     public function beforeInsert(array $aData)
@@ -83,6 +101,15 @@ class BuyGold extends Model
     public function getSumGoldAttribute():string
     {
         return bcadd($this->gold,$this->burn_gold,2);
+    }
+
+    /**
+     * @return int
+     * @see 两部成交金币数量的能量值
+     */
+    public function getEnergyAttribute():int
+    {
+        return bcmul($this->gold,2,0);
     }
 
 

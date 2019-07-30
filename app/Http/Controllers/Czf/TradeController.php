@@ -48,7 +48,10 @@ class TradeController extends Controller
      */
     public function sellGoldOrder(int $id,BuyGold $buyGold)
     {
-        $this->Logic($buyGold)->sellGold($id);
+        if ($this->Logic($buyGold)->sellGold($id))
+            return redirect(route('trade_center'));
+        else
+            abort(500);
     }
 
     /**

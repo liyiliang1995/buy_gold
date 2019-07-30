@@ -78,6 +78,13 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function buy_gold()
+    {
+        return $this->hasOne('App\BuyGold','user_id');
+    }
+    /**
      * @param array $aData
      * @插入之前的钩子
      */
