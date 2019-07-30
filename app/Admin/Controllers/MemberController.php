@@ -38,7 +38,7 @@ class MemberController extends AdminController
         $grid->column('wechat', __('微信'));
         $grid->column('status', __('状态'));
         $grid->column('is_admin', __('是否股东'));
-        $grid->column('ship_address', __('收获地址'));
+        $grid->column('ship_address.ship_address', __('收获地址'));
 //        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('Updated at'));
@@ -69,7 +69,6 @@ class MemberController extends AdminController
         $show->field('wechat', __('Wechat'));
         $show->field('status', __('Status'));
         $show->field('is_admin', __('Is admin'));
-        $show->field('ship_address', __('Ship address'));
         $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -97,7 +96,7 @@ class MemberController extends AdminController
 //        $form->number('child_user_num', __('Child user num'));
         $form->text('wechat', __('微信'));
         $form->select('is_admin', __('是否股东'))->options([0 => '否',1 => '是'])->default(0);
-        $form->text('ship_address', __('收获地址'));
+
         $form->password('password', __('密码'));
 
         return $form;

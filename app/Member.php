@@ -131,4 +131,26 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->status == 1;
     }
 
+    /**
+     * @param int $iGold 出售金币数量
+     * @return bool
+     * @see 检测出售数量是否超过持有数量的50%
+     */
+    public function checkMemberOneHalfGold(float $fGold):bool
+    {
+        $fHaveGold = bcmul($this->gold,0.5,2);
+        return $fHaveGold > $fGold;
+    }
+
+    /**
+     * @param float $fGold
+     * @return bool
+     * @see 检测出售金币是否含有同等数量的金币
+     */
+    public function checkMemberIntegral(float $fGold):bool
+    {
+        return $this->integral > $fGold;
+    }
+
+
 }

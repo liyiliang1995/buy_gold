@@ -18,7 +18,7 @@
     <body>
     <!--头部-->
     <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="./img/fh.png" alt=""></a>
+        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
         <div class="weui-flex__item">出售详情</div>
     </div>
 
@@ -45,12 +45,18 @@
 
     <div class="weui-row" id="sell_but">
         <div class="weui-col-50" style="width: 60%;text-align: center;    line-height: 50px;">合计：<b style="color: red;">{{$oBuyGoldDetail->sum_gold}}金币</b>（消耗{{$oBuyGoldDetail->consume_integral}}积分）</div>
-        <div class="weui-col-50" style="width: 40%"><a onclick="checkout()" href="javascript:;" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">提交订单</a></div>
+        <div class="weui-col-50" style="width: 40%"><a  href="{{route('sell_gold_order',['id'=>$oBuyGoldDetail->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">提交订单</a></div>
     </div>
     </body>
     <script>
         function checkout() {
             $.toast("操作成功");
         }
+
+        $(function () {
+            @if($errors->has('gold'))
+                $.toast("{{$errors->get('gold')[0]}}", 'text');
+            @endif
+        })
     </script>
 @endsection

@@ -29,7 +29,7 @@ class TradeController extends Controller
         $aParams['gold'] = request()->post('gold');
         $aParams['price'] = round(request()->post('price'),2);
         $this->Logic($buyGold)->buyGold($aParams);
-        return redirect()->route("buy_gold");
+        return redirect()->route("trade_center");
     }
 
     /**
@@ -43,6 +43,15 @@ class TradeController extends Controller
     }
 
     /**
+     * @param int $id
+     * @param BuyGold $buyGold
+     */
+    public function sellGoldOrder(int $id,BuyGold $buyGold)
+    {
+        $this->Logic($buyGold)->sellGold($id);
+    }
+
+    /**
      * @param object|null $oModel
      * @return TradeLogic
      */
@@ -50,4 +59,5 @@ class TradeController extends Controller
     {
         return new TradeLogic($oModel);
     }
+
 }

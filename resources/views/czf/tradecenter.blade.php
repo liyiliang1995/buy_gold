@@ -108,7 +108,11 @@
         <div class="weui-flex__item">{{$value->price}}</div>
         <div class="weui-flex__item">{{$value->sum_price}}</div>
         <div class="weui-flex__item">
-            <a href="{{route('sell_gold',['id'=>$value->id])}}" class="weui-btn weui-btn_primary" style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">出售</a>
+            @if(userId() != $value->user_id)
+                <a href="{{route('sell_gold',['id'=>$value->id])}}" class="weui-btn weui-btn_primary" style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">出售</a>
+            @else
+                <a href="javascript:void(0)"  disabled="disabled" class="weui-btn weui-btn_disabled weui-btn_primary" style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">出售</a>
+            @endif
         </div>
     </div>
     @endforeach

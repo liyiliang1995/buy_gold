@@ -31,6 +31,24 @@ class BuyGold extends Model
     }
 
     /**
+     * @see 插入以后
+     */
+    public function afterInsert()
+    {
+        $this->freezeBuyer();
+    }
+
+    /**
+     * @see 冻结买房
+     */
+    public function freezeBuyer()
+    {
+        //购买金币的状态 为冻结
+        \Auth::user()->status = 3;
+        \Auth::user()->save();
+    }
+
+    /**
      * @return bool
      * @see 是否存在上架没有完成交易的数据
      */

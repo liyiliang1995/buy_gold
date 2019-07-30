@@ -139,7 +139,7 @@ class BaseLogic {
     {
         $where   = $this->getWhere($aWhereData);
         $orWhere = $this->getOrWhere($aWhereData);
-        $oData = $this->model->where($where)->where($orWhere)->find($id);
+        $oData = $this->model->where($where)->where($orWhere)->findOrFail($id);
         return $oData;
     }
 

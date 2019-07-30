@@ -6,10 +6,12 @@
  * Time: 10:47 AM
  */
 namespace App\Logics;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 class TradeLogic extends BaseLogic
 {
 
+    protected $oBuyGoldDetail;
     /**
      * @param $price
      * @return array
@@ -63,6 +65,57 @@ class TradeLogic extends BaseLogic
         $aParams['sum_price'] = bcmul($aParams['gold'],$aParams['price'],2);
         $bRes = $this->store($aParams);
         return $bRes ?? false;
+    }
+
+    /**
+     * @param int $id
+     * @see 出售金币
+     * @step1 出售数量不能超过持有数量的50%
+     * @step2 出售金币消耗同等数量的积分 不够不能出售
+     * @step3 出售成功燃烧出售数量的5%金币 买家得到2倍数量的能量值
+     * @step4 卖家被冻结
+     */
+    public function sellGold(int $id)
+    {
+        DB::transaction(function () use($id){
+            $this->oBuyGoldDetail = $this->model->lockForUpdate()->findOrFail($id);
+            $this->sellGoldvalidate();
+            $this->sellGoldflow();
+        });
+
+    }
+
+    /**
+     * @see 消耗金币验证
+     */
+    public function sellGoldvalidate()
+    {
+        if (\Auth::user()->checkMemberOneHalfGold($this->oBuyGoldDetail->gold) === false)
+            throw ValidationException::withMessages(['gold'=>["出售金币数量不能超过持有数量的50%！"]]);
+        if (\Auth::user()->checkMemberIntegral($this->oBuyGoldDetail->gold) === false)
+            throw ValidationException::withMessages(['gold'=>["积分不够，出售金币消耗同等数量的积分！"]]);
+    }
+
+    /**
+     * @return bool
+     * @卖家扣除金币流水
+     * @买家增加金币流水
+     * @卖家消耗积分流水
+     * @买家增加能量值流水
+     */
+    public function sellGoldflow()
+    {
+        $this->freezeSeller();
+    }
+
+    /**
+     * @see 冻结卖方
+     */
+    public function freezeSeller()
+    {
+        //出售金币的状态 为冻结
+        \Auth::user()->status = 2;
+        \Auth::user()->save();
     }
 
 

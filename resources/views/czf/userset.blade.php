@@ -94,7 +94,9 @@
 
     <script>
         $(function () {
-
+            @if($errors->has('member'))
+                $.toast("{{$errors->get('member')[0]}}", 'text');
+            @endif
             $('#sub_but').click(function () {
                 // 验证姓名
                 var name = $('#name').val();
