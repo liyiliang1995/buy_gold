@@ -18,7 +18,7 @@ class OrderItem extends Model
     /**
      * @var array
      */
-    protected $and_fields = ['is_send'];
+    protected $and_fields = ['is_send','member_id'];
     /**
      * @var
      */
@@ -26,7 +26,7 @@ class OrderItem extends Model
     /**
      * @var array
      */
-    protected $fillable = ['goods_id','num','unit_price','sum_price','unit_gold','sum_gold','avg_gold_price'];
+    protected $fillable = ['goods_id','num','unit_price','sum_price','unit_gold','sum_gold','avg_gold_price','member_id'];
 
     /**
      * @return array

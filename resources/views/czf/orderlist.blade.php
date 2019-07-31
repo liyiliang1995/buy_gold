@@ -65,8 +65,13 @@
             url:"",
             // 获取订单
             ajaxGetOrderList:function () {
+                if (!order_list.url) {
+                    $.toast("没有更多数据加载！",'text');
+                    $('.weui-loadmore').hide();
+                    return;
+                }
                 $.ajax({
-                    url: this.url,
+                    url: order_list.url,
                     type: 'get',
                     dataType: "json",
                     error: function (data) {

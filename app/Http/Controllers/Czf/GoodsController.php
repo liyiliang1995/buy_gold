@@ -103,6 +103,7 @@ class GoodsController extends Controller
     {
         $aParams['is_send'] = $is_send;
         $aParams['_sort'] = "id,desc";
+        $aParams['member_id'] = userId();
         $aOrderItemData = $this->Logic($orderItem)->query($aParams)->toArray();
         if ($aOrderItemData){
             return $this->success("请求成功",$aOrderItemData);
