@@ -159,5 +159,14 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->integral > $fGold;
     }
 
+    /**
+     * @return int
+     * @查看用户代理注册了几个用户
+     */
+    public function getChildMemberNum():int
+    {
+        return $this->child_user_num ?? 0;
+    }
+
 
 }

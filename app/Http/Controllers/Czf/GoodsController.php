@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 class GoodsController extends Controller
 {
+    use \App\Traits\Restful;
     /**
      * GoodsController constructor.
      */
@@ -51,7 +52,10 @@ class GoodsController extends Controller
         $aParams['other'] = request()->input('other');
         $aParams['goods_id'] = $goodsId;
         $aParams['gold_price'] = request()->input('glod_price');
-        $this->Logic($good)->orderSave($aParams);
+        if ($this->Logic($good)->orderSave($aParams))
+            return $this->success("",["url"=>route("home")]);
+        else
+            return $this->server_error();
     }
 
     /**

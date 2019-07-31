@@ -234,6 +234,89 @@ class BaseLogic {
     }
 
     /**
+     * @param int $iType 1 自动领取金币消耗 2求购金币获得
+     * @param int $iUserId
+     * @param int $iEnergy 能量值
+     * @return BuyGoldDetail
+     * @能量流水 type=3 代表能量
+     */
+    public function getBuyGoldEnergyFlowDetail(int $iType,int $iUserId,int $iEnergy,string $sOther = ''):object
+    {
+        $oEnergyModel = new \App\EnergyFlow([
+            // 业务类型 1 自动领取金币消耗 2求购金币获得
+            'type' => $iType,
+            'energy' => $iEnergy,
+            'user_id' => $iUserId,
+            'other' => $sOther,
+        ]);
+        $oEnergyModel->save();
+        $flow_id = $oEnergyModel->id;
+        return $this->getCreateDetailFlow($flow_id,3);
+    }
+
+    /**
+     * @param  int $iIsIncome 是否收入 0 支出 1收入
+     * @param int $iType 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
+     * @param int $iUserId
+     * @param float $fGold
+     * @return object
+     */
+    public function getBuyGoldGoldFlowDetail(int $iIsIncome,int $iType,int $iUserId,float $fGold,string $sOther = ''):Closure
+    {
+        $oGoldModel = new \App\GoldFlow([
+            // $iType 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
+            'type' => $iType,
+            'gold' => $fGold,
+            'user_id' => $iUserId,
+            'is_income' => $iIsIncome,
+            'other' => $sOther,
+        ]);
+        $oGoldModel->save();
+        $flow_id = $oGoldModel->id;
+        return $this->getCreateDetailFlow($flow_id,1);
+
+
+    }
+    /**
+     * @param int $iType 业务类型 1消费获得 2 出售金币消耗
+     * @param int $iUserId
+     * @param int $iIntegral 积分值
+     * @param string $sOther
+     * @return object
+     */
+    public function getBuyGoldIntegralFlowDetail(int $iType,int $iUserId,int $iIntegral,string $sOther = ''):Closure
+    {
+        $oIntegralModel = new \App\IntegralFlow([
+            // 业务类型 1消费获得 2 出售金币消耗
+            'type' => $iType,
+            'integral' => $iIntegral,
+            'user_id' => $iUserId,
+            'other' => $sOther,
+        ]);
+        $oIntegralModel->save();
+        $flow_id = $oIntegralModel->id;
+        return $this->getCreateDetailFlow($flow_id,2);
+    }
+
+    /**
+     * @param int $flow_id
+     * @param $iType 流水单号类型 1金币流水 2积分流水 3能量流水
+     * @return Closure
+     */
+    public function getCreateDetailFlow(int $flow_id,int $iType):Closure
+    {
+        $callback = function (string $sClassName)use($flow_id,$iType){
+            return new $sClassName([
+                // 流水单号类型 1金币流水 2积分流水 3能量流水
+                'type'=> $iType,
+                'flow_id' => $flow_id,
+            ]);
+        };
+        return $callback;
+    }
+
+
+    /**
      * @param $name
      * @param $arguments
      * @return mixed

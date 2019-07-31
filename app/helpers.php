@@ -153,3 +153,32 @@ if(!function_exists('czf_asset')) {
         return asset($tmpPath.$sPath);
     }
 }
+
+if (!function_exists('redis_idempotent')) {
+    /**
+     * @param $sKey
+     * @param $time
+     * @see 接口防护防止幂等
+     */
+    function redis_idempotent(string $sKey = null,array $aParam = null,int $time = 2):bool
+    {
+        $bRes = false;
+        // 给一个默认key
+        if (!$sKey) {
+            $sSessionId = session()->getId();
+            if ($sSessionId) {
+                $sKey = $sSessionId;
+            }
+        }
+        if (!$aParam) {
+            $aParam = request()->input();
+            $sParam = $aParam ?  implode("-",$aParam) : "";
+        }
+        if ($sKey && $sParam) {
+            $bRes = Redis::sadd($sKey,$sParam);
+            Redis::expire($sKey,$time);
+        }
+        return $bRes;
+    }
+
+}

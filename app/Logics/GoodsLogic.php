@@ -9,12 +9,22 @@ namespace App\Logics;
 use App\Member;
 use App\MemberShipAddress;
 use App\Exceptions\CzfException;
+use Illuminate\Support\Facades\DB;
 class GoodsLogic extends BaseLogic
 {
     /**
      * @var
      */
     protected $goods_detail;
+    /**
+     * @var
+     */
+    protected $gold;
+    /**
+     * @var
+     */
+    protected $order_model;
+
     /**
      * @see 修改收货地址
      */
@@ -59,47 +69,107 @@ class GoodsLogic extends BaseLogic
      * @金币购买时 商品消耗金币不能超过持有金币的50%
      * @购物后赠送10倍积分
      * @至少激活一个用户才可以购物
+     * @扣除商品价格5%返回金币池
      */
-    public function orderSave(array $aParams)
+    public function orderSave(array $aParams):bool
     {
         $this->goods_detail = $this->model->findOrFail($aParams['goods_id']);
         $this->orderSaveValidate($aParams);
-        $bRes = DB::transaction(function (){
 
+        $bRes = DB::transaction(function () use($aParams){
+            // 保存订单
+            $this->orderSaveByModel($aParams);
+            // 保存订单详情
+            $this->orderItemSaveByModel($aParams);
+            // 流水
+            $this->orderflow();
+            // 用户增减
+            $this->orderIncreaseAndDecrease();
+            return true;
         });
+        return $bRes;
     }
 
+    /**
+     * @param array $aParams
+     * @throws CzfException
+     * @验证字段
+     */
     public function orderSaveValidate(array $aParams)
     {
+        if (redis_idempotent() === false)
+            throw new CzfException('请勿恶意提交订单！');
         if (floor($aParams['num']) - $aParams['num'] != 0 || $aParams['num'] <= 0)
             throw new CzfException('购买数量必须是一个大于0的整数');
         if (isset($aParams['other']) && mb_strlen($aParams['other']) > 200)
             throw new CzfException("留言长度字符不能超过200字符");
         if (empty($aParams['gold_price']) || $aParams['gold_price'] < 0.5)
             throw new CzfException("操作异常,购买价格不正常！");
-        //dd(\Auth::user()->checkMemberOneHalfGold($this->goods_detail->gold));
-        if (\Auth::user()->checkMemberOneHalfGold($this->goods_detail->gold) === false)
-        {
-
-        }
+        $this->gold = $this->goods_detail->amountToGold($aParams['num'],$aParams['gold_price']);
+        if (\Auth::user()->checkMemberOneHalfGold($this->gold) === false)
+            throw new CzfException("出售金币数量不能超过持有数量的50%!");
+        if (\Auth::user()->getChildMemberNum() < 1)
+            throw new CzfException("至少激活一个用户才可以购物!");
     }
 
     /**
-     * 设置购买商品总价格
+     * @param array $aParams
+     * @see 保存订单详情
      */
-    public function getGoodsSumPrice(int $iNum):float
+    public function orderSaveByModel(array $aParams)
     {
-        return bcmul($this->goods_detail->amount,$iNum,2);
+        $this->order_model = new \App\Order;
+        $this->order_model->order_no = $this->order_model->getOrderNo();
+        $this->order_model->user_id = userId();
+        $this->order_model->pay_status = 1;
+        $this->order_model->pay_gold = $this->gold;
+        $this->order_model->amount = $this->goods_detail->getSumPrice($aParams['num']);
+        $this->order_model->other = $aParams['other'] ?? '';
+        $this->order_model->save();
+    }
+    /**
+     * @param array $aParams
+     * @see 订单明细
+     */
+    public function orderItemSaveByModel(array $aParams)
+    {
+        $this->order_model->order_items()->save(new \App\OrderItem([
+            'goods_id' => $this->goods_detail->id,
+            'num' => $aParams['num'],
+            'unit_price' => $this->goods_detail->amount,
+            'sum_price' => $this->order_model->amount,
+            'unit_gold' => $this->goods_detail->unitAmountToGold($aParams['gold_price']),
+            'sum_gold' => $this->gold,
+            'avg_gold_price' => $aParams['gold_price'],
+        ]));
+    }
+    /**
+     * @购物完成流水
+     */
+    public function orderflow()
+    {
+        $this->order_model->order_details()->saveMany([
+            // 购物扣除
+            $this->getBuyGoldGoldFlowDetail(0,1,userId(),$this->gold,"购物消耗金币")('App\OrderDetail'),
+            // 返回金币池
+            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->order_model->burn_gold,"购物燃烧金币返回金币池")('App\OrderDetail'),
+            // 赠送10倍积分
+            $this->getBuyGoldIntegralFlowDetail(1,userId(),$this->order_model->give_integral,"购物赠送积分")('App\OrderDetail'),
+        ]);
+    }
+    /**
+     * @用户扣除金币
+     * @用户增加积分
+     * @金币池增加积分
+     */
+    public function orderIncreaseAndDecrease()
+    {
+        \Auth::user()->gold = bcsub(\Auth::user()->gold,$this->gold,2);
+        \Auth::user()->integral = bcadd(\Auth::user()->integral,$this->order_model->give_integral,0);
+        \Auth::user()->save();
+        //燃烧金币未完成
     }
 
-    /**
-     * @param int $iNum
-     * @return string
-     */
-    public function getGoodsSumGold(int $iNum)
-    {
-        $sum_price = $this->getGoodsSumPrice();
-        //return bcdiv($sum_price,);
-    }
+
 
 }

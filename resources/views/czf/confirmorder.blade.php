@@ -152,7 +152,7 @@
                     },
                     success:function(result){
                         if(result.code == 200){
-                            console.log(result);
+                            window.location.href = result.data.url;
                         } else {
                             $.toast(result.message,'text')
                         }

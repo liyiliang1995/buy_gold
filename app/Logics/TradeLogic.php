@@ -6,7 +6,6 @@
  * Time: 10:47 AM
  */
 namespace App\Logics;
-use App\BuyGoldDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 class TradeLogic extends BaseLogic
@@ -117,6 +116,8 @@ class TradeLogic extends BaseLogic
      */
     public function sellGoldvalidate()
     {
+        if (redis_idempotent() === false)
+            throw new CzfException('请勿恶意提交订单！');
         if (\Auth::user()->checkMemberOneHalfGold($this->oBuyGoldDetail->gold) === false)
             throw ValidationException::withMessages(['gold'=>["出售金币数量不能超过持有数量的50%！"]]);
         if (\Auth::user()->checkMemberIntegral($this->oBuyGoldDetail->gold) === false)
@@ -135,96 +136,18 @@ class TradeLogic extends BaseLogic
     {
         $this->oBuyGoldDetail->buy_gold_details()->saveMany([
             // 买家增加能量值流水
-            $this->getBuyGoldEnergyFlowDetail(2, $this->oBuyGoldDetail->user_id, $this->oBuyGoldDetail->energy,'出售金币获取能量'),
+            $this->getBuyGoldEnergyFlowDetail(2, $this->oBuyGoldDetail->user_id, $this->oBuyGoldDetail->energy,'出售金币获取能量')('App\BuyGoldDetail'),
             // 卖家扣除金币流水
-            $this->getBuyGoldGoldFlowDetail(0,2,userId(),$this->oBuyGoldDetail->sum_gold,"出售金币"),
+            $this->getBuyGoldGoldFlowDetail(0,2,userId(),$this->oBuyGoldDetail->sum_gold,"出售金币")('App\BuyGoldDetail'),
             // 买家增加金币流水
-            $this->getBuyGoldGoldFlowDetail(1,3,$this->oBuyGoldDetail->user_id,$this->oBuyGoldDetail->gold,"求购金币"),
+            $this->getBuyGoldGoldFlowDetail(1,3,$this->oBuyGoldDetail->user_id,$this->oBuyGoldDetail->gold,"求购金币")('App\BuyGoldDetail'),
             // 燃烧金币流水
-            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->oBuyGoldDetail->burn_gold,"燃烧金币"),
+            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->oBuyGoldDetail->burn_gold,"出售金币燃烧金币返回金币池")('App\BuyGoldDetail'),
             // 卖家消耗积分流水
-            $this->getBuyGoldIntegralFlowDetail(2,userId(),$this->oBuyGoldDetail->consume_integral,"出售金币消耗积分"),
+            $this->getBuyGoldIntegralFlowDetail(2,userId(),$this->oBuyGoldDetail->consume_integral,"出售金币消耗积分")('App\BuyGoldDetail'),
 
         ]);
         $this->freezeSeller();
-    }
-
-    /**
-     * @param int $iType 1 自动领取金币消耗 2求购金币获得
-     * @param int $iUserId
-     * @param int $iEnergy 能量值
-     * @return BuyGoldDetail
-     * @能量流水 type=3 代表能量
-     */
-    public function getBuyGoldEnergyFlowDetail(int $iType,int $iUserId,int $iEnergy,string $sOther = ''):object
-    {
-        $oEnergyModel = new \App\EnergyFlow([
-            // 业务类型 1 自动领取金币消耗 2求购金币获得
-            'type' => $iType,
-            'energy' => $iEnergy,
-            'user_id' => $iUserId,
-            'other' => $sOther,
-        ]);
-        $oEnergyModel->save();
-        $oModel  = new BuyGoldDetail([
-            // 流水单号类型 1金币流水 2积分流水 3能量流水
-            'type'=> 3,
-            'flow_id' => $oEnergyModel->id,
-        ]);
-        return $oModel;
-    }
-
-    /**
-     * @param  int $iIsIncome 是否收入 0 支出 1收入
-     * @param int $iType 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
-     * @param int $iUserId
-     * @param float $fGold
-     * @return object
-     */
-    public function getBuyGoldGoldFlowDetail(int $iIsIncome,int $iType,int $iUserId,float $fGold,string $sOther = ''):object
-    {
-        $oGoldModel = new \App\GoldFlow([
-            // $iType 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
-            'type' => $iType,
-            'gold' => $fGold,
-            'user_id' => $iUserId,
-            'is_income' => $iIsIncome,
-            'other' => $sOther,
-        ]);
-        $oGoldModel->save();
-        $oModel  = new BuyGoldDetail([
-            // 流水单号类型 1金币流水 2积分流水 3能量流水
-            'type'=> 1,
-            'flow_id' => $oGoldModel->id,
-        ]);
-        return $oModel;
-
-
-    }
-
-    /**
-     * @param int $iType 业务类型 1消费获得 2 出售金币消耗
-     * @param int $iUserId
-     * @param int $iIntegral 积分值
-     * @param string $sOther
-     * @return object
-     */
-    public function getBuyGoldIntegralFlowDetail(int $iType,int $iUserId,int $iIntegral,string $sOther = ''):object
-    {
-        $oIntegralModel = new \App\IntegralFlow([
-            // 业务类型 1消费获得 2 出售金币消耗
-            'type' => $iType,
-            'integral' => $iIntegral,
-            'user_id' => $iUserId,
-            'other' => $sOther,
-        ]);
-        $oIntegralModel->save();
-        $oModel  = new BuyGoldDetail([
-            // 流水单号类型 1金币流水 2积分流水 3能量流水
-            'type'=> 2,
-            'flow_id' => $oIntegralModel->id,
-        ]);
-        return $oModel;
     }
 
     /**

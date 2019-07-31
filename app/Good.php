@@ -27,6 +27,31 @@ class Good extends Model
         return (\Auth::user()->ship_address) ? true :false;
     }
 
+    /**
+     * @see 转换金币
+     */
+    public function amountToGold(int $iNum,float $fAvgPrice):float
+    {
+        return bcmul($this->unitAmountToGold($fAvgPrice),$iNum,2);
+    }
+
+    /**
+     * @param $fAvgPrice
+     * @return float
+     * @see 单价转金币
+     */
+    public function unitAmountToGold($fAvgPrice):float
+    {
+        return bcdiv($this->amount,$fAvgPrice,2);
+    }
+
+    /**
+     * @return float
+     */
+    public function getSumPrice(int $iNum):float
+    {
+        return bcmul($this->amount,$iNum,2);
+    }
 
 
 }
