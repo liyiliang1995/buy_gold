@@ -121,7 +121,6 @@ class GoodsLogic extends BaseLogic
         $this->order_model = new \App\Order;
         $this->order_model->order_no = $this->order_model->getOrderNo();
         $this->order_model->user_id = userId();
-        $this->order_model->pay_status = 1;
         $this->order_model->pay_gold = $this->gold;
         $this->order_model->amount = $this->goods_detail->getSumPrice($aParams['num']);
         $this->order_model->other = $aParams['other'] ?? '';

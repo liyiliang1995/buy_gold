@@ -131,9 +131,9 @@
                 }
 
                 if(aArr.length > 1) {
-                    a = aArr[0] + "." + aArr[1].substr(0, num);
+                    val = aArr[0] + "." + aArr[1].substr(0, num);
                 }
-                return a
+                return val;
             },
             show_price:function () {
                 var price = this.intToFloat(parseFloat(this.goods_unit_price) * parseFloat(this.goods_num));
