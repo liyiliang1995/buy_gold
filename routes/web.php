@@ -25,6 +25,8 @@ Route::group([],function($router){
         $router->post('order/save/{goodsId}', 'GoodsController@postOrderSave')->name('order_save');
         $router->get('address/edit','GoodsController@getEditAddress')->name('getEditAddress');
         $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
+        $router->get('order/list','GoodsController@orderList')->name('order_list');
+        $router->get('ajax/getorderlist/{is_send}','GoodsController@ajaxGetOrderList')->name('ajaxGetOrderList');
         $router->get('trade_center', 'TradeController@index')->name('trade_center');
         $router->post('buy_gold', 'TradeController@buyGold')->name('buy_gold');
         $router->get('sell_gold/{id}', 'TradeController@sellGold')->name('sell_gold');

@@ -12,8 +12,24 @@ class OrderItem extends Model
      */
     protected $table = 'order_item';
     /**
+     * @var int
+     */
+    public $query_page = 1;
+    /**
+     * @var array
+     */
+    protected $and_fields = ['is_send'];
+    /**
      * @var array
      */
     protected $fillable = ['goods_id','num','unit_price','sum_price','unit_gold','sum_gold','avg_gold_price'];
+
+    /**
+     * @return array
+     */
+    public function getAndFieds():array
+    {
+        return $this->and_fields??[];
+    }
 
 }

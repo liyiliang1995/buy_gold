@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Czf;
 use App\Good;
 use App\Member;
+use App\OrderItem;
 use App\HourAvgPrice;
 use App\Logics\GoodsLogic;
 use Illuminate\Http\Request;
@@ -84,6 +85,29 @@ class GoodsController extends Controller
             abort(500);
         }
 
+    }
+
+    /**
+     * @see 订单列表
+     */
+    public function orderList()
+    {
+        return view('czf.orderlist');
+    }
+
+    /**
+     * @param OrderItem $orderItem
+     * @see ajax 获取订单
+     */
+    public function ajaxGetOrderList(int $is_send,OrderItem $orderItem)
+    {
+        $aParams['is_send'] = $is_send;
+        $aParams['_sort'] = "id,desc";
+        $aOrderItemData = $this->Logic($orderItem)->query($aParams)->toArray();
+        if ($aOrderItemData)
+            return $this->success("请求成功",$aOrderItemData);
+        else
+            return $this->server_error();
     }
     /**
      * @param MemberLogic $memberLogic
