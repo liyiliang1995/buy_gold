@@ -104,7 +104,10 @@
     <div class="weui-footer_fixed-bottom">
         <div class="weui-tabbar">
             <a href="javascript:;" class="weui-tabbar__item">
-                <p class="weui-tabbar__label" id="show_price">合计:<span>{{$oGoods->amount}}元</span>（{{bcdiv($oGoods->amount,$hour_avg_price,2)}}金币）</p>
+                @php
+                    $pay_gold = pay_gold($hour_avg_price,$oGoods->amount);
+                @endphp
+                <p class="weui-tabbar__label" id="show_price">合计:<span>{{$oGoods->amount}}元</span>（{{sum_gold($pay_gold,burn_gold($pay_gold))}}金币）</p>
             </a>
             <a href="javascript:void(0)" id="sbm" class="weui-tabbar__item weui-bar__item--on">
                 <p class="weui-tabbar__label">提交订单</p>
@@ -138,7 +141,9 @@
             show_price:function () {
                 var price = this.intToFloat(parseFloat(this.goods_unit_price) * parseFloat(this.goods_num));
                 var gold = this.intToFloat(parseFloat(price)/parseFloat(this.gold_price));
-                $("#show_price").empty().html("合计:<span>"+price+"元</span>("+gold+")金币");
+                var burn_gold = this.intToFloat(parseFloat(gold)*0.05);
+                var sum_gold = this.intToFloat(parseFloat(gold)+parseFloat(burn_gold));
+                $("#show_price").empty().html("合计:<span>"+price+"元</span>("+sum_gold+")金币");
             },
             ajax_submit:function () {
                 $.ajax({

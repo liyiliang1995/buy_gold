@@ -98,7 +98,7 @@ class GoodsLogic extends BaseLogic
     public function orderSaveValidate(array $aParams)
     {
         if (redis_idempotent() === false)
-            throw new CzfException('请勿恶意提交订单！');
+            throw new CzfException('请勿恶意提交订单，过2秒钟在尝试！');
         if (floor($aParams['num']) - $aParams['num'] != 0 || $aParams['num'] <= 0)
             throw new CzfException('购买数量必须是一个大于0的整数');
         if (isset($aParams['other']) && mb_strlen($aParams['other']) > 200)
@@ -121,7 +121,7 @@ class GoodsLogic extends BaseLogic
         $this->order_model = new \App\Order;
         $this->order_model->order_no = $this->order_model->getOrderNo();
         $this->order_model->user_id = userId();
-        $this->order_model->pay_gold = $this->gold;
+        $this->order_model->pay_gold = $this->getSumGold();
         $this->order_model->amount = $this->goods_detail->getSumPrice($aParams['num']);
         $this->order_model->other = $aParams['other'] ?? '';
         $this->order_model->save();
@@ -152,9 +152,9 @@ class GoodsLogic extends BaseLogic
             // 购物扣除
             $this->getBuyGoldGoldFlowDetail(0,1,userId(),$this->gold,"购物消耗金币")('App\OrderDetail'),
             // 返回金币池
-            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->order_model->burn_gold,"购物燃烧金币返回金币池")('App\OrderDetail'),
+            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->getBurnGold(),"购物燃烧金币返回金币池")('App\OrderDetail'),
             // 赠送10倍积分
-            $this->getBuyGoldIntegralFlowDetail(1,userId(),$this->order_model->give_integral,"购物赠送积分")('App\OrderDetail'),
+            $this->getBuyGoldIntegralFlowDetail(1,userId(),$this->getGiveIntegral(),"购物赠送积分")('App\OrderDetail'),
         ]);
     }
     /**
@@ -164,10 +164,37 @@ class GoodsLogic extends BaseLogic
      */
     public function orderIncreaseAndDecrease()
     {
-        \Auth::user()->gold = bcsub(\Auth::user()->gold,$this->gold,2);
-        \Auth::user()->integral = bcadd(\Auth::user()->integral,$this->order_model->give_integral,0);
+        \Auth::user()->gold = bcsub(\Auth::user()->gold,$this->getSumGold(),2);
+        \Auth::user()->integral = bcadd(\Auth::user()->integral,$this->getGiveIntegral(),0);
         \Auth::user()->save();
         //燃烧金币未完成
+    }
+
+    /**
+     * @return float
+     * @see 燃烧金币
+     */
+    public function getBurnGold():float
+    {
+        return burn_gold($this->gold);
+    }
+
+    /**
+     * @return float
+     * @购物实际支付金币
+     */
+    public function getSumGold():float
+    {
+        return sum_gold($this->gold,$this->getBurnGold());
+    }
+
+    /**
+     * @return string
+     * @see 赠送积分
+     */
+    public function getGiveIntegral():int
+    {
+        return bcmul($this->gold,10,0);
     }
 
 

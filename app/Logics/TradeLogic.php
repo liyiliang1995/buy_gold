@@ -116,8 +116,8 @@ class TradeLogic extends BaseLogic
      */
     public function sellGoldvalidate()
     {
-        if (redis_idempotent() === false)
-            throw new CzfException('请勿恶意提交订单！');
+        if (redis_idempotent('',['sellGoldvalidate']) === false)
+            throw ValidationException::withMessages(['gold'=>['请勿恶意提交订单,过2秒钟在尝试！']]);
         if (\Auth::user()->checkMemberOneHalfGold($this->oBuyGoldDetail->gold) === false)
             throw ValidationException::withMessages(['gold'=>["出售金币数量不能超过持有数量的50%！"]]);
         if (\Auth::user()->checkMemberIntegral($this->oBuyGoldDetail->gold) === false)
