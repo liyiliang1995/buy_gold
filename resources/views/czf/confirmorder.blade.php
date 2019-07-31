@@ -20,13 +20,19 @@
                 console.log($input.val());
                 var number = parseInt($input.val() || "0") - 1
                 if (number < MIN) number = MIN;
-                $input.val(number)
+                $input.val(number);
+                order.goods_unit_price=$("#goods_unit_price").html().trim();
+                order.goods_num=number;
+                order.show_price();
             });
             $(".weui-count__increase").click(function (e) {
                 var $input = $(e.currentTarget).parent().find(".weui-count__number");
                 var number = parseInt($input.val() || "0") + 1
                 if (number > MAX) number = MAX;
-                $input.val(number)
+                $input.val(number);
+                order.goods_unit_price=$("#goods_unit_price").html().trim();
+                order.goods_num=number;
+                order.show_price();
             });
         }'
     ],
@@ -65,12 +71,12 @@
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <em style="">¥</em>
-                            <span style="">{{$oGoods->amount}}</span>
+                            <span style="" id="goods_unit_price">{{$oGoods->amount}}</span>
                         </div>
                         <div class="weui-cell__ft">
                             <div class="weui-count">
                                 <a class="weui-count__btn weui-count__decrease"></a>
-                                <input class="weui-count__number" type="number" value="1" />
+                                <input class="weui-count__number" type="number" id="goods_num" value="1" />
                                 <a class="weui-count__btn weui-count__increase"></a>
                             </div>
                         </div>
@@ -89,7 +95,7 @@
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__bd">
-                <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+                <textarea class="weui-textarea" placeholder="请输入文本" id="other" rows="3"></textarea>
                 <div class="weui-textarea-counter"><span>0</span>/200</div>
             </div>
         </div>
@@ -98,12 +104,68 @@
     <div class="weui-footer_fixed-bottom">
         <div class="weui-tabbar">
             <a href="javascript:;" class="weui-tabbar__item">
-                <p class="weui-tabbar__label">合计:<span>580元</span>（290金币）</p>
+                <p class="weui-tabbar__label" id="show_price">合计:<span>{{$oGoods->amount}}元</span>（{{bcdiv($oGoods->amount,$hour_avg_price,2)}}金币）</p>
             </a>
-            <a href="http://www.baidu.com" class="weui-tabbar__item weui-bar__item--on">
+            <a href="javascript:void(0)" id="sbm" class="weui-tabbar__item weui-bar__item--on">
                 <p class="weui-tabbar__label">提交订单</p>
             </a>
         </div>
     </div>
     </body>
+    <script>
+        var order = {
+            gold_price:"{{$hour_avg_price}}",
+            goods_unit_price:$("#goods_unit_price").html().trim(),
+            goods_num:$("#goods_num").val().trim(),
+            other:$("#other").val().trim(),
+            // 保留两位数
+            intToFloat:function(val) {
+                var num = 2;
+               // return new Number(val).toFixed(2);
+                var a_type = typeof(val);
+                if(a_type == "number"){
+                    var aStr = val.toString();
+                    var aArr = aStr.split('.');
+                }else if(a_type == "string"){
+                    var aArr = val.split('.');
+                }
+
+                if(aArr.length > 1) {
+                    a = aArr[0] + "." + aArr[1].substr(0, num);
+                }
+                return a
+            },
+            show_price:function () {
+                var price = this.intToFloat(parseFloat(this.goods_unit_price) * parseFloat(this.goods_num));
+                var gold = this.intToFloat(parseFloat(price)/parseFloat(this.gold_price));
+                $("#show_price").empty().html("合计:<span>"+price+"元</span>("+gold+")金币");
+            },
+            ajax_submit:function () {
+                $.ajax({
+                    url: "{{route('order_save',['goodsId'=>$oGoods->id])}}",
+                    type:'post',
+                    dataType: "json",
+                    data:{ num:this.goods_num,glod_price:this.gold_price,other:this.other,_method:'post' ,_token:"{{csrf_token()}}"},
+                    error:function(data){
+                        $.toast("服务器繁忙, 请联系管理员！",'text');
+                        return;
+                    },
+                    success:function(result){
+                        if(result.code == 200){
+                            console.log(result);
+                        } else {
+                            $.toast(result.message,'text')
+                        }
+                    },
+                })
+            }
+        }
+        $(function () {
+            $("#sbm").on('click',function () {
+                order.goods_num = $("#goods_num").val().trim();
+                order.other = $("#other").val().trim();
+                order.ajax_submit()
+            })
+        })
+    </script>
 @endsection

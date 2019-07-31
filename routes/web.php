@@ -22,6 +22,7 @@ Route::group([],function($router){
         $router->post('set_user','MemberController@setUser')->name('setUser');
         $router->get('goods/detail/{id}','GoodsController@goodsDetail')->name('goodsDetail');
         $router->get('confirm/order/{goodsId}','GoodsController@confirmOrder')->name('confirmOrder');
+        $router->post('order/save/{goodsId}', 'GoodsController@postOrderSave')->name('order_save');
         $router->get('address/edit','GoodsController@getEditAddress')->name('getEditAddress');
         $router->post('address/edit','GoodsController@postEditAddress')->name('postEditAddress');
         $router->get('trade_center', 'TradeController@index')->name('trade_center');

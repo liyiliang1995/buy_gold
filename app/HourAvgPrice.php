@@ -11,4 +11,17 @@ class HourAvgPrice extends Model
      * @var string
      */
     protected $table = 'hour_avg_price';
+    /**
+     * @var float
+     * @默认价格
+     */
+    protected $default_avg_price = 0.50;
+
+    /**
+     * 获取最新均价
+     */
+    public function getBestNewAvgPrice():string
+    {
+        return $this->orderBy('id','desc')->value("avg_price") ?? $this->default_avg_price ;
+    }
 }

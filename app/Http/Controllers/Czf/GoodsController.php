@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Czf;
 use App\Good;
 use App\Member;
+use App\HourAvgPrice;
 use App\Logics\GoodsLogic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,15 +30,28 @@ class GoodsController extends Controller
     /**
      * @see 确认订单
      */
-    public function confirmOrder(int $goodsId,Good $good)
+    public function confirmOrder(int $goodsId,Good $good,HourAvgPrice $hourAvgPrice)
     {
         $bRes = $this->Logic($good)->userHasExistsAddress();
         if (!$bRes) {
             return redirect(route('getEditAddress',['url'=>url()->full()]));
         }
         $oGoods = $good->findOrFail($goodsId);
+        $hour_avg_price = $hourAvgPrice->getBestNewAvgPrice();
         $oUser = \Auth::user();
-        return view('czf.confirmorder',compact('oGoods','oUser'));
+        return view('czf.confirmorder',compact('oGoods','oUser','hour_avg_price'));
+    }
+
+    /**
+     * @提交订单逻辑处理
+     */
+    public function postOrderSave(int $goodsId,Good $good)
+    {
+        $aParams['num'] = request()->input('num');
+        $aParams['other'] = request()->input('other');
+        $aParams['goods_id'] = $goodsId;
+        $aParams['gold_price'] = request()->input('glod_price');
+        $this->Logic($good)->orderSave($aParams);
     }
 
     /**
