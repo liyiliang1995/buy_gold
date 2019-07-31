@@ -16,7 +16,7 @@
     <body ontouchstart>
     <!--头部-->
     <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="./img/fh.png" alt=""></a>
+        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
         <div class="weui-flex__item">订单列表</div>
     </div>
 
@@ -30,114 +30,30 @@
             </a>
         </div>
         <div class="weui-tab__bd">
-            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active infinite">
 
                 <div class="weui-panel weui-panel_access">
-                    <div class="weui-panel__bd" id="tab1_item">
+                    <div class="weui-panel__bd content-padded" id="tab1_item">
                         <!--1-->
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">
-                            <div class="weui-flex__item">订单号：897941361324156456</div>
-                        </div>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                           style="background: #f9f9f9;">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/swiper-1.jpg">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">笔记本电脑轻薄便携学生15.6英寸上网本手提办公商务吃鸡游戏本</h4>
-                                <p class="weui-media-box__desc" style="margin-top: 20px">￥115 <span
-                                            STYLE="float: right">X1</span></p>
-                            </div>
-                        </a>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: #FF2634">待发货</div>
-                            <div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">￥115</b></div>
-                        </div>
-                        <!--2-->
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">
-                            <div class="weui-flex__item">订单号：897941361324156456</div>
-                        </div>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                           style="background: #f9f9f9;">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/swiper-1.jpg">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">笔记本电脑轻薄便携学生15.6英寸上网本手提办公商务吃鸡游戏本</h4>
-                                <p class="weui-media-box__desc" style="margin-top: 20px">￥115 <span
-                                            STYLE="float: right">X1</span></p>
-                            </div>
-                        </a>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: #FF2634">待发货</div>
-                            <div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">155</b></div>
-                        </div>
-                        <!--3-->
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">
-                            <div class="weui-flex__item">订单号：897941361324156456</div>
-                        </div>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                           style="background: #f9f9f9;">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/swiper-1.jpg">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">笔记本电脑轻薄便携学生15.6英寸上网本手提办公商务吃鸡游戏本</h4>
-                                <p class="weui-media-box__desc" style="margin-top: 20px">￥115 <span
-                                            STYLE="float: right">X1</span></p>
-                            </div>
-                        </a>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: #FF2634">待发货</div>
-                            <div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">155</b></div>
-                        </div>
+
 
                     </div>
                 </div>
+                <div class="weui-loadmore">
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">正在加载</span>
+                </div>
             </div>
-            <div id="tab2" class="weui-tab__bd-item">
+            <div id="tab2" class="weui-tab__bd-item infinite">
 
                 <div class="weui-panel weui-panel_access">
-                    <div class="weui-panel__bd" id="tab2_item">
-                        <!--1-->
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">
-                            <div class="weui-flex__item">订单号：897941361324156456</div>
-                        </div>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                           style="background: #f9f9f9;">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/swiper-1.jpg">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">笔记本电脑轻薄便携学生15.6英寸上网本手提办公商务吃鸡游戏本</h4>
-                                <p class="weui-media-box__desc" style="margin-top: 20px">￥115 <span
-                                            STYLE="float: right">X1</span></p>
-                            </div>
-                        </a>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: #FF2634">已发货</div>
-                            <div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">155</b></div>
-                        </div>
-                        <!--2-->
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">
-                            <div class="weui-flex__item">订单号：897941361324156456</div>
-                        </div>
-                        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg"
-                           style="background: #f9f9f9;">
-                            <div class="weui-media-box__hd">
-                                <img class="weui-media-box__thumb" src="images/swiper-1.jpg">
-                            </div>
-                            <div class="weui-media-box__bd">
-                                <h4 class="weui-media-box__title">笔记本电脑轻薄便携学生15.6英寸上网本手提办公商务吃鸡游戏本</h4>
-                                <p class="weui-media-box__desc" style="margin-top: 20px">￥115 <span
-                                            STYLE="float: right">X1</span></p>
-                            </div>
-                        </a>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: #FF2634">已发货</div>
-                            <div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">155</b></div>
-                        </div>
+                    <div class="weui-panel__bd content-padded" id="tab2_item">
+
                     </div>
+                </div>
+                <div class="weui-loadmore">
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">正在加载</span>
                 </div>
 
             </div>
@@ -158,7 +74,23 @@
                         return;
                     },
                     success: function (result) {
-                       // var html = "";
+                        var html = '';
+                        $.each(result.data.data,function (index,val) {
+                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
+                            html += '<div class="weui-flex__item">订单号：'+val.order_no+'</div>';
+                            html += '</div>';
+                            html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';
+                            html += '<div class="weui-media-box__hd"><img class="weui-media-box__thumb" src="'+val.goods_img+'"></div>';
+                            html += '<div class="weui-media-box__bd"><h4 class="weui-media-box__title">'+val.goods.name+'</h4>';
+                            html += '<p class="weui-media-box__desc" style="margin-top: 20px">￥'+val.goods.amount+'<span style="float: right">';
+                            html += 'X'+val.num+'</span></p>';
+                            html += '</div></a>';
+                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                            html += '<div class="weui-flex__item" style="color: #FF2634">'+val.is_send_str+'</div>';
+                            html += '<div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">'+val.sum_price+'</b></div></div>'
+                        });
+                        order_list.url = result.data.next_page_url;
+                        order_list.obj.append(html);
                     }
                 })
             }
@@ -180,6 +112,14 @@
                 order_list.obj = $("#tab2_item");
                 order_list.ajaxGetOrderList();
                 $("#tab2_item").empty();
+            })
+            $(".infinite").infinite().on("infinite", function() {
+                var self = this;
+                if(self.loading) return;
+                self.loading = true;
+                setTimeout(function() {
+                    order_list.ajaxGetOrderList();
+                }, 500);   //模拟延迟
             })
         })
     </script>

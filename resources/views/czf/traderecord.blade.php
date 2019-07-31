@@ -5,7 +5,6 @@
             'css/demos.css'
         ],
     'js' => [
-            'js/jquery-2.1.4.js',
             'js/fastclick.js',
             'js/jquery-weui.js',
 
