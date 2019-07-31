@@ -134,10 +134,11 @@ class GoodsLogic extends BaseLogic
     {
         $this->order_model->order_items()->save(new \App\OrderItem([
             'goods_id' => $this->goods_detail->id,
+            'member_id' => userId(),
             'num' => $aParams['num'],
             'unit_price' => $this->goods_detail->amount,
             'sum_price' => $this->order_model->amount,
-            'unit_gold' => $this->goods_detail->unitAmountToGold($aParams['gold_price']),
+            'unit_gold' => $this->goods_detail->unitAmountToGold($aParams['gold_price'],$aParams['num']),
             'sum_gold' => $this->gold,
             'avg_gold_price' => $aParams['gold_price'],
         ]));

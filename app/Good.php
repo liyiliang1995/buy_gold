@@ -32,7 +32,7 @@ class Good extends Model
      */
     public function amountToGold(int $iNum,float $fAvgPrice):float
     {
-        return bcmul($this->unitAmountToGold($fAvgPrice),$iNum,2);
+        return bcdiv($this->getSumPrice($iNum),$fAvgPrice,2);
     }
 
     /**
@@ -40,9 +40,9 @@ class Good extends Model
      * @return float
      * @see 单价转金币
      */
-    public function unitAmountToGold($fAvgPrice):float
+    public function unitAmountToGold(float $fAvgPrice,int $iNum):float
     {
-        return bcdiv($this->amount,$fAvgPrice,2);
+        return bcdiv($this->amountToGold($iNum,$fAvgPrice),$iNum,2);
     }
 
     /**
