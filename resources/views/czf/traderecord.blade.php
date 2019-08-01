@@ -50,7 +50,7 @@
 
         <div class="weui-tab__bd">
             <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active infinite">
-                <div class="content-padded">
+                <div class="content-padded" id="tab1_item">
                     <!--1-->
                         <div class="cont_list" style="background: #fff">
                             <div class="weui-flex"
@@ -75,99 +75,7 @@
                             </div>
                         </div>
                     {{--end--}}
-                    <!--1-->
-                    <div class="cont_list" style="background: #fff">
-                        <div class="weui-flex"
-                             style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                            <div class="weui-flex__item">2019-07-19 10:44</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">求购中</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">金币数量</div>
-                            <div class="weui-flex__item" style="text-align: right">200</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">总金额</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">+160</div>
-                        </div>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a>
-                            </div>
-                            <div class="weui-flex__item" style="text-align: right"><a id="trading_a" href="javascript:;"
-                                                                                      class="weui-btn weui-btn_primary">申请撤单</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--1-->
-                    <div class="cont_list" style="background: #fff">
-                        <div class="weui-flex"
-                             style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                            <div class="weui-flex__item">2019-07-19 10:44</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">求购中</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">金币数量</div>
-                            <div class="weui-flex__item" style="text-align: right">200</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">总金额</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">+160</div>
-                        </div>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a>
-                            </div>
-                            <div class="weui-flex__item" style="text-align: right"><a id="trading_a" href="javascript:;"
-                                                                                      class="weui-btn weui-btn_primary">申请撤单</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--1-->
-                    <div class="cont_list" style="background: #fff">
-                        <div class="weui-flex"
-                             style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                            <div class="weui-flex__item">2019-07-19 10:44</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">求购中</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">金币数量</div>
-                            <div class="weui-flex__item" style="text-align: right">200</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">总金额</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">+160</div>
-                        </div>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a>
-                            </div>
-                            <div class="weui-flex__item" style="text-align: right"><a id="trading_a" href="javascript:;"
-                                                                                      class="weui-btn weui-btn_primary">申请撤单</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--1-->
-                    <div class="cont_list" style="background: #fff">
-                        <div class="weui-flex"
-                             style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                            <div class="weui-flex__item">2019-07-19 10:44</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">求购中</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">金币数量</div>
-                            <div class="weui-flex__item" style="text-align: right">200</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">总金额</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">+160</div>
-                        </div>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a>
-                            </div>
-                            <div class="weui-flex__item" style="text-align: right"><a id="trading_a" href="javascript:;"
-                                                                                      class="weui-btn weui-btn_primary">申请撤单</a>
-                            </div>
-                        </div>
-                    </div>
-                    {{--end--}}
+
                 </div>
                 <div class="weui-loadmore">
                     <i class="weui-loading"></i>
@@ -335,5 +243,80 @@
 
     </div>
     </div>
+
+    <script>
+        var order_list = {
+            obj:"",
+            url:"",
+            // 获取订单
+            ajaxGetOrderList:function () {
+                if (!order_list.url) {
+                    $.toast("没有更多数据加载！",'text');
+                    $('.weui-loadmore').hide();
+                    return;
+                }
+                $.ajax({
+                    url: trade_record.url,
+                    type: 'get',
+                    dataType: "json",
+                    error: function (data) {
+                        $.toast("服务器繁忙, 请联系管理员！",'text');
+                        return;
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        var html = '';
+                        $.each(result.data.data,function (index,val) {
+                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
+                            html += '<div class="weui-flex__item">订单号：'+val.order_no+'</div>';
+                            html += '</div>';
+                            html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';
+                            html += '<div class="weui-media-box__hd"><img class="weui-media-box__thumb" src="'+val.goods_img+'"></div>';
+                            html += '<div class="weui-media-box__bd"><h4 class="weui-media-box__title">'+val.goods.name+'</h4>';
+                            html += '<p class="weui-media-box__desc" style="margin-top: 20px">￥'+val.goods.amount+'<span style="float: right">';
+                            html += 'X'+val.num+'</span></p>';
+                            html += '</div></a>';
+                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                            html += '<div class="weui-flex__item" style="color: #FF2634">'+val.is_send_str+'</div>';
+                            html += '<div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">'+val.sum_price+'</b></div></div>'
+                        });
+                        order_list.url = result.data.next_page_url;
+                        order_list.obj.append(html);
+                    }
+                })
+            }
+        };
+        $(function () {
+            var url1 = "{{route('ajaxGetGoldFlow',['is_send'=>3])}}";
+            var url2 = "{{route('ajaxGetGoldFlow',['is_send'=>2])}}";
+            order_list.url = url1;
+            order_list.obj = $("#tab1_item");
+            order_list.ajaxGetOrderList();
+            $(".no_is_send").on('click',function () {
+                order_list.url = url1;
+                order_list.obj = $("#tab1_item");
+                order_list.ajaxGetOrderList();
+                $("#tab1_item").empty();
+            })
+            $(".is_send").on('click',function () {
+                order_list.url = url2;
+                order_list.obj = $("#tab2_item");
+                order_list.ajaxGetOrderList();
+                $("#tab2_item").empty();
+            })
+            $(".infinite").infinite().on("infinite", function() {
+                var self = this;
+                if(self.loading) return;
+                self.loading = true;
+                setTimeout(function() {
+                    order_list.ajaxGetOrderList();
+                }, 500);   //模拟延迟
+            })
+        })
+    </script>
+
+
+
+
     </body>
 @endsection
