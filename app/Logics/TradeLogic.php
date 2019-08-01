@@ -87,6 +87,8 @@ class TradeLogic extends BaseLogic
             $this->sellGoldIncreaseAndDecrease();
             // 把出售下架
             $this->oBuyGoldDetail->is_show = 0;
+            // 订单卖家
+            $this->oBuyGoldDetail->seller_id = userId();
             $bRes = $this->oBuyGoldDetail->save();
             return $bRes;
         });
