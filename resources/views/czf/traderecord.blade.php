@@ -51,9 +51,6 @@
         <div class="weui-tab__bd">
             <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active infinite">
                 <div class="content-padded" id="tab1_item">
-                    <!--1-->
-
-                    {{--end--}}
 
                 </div>
                 <div class="weui-loadmore">
@@ -64,31 +61,7 @@
             <div id="tab2" class="weui-tab__bd-item infinite">
                 <div class="content-padded" id="tab2_item">
 
-                    <!--1-->
-                    <div class="cont_list" style="background: #fff">
-                        <div class="weui-flex"
-                             style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                            <div class="weui-flex__item">2019-07-19 10:44</div>
-                            <div class="weui-flex__item" style="text-align: right;color: red">未收款</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">金币数量</div>
-                            <div class="weui-flex__item" style="text-align: right">200</div>
-                        </div>
-                        <div class="weui-flex" style=" padding: 5px 15px; ">
-                            <div class="weui-flex__item">总金额</div>
-                            <div class="weui-flex__item" style="text-align: right;color: #4CAF50">+160</div>
-                        </div>
-                        <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                            <div class="weui-flex__item" style="color: red"><a href=""
-                                                                               style="color: #333">查看详情>></a></div>
-                            <div class="weui-flex__item" style="text-align: right"><a id="trading_b"
-                                                                                      href="javascript:;"
-                                                                                      class="weui-btn weui-btn_primary">确认收款</a>
-                            </div>
-                        </div>
-                    </div>
-                    {{--end--}}
+
 
                 </div>
                 <div class="weui-loadmore">
@@ -121,6 +94,9 @@
                     },
                     success: function (result) {
                         console.log(result);
+                        if (result.data.data != null){
+                            $('.weui-loadmore').hide();
+                        }
                         // 3:求购 2:出售
                         var html = '';
                         if(result.data.type == 3){

@@ -37,6 +37,7 @@ Route::group([],function($router){
         $router->get('ajax/getenergyflow/{type}','TradeController@ajaxGetEnergyFlow')->name('ajaxGetEnergyFlow');
         $router->get('ajax/getbuygoldType/{type}','TradeController@ajaxGetBuyGoldType')->name('ajaxGetBuyGoldType');
         $router->get('/', 'HomeController@index')->name('home');
+        $router->get('energy/record','TradeController@energyRecord')->name('energy_record');
     });
 });
 Auth::routes();
