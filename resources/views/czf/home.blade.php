@@ -84,7 +84,7 @@
                 </div>
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="javascript:;" class="weui-tabbar__item">
+            <a href="{{}}" class="weui-tabbar__item">
                 <div class="weui-tabbar__icon">
                     <i class="iconfont icon-user-fill"></i>
                 </div>

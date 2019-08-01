@@ -327,7 +327,6 @@
                         </div>
                     </div>
                     {{--end--}}
-
                 </div>
                 <div class="weui-loadmore">
                     <i class="weui-loading"></i>
