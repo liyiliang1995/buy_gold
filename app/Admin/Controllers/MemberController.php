@@ -3,9 +3,11 @@
 namespace App\Admin\Controllers;
 
 use App\Member;
+use App\Logics\MemberLogic;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
 class MemberController extends AdminController
@@ -46,7 +48,8 @@ class MemberController extends AdminController
 
         $grid->actions(function ($actions){
             $actions->disableView();
-            $actions->append('<a href="">用户充值</a>');
+            $url = route("admin.recharge",['id'=>$actions->getKey()]);
+            $actions->append('<a href="'.$url.'">用户充值</a>');
         });
 
         return $grid;
@@ -107,13 +110,48 @@ class MemberController extends AdminController
         return $form;
     }
 
-    public function form2()
+    public function form2(int $id)
     {
-        $form = new Form(new Member);
-        $form->text('name', __('名称'));
-        $form->decimal('gold', __('金币'))->default(0.00);
+        $member = Member::find($id);
+        $form = new Form($member);
+        $form->text('name', __('名称'))->default($member->name)->disable();
+        $form->mobile('phone', __('手机号码'))->default($member->phone)->disable();
+        $form->decimal('gold', __('已有金额'))->default($member->gold)->disable();
+        $form->decimal('gold', __('充值金额'))->default(0.00);
+        return $form;
+    }
+
+    public function recharge(int $id,Content $content){
+        $form = $this->form2($id);
+        $form->setAction(route('admin.post_recharge',['id'=>$id]));
+        return $content
+            ->title("会员充值")
+            ->description("金币充值")
+            ->body($form);
+        return $form;
+    }
+
+    /**
+     * @param int $id
+     * @param Member $member
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function postRecharge(int $id,Member $member)
+    {
+        $aData['gold'] = request()->input('gold');
+        $aData['member_id'] = $id;
+        $this->Logic($member)->recharge($aData);
+        return redirect(route('members.index'));
 
     }
 
+    /**
+     * @param $oModel
+     * @return MemberLogic
+     */
+    public function Logic($oModel)
+    {
+        return new MemberLogic($oModel);
+    }
 
 }

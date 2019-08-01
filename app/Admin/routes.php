@@ -16,5 +16,7 @@ Route::group([
     $router->resource('goods', GoodController::class);
     $router->get('getKvbyTypeId/{id}',"ConfigController@getKvbyTypeId")->name('admin.getKvbyTypeId');
     $router->post('postKvbyTypeId/{id}',"ConfigController@postKvbyTypeId")->name("admin.postKvbyTypeId");
+    $router->get('recharge/{id}',"MemberController@recharge")->name('admin.recharge');
+    $router->post('post_recharge/{id}',"MemberController@postRecharge")->name('admin.post_recharge');
 
 });
