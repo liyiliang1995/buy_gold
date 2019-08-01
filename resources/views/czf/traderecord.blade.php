@@ -93,7 +93,6 @@
                         return;
                     },
                     success: function (result) {
-                        console.log(result);
                         if (result.data.data != null){
                             $('.weui-loadmore').hide();
                         }
