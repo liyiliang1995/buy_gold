@@ -23,7 +23,8 @@ class TradeController extends Controller
     public function index(BuyGold $buyGold)
     {
         $aBuyGold = $this->Logic($buyGold)->query(['_sort'=>'price,desc']);
-        return view('czf.tradecenter',compact('aBuyGold'));
+        $fGuidancePrice = $this->Logic(null)->getGuidancePrice();
+        return view('czf.tradecenter',compact('aBuyGold','fGuidancePrice'));
     }
 
     /**
@@ -82,6 +83,7 @@ class TradeController extends Controller
         // 取消是上架 订单未确认才显示
         $buyGold->setParentFlag([]);
         $aData = $this->Logic($buyGold)->query($aParams)->toArray();
+        $aData['type'] = $iType;
         if ($aData ){
             return $this->success("请求成功",$aData );
         }

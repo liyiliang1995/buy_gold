@@ -78,7 +78,7 @@
                 <input class="weui-input" id="pre" type="text" name="price"  value="{{old('price')}}" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''" placeholder="请输入价格">
             </div>
             <div class="weui-cell__bd" style="font-size: 12px">
-                <span>指导价：0.81-0.85</span>
+                <span>指导价：{{$fGuidancePrice['min']}}-{{$fGuidancePrice['max']}}</span>
             </div>
             <div class="weui-cell__bd" style="text-align: right;">
                 <span id="intext">金额 <b style="color: red;">￥99</b></span>

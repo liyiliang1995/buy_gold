@@ -29,7 +29,7 @@ class BuyGold extends Model
     /**
      * @var array
      */
-    protected $appends = ["buy_gold_status"];
+    protected $appends = ["buy_gold_status",'give_status'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -161,6 +161,19 @@ class BuyGold extends Model
             $sRes = "交易中";
         else if  ($this->status == 1)
             $sRes = "交易完成";
+        return $sRes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGiveStatusAttribute():string
+    {
+        $sRes = '';
+        if ($this->status == 0)
+            $sRes = "未收款";
+        else if ($this->status == 1)
+            $sRes = '已收款';
         return $sRes;
     }
 }
