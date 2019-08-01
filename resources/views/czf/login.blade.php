@@ -22,6 +22,12 @@
             display: block;
             margin: 0 auto;
         }
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
     </style>
     <body class="login-page">
 
