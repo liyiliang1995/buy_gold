@@ -16,10 +16,26 @@ class IntegralFlow extends Model
      */
     protected $fillable = ['type','integral','user_id','other'];
     /**
+     * @var int
+     */
+    public $query_page = 10;
+    /**
+     * @var array
+     */
+    protected $and_fields = ['user_id','type'];
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function buy_gold_detail()
     {
         return $this->hasOne('App\BuyGoldDetail','flow_id');
     }
+    /**
+     * @return array
+     */
+    public function getAndFieds():array
+    {
+        return $this->and_fields??[];
+    }
+
 }
