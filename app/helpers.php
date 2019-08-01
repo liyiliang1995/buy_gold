@@ -124,7 +124,7 @@ if (!function_exists('userId')) {
 
     function userId()
     {
-        return Auth::guard()->id();
+        return Auth::user()->id;
     }
 }
 

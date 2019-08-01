@@ -54,7 +54,7 @@ class GoodsController extends Controller
         $aParams['goods_id'] = $goodsId;
         $aParams['gold_price'] = request()->input('glod_price');
         if ($this->Logic($good)->orderSave($aParams))
-            return $this->success("",["url"=>route("home")]);
+            return $this->success("",["url"=>route("order_list")]);
         else
             return $this->server_error();
     }

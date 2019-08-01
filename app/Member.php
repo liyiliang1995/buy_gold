@@ -65,8 +65,9 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     public function addChildMember(array $aData)
     {
         $aData['parent_user_id'] = userId();
-        $this->create($aData);
+        $member = $this->create($aData);
         $this->addChildUserNum();
+        return $member;
     }
 
     /**
@@ -90,7 +91,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function beforeInsert(array $aData)
     {
-        dd('222');
+
     }
 
     /**

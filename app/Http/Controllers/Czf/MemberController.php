@@ -93,6 +93,7 @@ class MemberController extends Controller
     {
         $aParam['user_id'] = userId();
         $aParam['phone'] = $request->post('phone');
+        $aParam['password'] = $request->post('password');
         if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
             return $this->success('注册成功');
         } else {

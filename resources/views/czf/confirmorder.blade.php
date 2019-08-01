@@ -49,10 +49,10 @@
                         </div>
                         <div class="weui-cell__bd weui-cell_primary">
                             <div class="weui-flex">
-                                <div class="weui-flex__item contact_name">收货人：{{$oUser->ship_address->name}}</div>
-                                <div class="weui-flex__item contact_tel">{{$oUser->ship_address->phone}}</div>
+                                <div class="weui-flex__item contact_name">收货人：{{$oUser->ship_address->name ?? ''}}</div>
+                                <div class="weui-flex__item contact_tel">{{$oUser->ship_address->phone ?? ''}}</div>
                             </div>
-                            <p class="contact_address">收货地址：{{$oUser->ship_address->ship_address}}</p>
+                            <p class="contact_address">收货地址：{{$oUser->ship_address->ship_address ?? ''}}</p>
                         </div>
                         <span class="weui-cell__ft"></span>
                     </a>
