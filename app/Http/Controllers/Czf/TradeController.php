@@ -68,14 +68,36 @@ class TradeController extends Controller
     }
 
     /**
+     * @param int $iType 1 求购 2售出
+     * @param BuyGold $buyGold
+     * @see金币求购订单
+     */
+    public function ajaxGetBuyGoldType(int $iType,BuyGold $buyGold)
+    {
+        $aParams['_sort'] = "id,desc";
+        if ($iType == 1)
+            $aParams['user_id'] = userId();
+        else if ($iType == 2)
+            $aParams['seller_id'] = userId();
+        // 取消是上架 订单未确认才显示
+        $buyGold->setParentFlag([]);
+        $aData = $this->Logic($buyGold)->query($aParams)->toArray();
+        if ($aData ){
+            return $this->success("请求成功",$aData );
+        }
+        else
+            return $this->server_error();
+
+    }
+    /**
      * @param int $Itype
-     * 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
+     * @param int $iType   金币流水 支出还是收入 0 支出 1收入
      */
     public function ajaxGetGoldFlow(int $iType,GoldFlow $goldFlow)
     {
         $aParams['_sort'] = "id,desc";
         $aParams['user_id'] = userId();
-        $aParams['type'] = $iType;
+        $aParams['is_income'] = $iType;
         $aData = $this->Logic($goldFlow)->query($aParams)->toArray();
         if ($aData ){
             return $this->success("请求成功",$aData );
@@ -87,6 +109,7 @@ class TradeController extends Controller
     /**
      * @param int 业务类型 1收入 2 支出'
      * @param IntegralFlow $integralFlow
+     * @see 获取积分流水
      */
     public function ajaxGetIntegralFlow(int $iType,IntegralFlow $integralFlow)
     {
@@ -104,6 +127,7 @@ class TradeController extends Controller
      * @param int $iType  业务类型 1 自动领取金币消耗 2求购金币获得
      * @param EnergyFlow $energyFlow
      * @return \Illuminate\Http\JsonResponse
+     * @see 获取能量值流水
      */
     public function ajaxGetEnergyFlow(int $iType,EnergyFlow $energyFlow)
     {
