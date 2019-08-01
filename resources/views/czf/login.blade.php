@@ -18,6 +18,10 @@
             padding-left: 10px;
             font-size: 14px;
         }
+        #login{
+            display: block;
+            margin: 0 auto;
+        }
     </style>
     <body class="login-page">
 
@@ -30,7 +34,7 @@
     </div>
     <div class="weui-flex">
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
-        <form action="{{ route("login")}}" method="post" id="login">
+        <form action="{{ route("login")}}" method="post" id="login" >
         <div class="weui-flex__item">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
