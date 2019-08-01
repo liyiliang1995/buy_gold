@@ -18,6 +18,14 @@ class BuyGold extends Model
      * @var int
      */
     public $query_page = 10;
+    /**
+     * @var array
+     */
+    protected $and_fields = ['user_id','seller_id'];
+    /**
+     * @var array
+     */
+    protected $parent_flag = ['status' => 0, 'is_show' => 1];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -118,9 +126,22 @@ class BuyGold extends Model
      */
     public function parentFlag():array
     {
-        return [
-            'status' => 0,
-            'is_show' => 1,
-        ];
+        return $this->parent_flag;
+    }
+
+    /**
+     * @param array $aParam
+     */
+    public function setParentFlag(array $aParam)
+    {
+        $this->parent_flag = $aParam;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAndFieds():array
+    {
+        return $this->and_fields??[];
     }
 }

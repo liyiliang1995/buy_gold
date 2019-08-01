@@ -26,7 +26,7 @@ class GoldFlow extends Model
     /**
      * @var array
      */
-    protected $and_fields = ['user_id','type'];
+    protected $and_fields = ['user_id','type','is_income'];
     /**
      * @var array
      */
