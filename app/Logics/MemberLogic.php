@@ -67,7 +67,7 @@ class MemberLogic extends BaseLogic
     {
 
         $this->getBuyGoldGoldFlowDetail(0,6,userId(),100,"代理注册扣除金币100");
-        $this->getBuyGoldGoldFlowDetail(0,7,$this->member->id,100,"代理注册增加金币100");
+        $this->getBuyGoldGoldFlowDetail(1,7,$this->member->id,100,"代理注册增加金币100");
     }
 
     /**
@@ -81,6 +81,74 @@ class MemberLogic extends BaseLogic
         $this->member->save();
         \Auth::user()->save();
     }
+
+    /**
+     * @param array $aParams
+     * @see 后台充值
+     */
+    public function recharge(array $aParam):bool
+    {
+        $this->rechargeValidate($aParam);
+        $bRes = DB::transaction(function () use($aParam){
+            $this->rechargeFlow($aParam);
+            $this->rechargeIncreaseAndDecrease($aParam);
+            return true;
+        });
+        return $bRes;
+    }
+
+    /**
+     * @param array $aParam
+     * @throws \Exception
+     */
+    public function rechargeValidate(array $aParam)
+    {
+        if (redis_idempotent() === false)
+            throw new \Exception('请勿恶意提交订单，过2秒钟在尝试！');
+        if (!is_numeric($aParam['gold']))
+            throw new \Exception('充值金额必须是一个数字！');
+        if ($aParam['gold'] > 10000 || $aParam['gold'] <-10000)
+            throw new \Exception('一次充值金额数量不能超过10000！');
+    }
+
+    /**
+     * @see 流水
+     * @用户增加
+     * @金币池减少
+     * @为负数 金币池增加 用户减少
+     */
+    public function rechargeFlow(array $aParam)
+    {
+        // 9 后台充值增加 10后台充值减少
+        if ($aParam['gold'] > 0 ) {
+            $isIncomde = 1;
+            $iType =  9;
+            $sOther = "后台充值增加";
+        } else {
+            $isIncomde = 0;
+            $iType = 10;
+            $sOther = "后台充值扣除";
+        }
+        $this->getBuyGoldGoldFlowDetail($isIncomde,$iType,userId(),abs($aParam['gold']),$sOther);
+    }
+
+    /**
+     * @param array $aParam
+     * @see 充值方减少增加
+     * @see 金币池分减少增加
+     */
+    public function rechargeIncreaseAndDecrease(array $aParam)
+    {
+        $member = $this->find($aParam['member_id']);
+        if ($aParam['gold'] > 0 )
+            $member->gold = bcadd($member->gold,$aParam['gold'],2);
+        else
+            $member->gold = bcsub($member->gold,abs($aParam['gold']),2);
+        $member->save();
+    }
+
+
+
 
 
 }
