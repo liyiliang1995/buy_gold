@@ -83,6 +83,7 @@ class TradeController extends Controller
         // 取消是上架 订单未确认才显示
         $buyGold->setParentFlag([]);
         $aData = $this->Logic($buyGold)->query($aParams)->toArray();
+        $aData['type'] = $iType;
         if ($aData ){
             return $this->success("请求成功",$aData );
         }
