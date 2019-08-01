@@ -172,8 +172,9 @@ if (!function_exists('redis_idempotent')) {
         }
         if (!$aParam) {
             $aParam = request()->input();
-            $sParam = $aParam ?  implode("-",$aParam) : "";
         }
+        $sParam = $aParam ?  implode("-",$aParam) : "";
+
         if ($sKey && $sParam) {
             $bRes = Redis::sadd($sKey,$sParam);
             Redis::expire($sKey,$time);
@@ -181,4 +182,67 @@ if (!function_exists('redis_idempotent')) {
         return $bRes;
     }
 
+}
+
+if (!function_exists('sum_gold')) {
+    /**
+     * @param int $iNum
+     * @param float $fAvgprice
+     * @param float $fRate
+     * @消耗总金币
+     */
+    function sum_gold(float $fPayGold,float $fBurnGold)
+    {
+        return bcadd($fPayGold,$fBurnGold,2);
+    }
+}
+if (!function_exists("burn_gold")) {
+    /**
+     * @param float $fPayGold //支付金币数量
+     * @param float $fRate // 消耗费率
+     * @see返回金币池金币
+     */
+    function burn_gold(float $fPayGold,float $fRate = 0.05)
+    {
+        return bcmul($fPayGold,$fRate,2);
+    }
+}
+
+if (!function_exists('pay_gold')) {
+    /**
+     * @param float $fAvgPrice 一个金币多少钱
+     * @param float $fSumPrice 商品总价格
+     * @return string
+     * @商品价格转换为支付金币数量
+     */
+    function pay_gold(float $fAvgPrice,float $fSumPrice):float
+    {
+        return bcdiv($fSumPrice,$fAvgPrice,2);
+    }
+}
+
+if (!function_exists('sum_price')) {
+    /**
+     * @param int $iNum 商品数量
+     * @param float $fUnitPrice 商品单价
+     * @return float
+     * @返回商品价格
+     */
+    function sum_price(int $iNum,float $fUnitPrice):float
+    {
+        return bcmul($fUnitPrice,$iNum,2);
+    }
+}
+
+if (!function_exists('unit_gold')) {
+    /**
+     * @param float $fPayGold
+     * @param int $iNum
+     * @return float
+     * @每个商品单金币价格
+     */
+    function unit_gold(float $fPayGold,int $iNum):float
+    {
+        return bcdiv($fPayGold,$iNum,2);
+    }
 }

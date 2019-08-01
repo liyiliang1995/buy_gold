@@ -82,7 +82,7 @@ class BuyGold extends Model
      */
     public function getBurnGoldAttribute():string
     {
-        return bcmul($this->gold,0.05,2);
+        return burn_gold($this->gold);
     }
 
     /**
@@ -100,7 +100,7 @@ class BuyGold extends Model
      */
     public function getSumGoldAttribute():string
     {
-        return bcadd($this->gold,$this->burn_gold,2);
+        return sum_gold($this->gold,$this->burn_gold);
     }
 
     /**

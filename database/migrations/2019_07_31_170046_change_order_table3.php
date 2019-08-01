@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeOrderTable extends Migration
+class ChangeOrderTable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeOrderTable extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
-            $table->string("other",200)->default('')->comment("买家留言");
+        Schema::table('order_item', function (Blueprint $table) {
+            $table->unsignedTinyInteger("is_send")->default(0)->comment("是否送货 0 待收货 1 已发货");
         });
     }
 

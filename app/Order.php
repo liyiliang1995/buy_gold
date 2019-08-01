@@ -26,7 +26,7 @@ class Order extends Model
      */
     public function order_items()
     {
-        return $this->hasMany('App\OrderItem','order_no');
+        return $this->hasMany('App\OrderItem','order_no','order_no');
     }
 
     /**
@@ -37,21 +37,4 @@ class Order extends Model
         return $this->hasMany('App\OrderDetail','order_id');
     }
 
-    /**
-     * @param $value
-     * @see 燃烧金币
-     */
-    public function getBurnGoldAttribute():string
-    {
-        return bcmul($this->pay_gold,0.05,2);
-    }
-
-    /**
-     * @return string
-     * @see 赠送积分
-     */
-    public function getGiveIntegralAttribute():int
-    {
-        return bcmul($this->pay_gold,10,0);
-    }
 }
