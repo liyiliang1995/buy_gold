@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Czf;
 
 use App\BuyGold;
 use App\GoldFlow;
+use App\EnergyFlow;
+use App\IntegralFlow;
 use App\Logics\TradeLogic;
 use App\Http\Controllers\Controller;
 
@@ -79,6 +81,39 @@ class TradeController extends Controller
             return $this->success("请求成功",$aData );
         }
         else
+            return $this->server_error();
+    }
+
+    /**
+     * @param int 业务类型 1收入 2 支出'
+     * @param IntegralFlow $integralFlow
+     */
+    public function ajaxGetIntegralFlow(int $iType,IntegralFlow $integralFlow)
+    {
+        $aParams['_sort'] = "id,desc";
+        $aParams['user_id'] = userId();
+        $aParams['type'] = $iType;
+        $aData = $this->Logic($integralFlow)->query($aParams)->toArray();
+        if ($aData) {
+            return $this->success("请求成功", $aData);
+        } else
+            return $this->server_error();
+    }
+
+    /**
+     * @param int $iType  业务类型 1 自动领取金币消耗 2求购金币获得
+     * @param EnergyFlow $energyFlow
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajaxGetEnergyFlow(int $iType,EnergyFlow $energyFlow)
+    {
+        $aParams['_sort'] = "id,desc";
+        $aParams['user_id'] = userId();
+        $aParams['type'] = $iType;
+        $aData = $this->Logic($energyFlow)->query($aParams)->toArray();
+        if ($aData) {
+            return $this->success("请求成功", $aData);
+        } else
             return $this->server_error();
     }
 

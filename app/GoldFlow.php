@@ -22,7 +22,7 @@ class GoldFlow extends Model
     /**
      * @var int
      */
-    public $query_page = 7;
+    public $query_page = 10;
     /**
      * @var array
      */
@@ -51,7 +51,7 @@ class GoldFlow extends Model
      */
     public function getOrderAttribute()
     {
-          return  $this->buy_gold_detail->buy_gold;
+          return  $this->buy_gold_detail->buy_gold ?? null;
     }
 
 }
