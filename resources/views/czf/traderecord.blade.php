@@ -52,28 +52,7 @@
             <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active infinite">
                 <div class="content-padded" id="tab1_item">
                     <!--1-->
-                        <div class="cont_list" style="background: #fff">
-                            <div class="weui-flex"
-                                 style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">
-                                <div class="weui-flex__item">2019-07-19 10:44</div>
-                                <div class="weui-flex__item" style="text-align: right;color: red">求购中</div>
-                            </div>
-                            <div class="weui-flex" style=" padding: 5px 15px; ">
-                                <div class="weui-flex__item">金币数量</div>
-                                <div class="weui-flex__item" style="text-align: right">200</div>
-                            </div>
-                            <div class="weui-flex" style=" padding: 5px 15px; ">
-                                <div class="weui-flex__item">总金额</div>
-                                <div class="weui-flex__item" style="text-align: right;color: red">+160</div>
-                            </div>
-                            <div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">
-                                <div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a>
-                                </div>
-                                <div class="weui-flex__item" style="text-align: right"><a id="trading_a" href="javascript:;"
-                                                                                          class="weui-btn weui-btn_primary">申请撤单</a>
-                                </div>
-                            </div>
-                        </div>
+
                     {{--end--}}
 
                 </div>
@@ -126,7 +105,7 @@
             obj:"",
             url:"",
             // 获取订单
-            ajaxGetGoldFlow:function () {
+            ajaxGetBuyGoldType:function () {
                 if (!trade_record.url) {
                     $.toast("没有更多数据加载！",'text');
                     $('.weui-loadmore').hide();
@@ -144,7 +123,10 @@
                         console.log(result);
                         var html = '';
                         $.each(result.data.data,function (index,val) {
-                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
+                            html += ' <div class="cont_list" style="background: #fff">';
+                            html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
+                            html +='<div class="weui-flex__item">'+val.created_at+'</div>';
+                            html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.created_at+'</div>';
                         //     html += '<div class="weui-flex__item">订单号：'+val.order_no+'</div>';
                         //     html += '</div>';
                         //     html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';
@@ -164,21 +146,21 @@
             }
         };
         $(function () {
-            var url1 = "{{route('ajaxGetGoldFlow',['type'=>3])}}";
-            var url2 = "{{route('ajaxGetGoldFlow',['type'=>2])}}";
+            var url1 = "{{route('ajaxGetBuyGoldType',['type'=>3])}}";
+            var url2 = "{{route('ajaxGetBuyGoldType',['type'=>2])}}";
             trade_record.url = url1;
             trade_record.obj = $("#tab1_item");
-            trade_record.ajaxGetGoldFlow();
+            trade_record.ajaxGetBuyGoldType();
             $(".no_is_send").on('click',function () {
                 trade_record.url = url1;
                 trade_record.obj = $("#tab1_item");
-                trade_record.ajaxGetGoldFlow();
+                trade_record.ajaxGetBuyGoldType();
                 $("#tab1_item").empty();
             })
             $(".is_send").on('click',function () {
                 trade_record.url = url2;
                 trade_record.obj = $("#tab2_item");
-                trade_record.ajaxGetGoldFlow();
+                trade_record.ajaxGetBuyGoldType();
                 $("#tab2_item").empty();
             })
             $(".infinite").infinite().on("infinite", function() {
@@ -186,7 +168,7 @@
                 if(self.loading) return;
                 self.loading = true;
                 setTimeout(function() {
-                    trade_record.ajaxGetGoldFlow();
+                    trade_record.ajaxGetBuyGoldType();
                 }, 500);   //模拟延迟
             })
         })
