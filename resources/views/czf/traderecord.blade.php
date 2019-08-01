@@ -121,9 +121,9 @@
                     },
                     success: function (result) {
                         console.log(result);
-                        // 1:求购 2:出售
+                        // 3:求购 2:出售
                         var html = '';
-
+                        if(result.data.type == 3){
                         $.each(result.data.data,function (index,val) {
                             html += ' <div class="cont_list" style="background: #fff">';
                             html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
@@ -145,7 +145,30 @@
                             }
                             html +='</div></div></div>';
                         });
+                        }else{
+                            $.each(result.data.data,function (index,val) {
+                                html += ' <div class="cont_list" style="background: #fff">';
+                                html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
+                                html +='<div class="weui-flex__item">'+val.created_at+'</div>';
+                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.give_status+'</div></div>';
+                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html +='<div class="weui-flex__item">金币数量</div>';
+                                html +='<div class="weui-flex__item" style="text-align: right">'+val.gold+'</div></div>';
+                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html +='<div class="weui-flex__item">总金额</div>';
+                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
+                                html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                                html +='<div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a></div>';
+                                html +='<div class="weui-flex__item" style="text-align: right">';
+                                if (val.give_status == '未收款'){
+                                    html +='<a id="trading_b" href="javascript:;" class="weui-btn weui-btn_primary">确认收款</a>';
+                                }
+                                html +='</div></div></div>';
+                            });
 
+
+
+                        }
 
                         trade_record.url = result.data.next_page_url;
                         trade_record.obj.append(html);
