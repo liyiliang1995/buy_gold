@@ -129,7 +129,7 @@ class MemberLogic extends BaseLogic
             $iType = 10;
             $sOther = "后台充值扣除";
         }
-        $this->getBuyGoldGoldFlowDetail($isIncomde,$iType,userId(),abs($aParam['gold']),$sOther);
+        $this->getBuyGoldGoldFlowDetail($isIncomde,$iType,$aParam['member_id'],abs($aParam['gold']),$sOther);
     }
 
     /**
@@ -140,7 +140,7 @@ class MemberLogic extends BaseLogic
     public function rechargeIncreaseAndDecrease(array $aParam)
     {
         $member = $this->find($aParam['member_id']);
-        if ($aParam['gold'] < 0 || abs($aParam['gold']) > $member->gold)
+        if ($aParam['gold'] < 0 && abs($aParam['gold']) > $member->gold)
             throw new \Exception('扣除金额大于用户实际金额！');
         if ($aParam['gold'] > 0 )
             $member->gold = bcadd($member->gold,$aParam['gold'],2);

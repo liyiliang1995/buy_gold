@@ -11,6 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        DB::table('gold_change_day')->insert([
+            // 金币池总金额
+            'gold' => 1000000000.00,
+            // 用户手中总金额
+            'user_sum_gold' => 0.00,
+            'date' => date('Y-m-d'),
+            // 用户购物消耗总金额
+            'shop_gold' => 0.00,
+        ]);
     }
 }

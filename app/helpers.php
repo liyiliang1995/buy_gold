@@ -246,3 +246,39 @@ if (!function_exists('unit_gold')) {
         return bcdiv($fPayGold,$iNum,2);
     }
 }
+
+
+if (!function_exists('redis_set')) {
+    /**
+     * @param $sKey
+     * @param $content
+     * @param int $time
+     */
+    function redis_set($sKey,$content,$time = 7200)
+    {
+        if (is_array($content) || is_object($content)) {
+            Redis::set($sKey,json_encode($content,true));
+        } else {
+            Redis::set($sKey,$content);
+        }
+        Redis::expire($sKey,$time);
+    }
+}
+if (!function_exists('redis_get')) {
+    /**
+     * @param $sKey
+     * @param $content
+     * @param int $time
+     */
+    function redis_get($sKey)
+    {
+        $sData = Redis::get($sKey);
+        $content = json_decode($sData,true);
+        if ($content && (is_object($content)) || (is_array($content) && !empty($content))) {
+            $result = $content;
+        } else {
+            $result = $sData;
+        }
+        return $result;
+    }
+}

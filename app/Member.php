@@ -169,5 +169,13 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->child_user_num ?? 0;
     }
 
+    /**
+     * @return float
+     */
+    public function getAllMemberGold():float
+    {
+        return $this->sum('gold') ?? 0.00;
+    }
+
 
 }

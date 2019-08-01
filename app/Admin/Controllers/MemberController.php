@@ -138,11 +138,10 @@ class MemberController extends AdminController
      */
     public function postRecharge(int $id,Member $member)
     {
-        $aData['gold'] = request()->input('gold');
+        $aData['gold'] = (float)request()->input('gold');
         $aData['member_id'] = $id;
         $this->Logic($member)->recharge($aData);
         return redirect(route('members.index'));
-
     }
 
     /**
