@@ -26,6 +26,10 @@ class BuyGold extends Model
      * @var array
      */
     protected $parent_flag = ['status' => 0, 'is_show' => 1];
+    /**
+     * @var array
+     */
+    protected $appends = ["buy_gold_status"];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -143,5 +147,20 @@ class BuyGold extends Model
     public function getAndFieds():array
     {
         return $this->and_fields??[];
+    }
+
+    /**
+     * @return string
+     */
+    public function getBuyGoldStatusAttribute():string
+    {
+        $sRes = '';
+        if ($this->status == 0 && !$this->seller_id)
+            $sRes = "求购中";
+        else if ($this->status == 0 && $this->seller_id)
+            $sRes = "交易中";
+        else if  ($this->status == 1)
+            $sRes = "交易完成";
+        return $sRes;
     }
 }
