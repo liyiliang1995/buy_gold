@@ -76,7 +76,13 @@ class TradeController extends Controller
         return view('czf.energyrecord');
     }
 
-
+    /**
+     * @see 积分记录
+     */
+    public function integralRecord()
+    {
+        return view('czf.integralrecord');
+    }
 
     /**
      * @param int $iType 1 求购 2售出

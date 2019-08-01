@@ -38,6 +38,7 @@ Route::group([],function($router){
         $router->get('ajax/getbuygoldType/{type}','TradeController@ajaxGetBuyGoldType')->name('ajaxGetBuyGoldType');
         $router->get('/', 'HomeController@index')->name('home');
         $router->get('energy/record','TradeController@energyRecord')->name('energy_record');
+        $router->get('integral/record','TradeController@integralRecord')->name('integral_record');
     });
 });
 Auth::routes();
