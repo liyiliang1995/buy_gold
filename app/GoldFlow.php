@@ -16,10 +16,42 @@ class GoldFlow extends Model
      */
     protected $fillable = ['type','gold','is_income','user_id','other'];
     /**
+     * @var array
+     */
+    protected $hidden = ['buy_gold_detail'];
+    /**
+     * @var int
+     */
+    public $query_page = 7;
+    /**
+     * @var array
+     */
+    protected $and_fields = ['user_id','type'];
+    /**
+     * @var array
+     */
+    protected $appends = ["order"];
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function buy_gold_detail()
     {
         return $this->hasOne('App\BuyGoldDetail','flow_id');
     }
+    /**
+     * @return array
+     */
+    public function getAndFieds():array
+    {
+        return $this->and_fields??[];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderAttribute()
+    {
+          return  $this->buy_gold_detail->buy_gold;
+    }
+
 }

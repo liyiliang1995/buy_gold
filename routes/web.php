@@ -32,6 +32,8 @@ Route::group([],function($router){
         $router->get('sell_gold/{id}', 'TradeController@sellGold')->name('sell_gold');
         $router->get('sell_gold_order/{id}', 'TradeController@sellGoldOrder')->name('sell_gold_order');
         $router->get('trade/record','TradeController@tradeRecord')->name('trade_record');
+        $router->get('ajax/getgoldflow/{type}','TradeController@ajaxGetGoldFlow')->name('ajaxGetGoldFlow');
+
         $router->get('/', 'HomeController@index')->name('home');
     });
 });

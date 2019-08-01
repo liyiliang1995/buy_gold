@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Czf;
 
 use App\BuyGold;
+use App\GoldFlow;
 use App\Logics\TradeLogic;
 use App\Http\Controllers\Controller;
 
 class TradeController extends Controller
 {
+    use \App\Traits\Restful;
+
     public function __construct()
     {
         $this->middleware(['auth','checkmbr']);
@@ -60,6 +63,23 @@ class TradeController extends Controller
     public function tradeRecord()
     {
         return view('czf.traderecord');
+    }
+
+    /**
+     * @param int $Itype
+     * 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除
+     */
+    public function ajaxGetGoldFlow(int $iType,GoldFlow $goldFlow)
+    {
+        $aParams['_sort'] = "id,desc";
+        $aParams['user_id'] = userId();
+        $aParams['type'] = $iType;
+        $aData = $this->Logic($goldFlow)->query($aParams)->toArray();
+        if ($aData ){
+            return $this->success("请求成功",$aData );
+        }
+        else
+            return $this->server_error();
     }
 
     /**

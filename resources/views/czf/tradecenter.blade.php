@@ -23,7 +23,7 @@
     '$("#pre").on("blur",function(){
         var item = $("#job").val();
         var price = $(this).val().trim();
-        var sum = price*item;
+        var sum = buy_gold.intToFloat(price*item);
         $("#intext>b").empty().html("￥"+sum);
     })',
     ],
@@ -141,7 +141,23 @@
                 if (this.unit_price() && this.sum_val) {
                     $("#submit_buy").submit();
                 }
-            }
+            },
+            intToFloat:function(val) {
+                var num = 2;
+                // return new Number(val).toFixed(2);
+                var a_type = typeof(val);
+                if(a_type == "number"){
+                    var aStr = val.toString();
+                    var aArr = aStr.split('.');
+                }else if(a_type == "string"){
+                    var aArr = val.split('.');
+                }
+
+                if(aArr.length > 1) {
+                    val = aArr[0] + "." + aArr[1].substr(0, num);
+                }
+                return val;
+            },
         }
         $(function () {
             @if($errors->has('gold'))
