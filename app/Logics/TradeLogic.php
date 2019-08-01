@@ -21,8 +21,10 @@ class TradeLogic extends BaseLogic
      * 5=<price<10 上下浮动2%
      * 10=<price 上下浮动1%
      */
-    public function getGuidancePrice(float $price = 0.50):array
+    public function getGuidancePrice():array
     {
+        $hapModel = new \App\HourAvgPrice;
+        $price = $hapModel->getBestNewAvgPrice();
         // 精度2位
         bcscale(2);
         if (bccomp($price,0.5) >= 0 && bccomp($price,0.52) < 0) {

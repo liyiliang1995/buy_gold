@@ -23,7 +23,8 @@ class TradeController extends Controller
     public function index(BuyGold $buyGold)
     {
         $aBuyGold = $this->Logic($buyGold)->query(['_sort'=>'price,desc']);
-        return view('czf.tradecenter',compact('aBuyGold'));
+        $fGuidancePrice = $this->Logic(null)->getGuidancePrice();
+        return view('czf.tradecenter',compact('aBuyGold','fGuidancePrice'));
     }
 
     /**

@@ -44,6 +44,11 @@ class MemberController extends AdminController
 //        $grid->column('updated_at', __('Updated at'));
 //        $grid->column('password', __('Password'));
 
+        $grid->actions(function ($actions){
+            $actions->disableView();
+            $actions->append('<a href="">用户充值</a>');
+        });
+
         return $grid;
     }
 
@@ -89,9 +94,9 @@ class MemberController extends AdminController
         $form->text('name', __('名称'));
         $form->mobile('phone', __('手机号码'));
         $form->text('phone2', __('联系手机'));
-        $form->decimal('gold', __('金币'))->default(0.00);
-        $form->decimal('energy', __('能量值'))->default(0.00);
-        $form->decimal('integral', __('积分值'))->default(0.00);
+//        $form->decimal('gold', __('金币'))->default(0.00);
+//        $form->decimal('energy', __('能量值'))->default(0.00);
+//        $form->decimal('integral', __('积分值'))->default(0.00);
 //        $form->number('parent_user_id', __('Parent user id'));
 //        $form->number('child_user_num', __('Child user num'));
         $form->text('wechat', __('微信'));
@@ -101,4 +106,14 @@ class MemberController extends AdminController
 
         return $form;
     }
+
+    public function form2()
+    {
+        $form = new Form(new Member);
+        $form->text('name', __('名称'));
+        $form->decimal('gold', __('金币'))->default(0.00);
+
+    }
+
+
 }
