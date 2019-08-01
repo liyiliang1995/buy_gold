@@ -85,9 +85,9 @@
                             <div class="weui-flex__item" style="text-align: right"><a id="trading_b"
                                                                                       href="javascript:;"
                                                                                       class="weui-btn weui-btn_primary">确认收款</a>
-                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
                     {{--end--}}
 
                 </div>
@@ -121,26 +121,34 @@
                     },
                     success: function (result) {
                         console.log(result);
+                        // 1:求购 2:出售
                         var html = '';
+
                         $.each(result.data.data,function (index,val) {
                             html += ' <div class="cont_list" style="background: #fff">';
                             html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
                             html +='<div class="weui-flex__item">'+val.created_at+'</div>';
-                            html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.created_at+'</div>';
-                        //     html += '<div class="weui-flex__item">订单号：'+val.order_no+'</div>';
-                        //     html += '</div>';
-                        //     html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';
-                        //     html += '<div class="weui-media-box__hd"><img class="weui-media-box__thumb" src="'+val.goods_img+'"></div>';
-                        //     html += '<div class="weui-media-box__bd"><h4 class="weui-media-box__title">'+val.goods.name+'</h4>';
-                        //     html += '<p class="weui-media-box__desc" style="margin-top: 20px">￥'+val.goods.amount+'<span style="float: right">';
-                        //     html += 'X'+val.num+'</span></p>';
-                        //     html += '</div></a>';
-                        //     html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                        //     html += '<div class="weui-flex__item" style="color: #FF2634">'+val.is_send_str+'</div>';
-                        //     html += '<div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">'+val.sum_price+'</b></div></div>'
+                            html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.buy_gold_status+'</div></div>';
+                            html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
+                            html +='<div class="weui-flex__item">金币数量</div>';
+                            html +='<div class="weui-flex__item" style="text-align: right">'+val.gold+'</div></div>';
+                            html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
+                            html +='<div class="weui-flex__item">总金额</div>';
+                            html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
+                            html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                            html +='<div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a></div>';
+                            html +='<div class="weui-flex__item" style="text-align: right">';
+                            if (val.buy_gold_status == '求购中'){
+                            html +='<a id="trading_a" href="javascript:;" class="weui-btn weui-btn_primary">申请撤单</a>';
+                            }else if(val.buy_gold_status == '交易中'){
+                                html +='<a id="trading_a" style="color: #666;border: #eee;"  class="weui-btn weui-btn_primary" disabled>正在交易</a>';
+                            }
+                            html +='</div></div></div>';
                         });
-                        // trade_record.url = result.data.next_page_url;
-                        // trade_record.obj.append(html);
+
+
+                        trade_record.url = result.data.next_page_url;
+                        trade_record.obj.append(html);
                     }
                 })
             }
