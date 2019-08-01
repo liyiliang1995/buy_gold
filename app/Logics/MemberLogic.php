@@ -140,6 +140,8 @@ class MemberLogic extends BaseLogic
     public function rechargeIncreaseAndDecrease(array $aParam)
     {
         $member = $this->find($aParam['member_id']);
+        if ($aParam['gold'] < 0 || abs($aParam['gold']) > $member->gold)
+            throw new \Exception('扣除金额大于用户实际金额！');
         if ($aParam['gold'] > 0 )
             $member->gold = bcadd($member->gold,$aParam['gold'],2);
         else

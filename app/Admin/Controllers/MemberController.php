@@ -116,7 +116,7 @@ class MemberController extends AdminController
         $form = new Form($member);
         $form->text('name', __('名称'))->default($member->name)->disable();
         $form->mobile('phone', __('手机号码'))->default($member->phone)->disable();
-        $form->decimal('gold', __('已有金额'))->default($member->gold)->disable();
+        $form->decimal('not', __('已有金额'))->default($member->gold)->disable();
         $form->decimal('gold', __('充值金额'))->default(0.00);
         return $form;
     }
@@ -126,7 +126,7 @@ class MemberController extends AdminController
         $form->setAction(route('admin.post_recharge',['id'=>$id]));
         return $content
             ->title("会员充值")
-            ->description("金币充值")
+            ->description("金币充值(正数增加负数扣除)")
             ->body($form);
         return $form;
     }
