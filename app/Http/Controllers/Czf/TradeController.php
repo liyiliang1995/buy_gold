@@ -69,6 +69,16 @@ class TradeController extends Controller
     }
 
     /**
+     * @see 能量记录
+     */
+    public function energyRecord()
+    {
+        return view('czf.energyrecord');
+    }
+
+
+
+    /**
      * @param int $iType 1 求购 2售出
      * @param BuyGold $buyGold
      * @see金币求购订单
