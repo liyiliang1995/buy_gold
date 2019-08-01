@@ -54,7 +54,7 @@
     <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
-            <input class="weui-input" name="address2" type="text" value="{{explode(" | ",$oUser->ship_address->ship_address)[1] ?? ''}}" placeholder="请输入地址">
+            <input class="weui-input" name="address2" type="text" value="{{explode(" | ",$oUser->ship_address->ship_address ?? '' )[1] ?? ''}}" placeholder="请输入地址">
         </div>
     </div>
     @csrf

@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-use App\Exceptions\CzfException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -36,23 +35,20 @@ class AgentRegister extends Model
      */
     public function beforeInsert(array $aData)
     {
-        $member = new \App\Member;
-        if ($this->checkPhoneOnly($aData['phone']) || $member->isExistsPhone($aData['phone'])) {
-             throw new CzfException("注册手机号码已经存在！");
-        }
-        $pwd = request()->post('password') ?? '';
-        $this->checkPwd($pwd);
-        $member->addChildMember(['phone'=>$aData['phone'],'password'=>$pwd]);
     }
 
     /**
      * @param $pwd
      * @see 检测密码
      */
-    public function checkPwd($pwd)
+    public function checkPwd(string $pwd):bool
     {
+//        if (empty($pwd) || strlen($pwd) < 6)
+//            throw new CzfException("请输入不小于6个字符的密码！");
+        $bRes = true;
         if (empty($pwd) || strlen($pwd) < 6)
-            throw new CzfException("请输入不小于6个字符的密码！");
+            $bRes = false;
+        return $bRes;
     }
 
 
