@@ -29,7 +29,7 @@ class BuyGold extends Model
     /**
      * @var array
      */
-    protected $appends = ["buy_gold_status",'give_status'];
+    protected $appends = ["buy_gold_status",'give_status','detail_url'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -122,6 +122,15 @@ class BuyGold extends Model
     public function getEnergyAttribute():int
     {
         return bcmul($this->gold,2,0);
+    }
+
+    /**
+     * @return string
+     * @see 获取详情url
+     */
+    public function getDetailUrlAttribute():string
+    {
+        return route('order_gold_detail',['id'=>$this->id]);
     }
 
 

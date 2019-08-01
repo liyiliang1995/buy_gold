@@ -93,13 +93,12 @@
                         return;
                     },
                     success: function (result) {
-                        console.log(result);
                         if (result.data.data != null){
                             $('.weui-loadmore').hide();
                         }
                         // 3:求购 2:出售
                         var html = '';
-                        if(result.data.type == 3){
+                        if(result.data.type == 1){
                         $.each(result.data.data,function (index,val) {
                             html += ' <div class="cont_list" style="background: #fff">';
                             html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
@@ -112,7 +111,7 @@
                             html +='<div class="weui-flex__item">总金额</div>';
                             html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
                             html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                            html +='<div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a></div>';
+                            html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
                             html +='<div class="weui-flex__item" style="text-align: right">';
                             if (val.buy_gold_status == '求购中'){
                             html +='<a id="trading_a" href="javascript:;" class="weui-btn weui-btn_primary">申请撤单</a>';
@@ -134,7 +133,7 @@
                                 html +='<div class="weui-flex__item">总金额</div>';
                                 html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
                                 html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                                html +='<div class="weui-flex__item" style="color: red"><a href="buy.html" style="color: #333">查看详情>></a></div>';
+                                html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
                                 html +='<div class="weui-flex__item" style="text-align: right">';
                                 if (val.give_status == '未收款'){
                                     html +='<a id="trading_b" href="javascript:;" class="weui-btn weui-btn_primary">确认收款</a>';
@@ -153,7 +152,7 @@
             }
         };
         $(function () {
-            var url1 = "{{route('ajaxGetBuyGoldType',['type'=>3])}}";
+            var url1 = "{{route('ajaxGetBuyGoldType',['type'=>1])}}";
             var url2 = "{{route('ajaxGetBuyGoldType',['type'=>2])}}";
             trade_record.url = url1;
             trade_record.obj = $("#tab1_item");

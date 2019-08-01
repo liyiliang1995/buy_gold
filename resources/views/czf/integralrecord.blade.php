@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'能量值明细',
+@extends('czf.base',['header'=>'积分明细',
 'css' => [
         'css/weui.min.css',
         'css/jquery-weui.css',
@@ -28,7 +28,7 @@
     <!--头部-->
     <div class="weui-flex" id="header_top">
         <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
-        <div class="weui-flex__item">能量值明细</div>
+        <div class="weui-flex__item">积分明细</div>
     </div>
 
 
@@ -58,23 +58,23 @@
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
                 </div>
+            </div>
         </div>
-    </div>
 
     </div>
     <script>
-        var energy_record = {
+        var integral_record = {
             obj:"",
             url:"",
             // 获取订单
-            ajaxGetEnergyFlow:function () {
-                if (!energy_record.url) {
+            ajaxGetIntegralFlow:function () {
+                if (!integral_record.url) {
                     $.toast("没有更多数据加载！",'text');
                     $('.weui-loadmore').hide();
                     return;
                 }
                 $.ajax({
-                    url: energy_record.url,
+                    url: integral_record.url,
                     type: 'get',
                     dataType: "json",
                     error: function (data) {
@@ -85,37 +85,37 @@
                         if (result.data.data != null){
                             $('.weui-loadmore').hide();
                         }
-                        // 2:获得 1:支出
+                        // 1收入 2 支出
                         var html = '';
-                            $.each(result.data.data,function (index,val) {
-                                html +='<div class="weui-flex" id="integral"><div class="weui-flex__item">';
-                                html +='<p style="font-weight: bold;font-size: 14px;color: #666">'+val.other+'</p>';
-                                html +='<p style="font-size: 12px;color: #999">'+ val.created_at +'</p></div>';
-                                html +='<div class="weui-flex__item" style="color: red;text-align: right">'+val.energy+'</div></div>';
-                            });
+                        $.each(result.data.data,function (index,val) {
+                            html +='<div class="weui-flex" id="integral"><div class="weui-flex__item">';
+                            html +='<p style="font-weight: bold;font-size: 14px;color: #666">'+val.other+'</p>';
+                            html +='<p style="font-size: 12px;color: #999">'+ val.created_at +'</p></div>';
+                            html +='<div class="weui-flex__item" style="color: red;text-align: right">'+val.integral+'</div></div>';
+                        });
 
-                        energy_record.url = result.data.next_page_url;
-                        energy_record.obj.append(html);
+                        integral_record.url = result.data.next_page_url;
+                        integral_record.obj.append(html);
                     }
                 })
             }
         };
         $(function () {
-            var url1 = "{{route('ajaxGetEnergyFlow',['type'=>2])}}";
-            var url2 = "{{route('ajaxGetEnergyFlow',['type'=>1])}}";
-            energy_record.url = url1;
-            energy_record.obj = $("#tab1_item");
-            energy_record.ajaxGetEnergyFlow();
+            var url1 = "{{route('ajaxGetIntegralFlow',['type'=>1])}}";
+            var url2 = "{{route('ajaxGetIntegralFlow',['type'=>2])}}";
+            integral_record.url = url1;
+            integral_record.obj = $("#tab1_item");
+            integral_record.ajaxGetIntegralFlow();
             $(".no_is_send").on('click',function () {
-                energy_record.url = url1;
-                energy_record.obj = $("#tab1_item");
-                energy_record.ajaxGetEnergyFlow();
+                integral_record.url = url1;
+                integral_record.obj = $("#tab1_item");
+                integral_record.ajaxGetIntegralFlow();
                 $("#tab1_item").empty();
             })
             $(".is_send").on('click',function () {
-                energy_record.url = url2;
-                energy_record.obj = $("#tab2_item");
-                energy_record.ajaxGetEnergyFlow();
+                integral_record.url = url2;
+                integral_record.obj = $("#tab2_item");
+                integral_record.ajaxGetIntegralFlow();
                 $("#tab2_item").empty();
             })
             $(".infinite").infinite().on("infinite", function() {
@@ -123,7 +123,7 @@
                 if(self.loading) return;
                 self.loading = true;
                 setTimeout(function() {
-                    energy_record.ajaxGetEnergyFlow();
+                    integral_record.ajaxGetIntegralFlow();
                 }, 500);   //模拟延迟
             })
         })
