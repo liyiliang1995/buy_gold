@@ -13,6 +13,19 @@
     ],
 ])
 @section('content')
+    <style>
+        #order_sn{
+            font-size: 12px;
+            color: #666;
+        }
+        .weui-media-box__title{
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .weui-media-box__desc{
+            color: #666;
+        }
+    </style>
     <body ontouchstart>
     <!--头部-->
     <div class="weui-flex" id="header_top">
@@ -85,7 +98,7 @@
                         var html = '';
                         $.each(result.data.data,function (index,val) {
                             html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
-                            html += '<div class="weui-flex__item">订单号：'+val.order_no+'</div>';
+                            html += '<div class="weui-flex__item" id="order_sn">订单号：'+val.order_no+'</div>';
                             html += '</div>';
                             html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';
                             html += '<div class="weui-media-box__hd"><img class="weui-media-box__thumb" src="'+val.goods_img+'"></div>';

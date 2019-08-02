@@ -40,6 +40,7 @@ Route::group([],function($router){
         $router->get('energy/record','TradeController@energyRecord')->name('energy_record');
         $router->get('integral/record','TradeController@integralRecord')->name('integral_record');
         $router->get('order_gold_detail/{id}','TradeController@orderGoldDetail')->name('order_gold_detail');
+        $router->get('member_index','MemberController@memberIndex')->name('member_index');
     });
 });
 Auth::routes();
