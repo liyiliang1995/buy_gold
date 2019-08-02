@@ -112,7 +112,7 @@ class TradeLogic extends BaseLogic
         $this->oBuyGoldDetail->member->gold = bcadd($this->oBuyGoldDetail->member->gold,$this->oBuyGoldDetail->gold,2);
         $this->oBuyGoldDetail->member->energy = bcadd($this->oBuyGoldDetail->member->energy,$this->oBuyGoldDetail->energy,0);
         $this->oBuyGoldDetail->member->save();
-        // 燃烧金币未完成
+        set_gold_pool($this->oBuyGoldDetail->gold);
     }
 
     /**

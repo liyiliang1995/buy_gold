@@ -39,6 +39,7 @@ Route::group([],function($router){
         $router->get('ajax/getintegralflow/{type}','TradeController@ajaxGetIntegralFlow')->name('ajaxGetIntegralFlow');
         $router->get('ajax/getenergyflow/{type}','TradeController@ajaxGetEnergyFlow')->name('ajaxGetEnergyFlow');
         $router->get('ajax/getbuygoldType/{type}','TradeController@ajaxGetBuyGoldType')->name('ajaxGetBuyGoldType');
+        $router->get('ajax/get_gold_pool','TradeController@ajaxGetGoldPool')->name('ajaxGetGoldPool');
         $router->get('/', 'HomeController@index')->name('home');
         $router->get('energy/record','TradeController@energyRecord')->name('energy_record');
         $router->get('integral/record','TradeController@integralRecord')->name('integral_record');
