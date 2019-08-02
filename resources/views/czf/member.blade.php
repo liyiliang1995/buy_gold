@@ -176,6 +176,4 @@
 
     </body>
 
-
-
 @endsection
