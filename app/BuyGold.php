@@ -29,7 +29,7 @@ class BuyGold extends Model
     /**
      * @var array
      */
-    protected $appends = ["buy_gold_status",'give_status','detail_url'];
+    protected $appends = ["buy_gold_status",'give_status','detail_url','apply_url','confirm_url'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -46,6 +46,14 @@ class BuyGold extends Model
     public function member()
     {
         return $this->belongsTo('App\Member','user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function seller()
+    {
+        return $this->belongsTo('App\Member','seller_id');
     }
 
 
@@ -131,6 +139,24 @@ class BuyGold extends Model
     public function getDetailUrlAttribute():string
     {
         return route('order_gold_detail',['id'=>$this->id]);
+    }
+
+    /**
+     * @return string
+     * @see 撤销订单url
+     */
+    public function getApplyUrlAttribute():string
+    {
+        return route("apply_cancel_order",['id'=>$this->id]);
+    }
+
+    /**
+     * @return string
+     * @see 确认订单url
+     */
+    public function getConfirmUrlAttribute():string
+    {
+        return route("confirm_order",['id'=>$this->id]);
     }
 
 

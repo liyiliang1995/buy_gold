@@ -183,6 +183,25 @@ class TradeController extends Controller
     }
 
     /**
+     * @see 申请撤单
+     */
+    public function applyCancelOrder(int $id,BuyGold $buyGold)
+    {
+        $this->Logic($buyGold)->applyCancelOrder($id);
+        return redirect(route('trade_record'));
+    }
+
+    /**
+     * @param int $id
+     * @see 确认收款
+     */
+    public function confirmOrder(int $id,BuyGold $buyGold)
+    {
+        $this->Logic($buyGold)->confirmOrder($id);
+        return redirect(route('trade_record'));
+    }
+
+    /**
      * @param object|null $oModel
      * @return TradeLogic
      */

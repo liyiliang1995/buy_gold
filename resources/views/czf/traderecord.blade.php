@@ -114,7 +114,7 @@
                             html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
                             html +='<div class="weui-flex__item" style="text-align: right">';
                             if (val.buy_gold_status == '求购中'){
-                            html +='<a id="trading_a" href="javascript:;" class="weui-btn weui-btn_primary">申请撤单</a>';
+                            html +='<a id="trading_a" href="'+val.apply_url+'" class="weui-btn weui-btn_primary">申请撤单</a>';
                             }else if(val.buy_gold_status == '交易中'){
                                 html +='<a id="trading_a" style="color: #666;border: #eee;"  class="weui-btn weui-btn_primary" disabled>正在交易</a>';
                             }
@@ -136,7 +136,7 @@
                                 html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
                                 html +='<div class="weui-flex__item" style="text-align: right">';
                                 if (val.give_status == '未收款'){
-                                    html +='<a id="trading_b" href="javascript:;" class="weui-btn weui-btn_primary">确认收款</a>';
+                                    html +='<a id="trading_b" href="'+val.confirm_url+'" class="weui-btn weui-btn_primary">确认收款</a>';
                                 }
                                 html +='</div></div></div>';
                             });
@@ -152,6 +152,10 @@
             }
         };
         $(function () {
+            @if($errors->has('user_id'))
+                $.toast("{{$errors->get('user_id')[0]}}", 'text');
+            @endif
+
             var url1 = "{{route('ajaxGetBuyGoldType',['type'=>1])}}";
             var url2 = "{{route('ajaxGetBuyGoldType',['type'=>2])}}";
             trade_record.url = url1;

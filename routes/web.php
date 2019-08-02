@@ -32,6 +32,9 @@ Route::group([],function($router){
         $router->get('sell_gold/{id}', 'TradeController@sellGold')->name('sell_gold');
         $router->get('sell_gold_order/{id}', 'TradeController@sellGoldOrder')->name('sell_gold_order');
         $router->get('trade/record','TradeController@tradeRecord')->name('trade_record');
+        $router->get('apply/cancel_order/{id}','TradeController@applyCancelOrder')->name('apply_cancel_order');
+        $router->get('confirm_order/{id}','TradeController@confirmOrder')->name('confirm_order');
+        $router->get('trade/record','TradeController@tradeRecord')->name('trade_record');
         $router->get('ajax/getgoldflow/{type}','TradeController@ajaxGetGoldFlow')->name('ajaxGetGoldFlow');
         $router->get('ajax/getintegralflow/{type}','TradeController@ajaxGetIntegralFlow')->name('ajaxGetIntegralFlow');
         $router->get('ajax/getenergyflow/{type}','TradeController@ajaxGetEnergyFlow')->name('ajaxGetEnergyFlow');

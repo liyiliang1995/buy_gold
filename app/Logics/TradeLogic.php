@@ -191,5 +191,57 @@ class TradeLogic extends BaseLogic
         ];
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     * @判断订单是否是当前用户的
+     * @判断订单是否是没有在交易中
+     * @撤单后解除冻结
+     */
+    public function applyCancelOrder(int $id):bool
+    {
+        $bRes =  DB::transaction(function () use($id) {
+            $oBuyGold = $this->model->lockForUpdate()->findOrFail($id);
+            if ($oBuyGold->user_id != userId())
+                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
+            if ($oBuyGold->seller_id)
+                throw ValidationException::withMessages(['user_id' => ['当前订单已处于交易中，无法撤销！']]);
+            if ($oBuyGold->status != 0)
+                throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
+            // 下架
+            $oBuyGold->delete();
+            \Auth::user()->status = 1;
+            return  \Auth::user()->save();
+        });
+        return $bRes ?? false;
+    }
+
+    /**
+     * @param int $id
+     * @see 确认收款
+     * @订单状态改为1
+     * @双方会员用户状态为正常
+     */
+    public function confirmOrder(int $id):bool
+    {
+       $bRes =  DB::transaction(function () use($id) {
+            $oBuyGold = $this->model->lockForUpdate()->findOrFail($id);
+            if (!$oBuyGold->seller)
+                throw ValidationException::withMessages(['user_id' => ['卖家已经不存在,无法完成交易，请联系管理员']]);
+            if ($oBuyGold->seller_id != userId())
+                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
+            if (!$oBuyGold->seller_id)
+                throw ValidationException::withMessages(['user_id' => ['没有卖家出售，无法确认']]);
+            $oBuyGold->status = 1;
+            $oBuyGold->is_show = 0;
+            $oBuyGold->member->status = 1;
+            $oBuyGold->push();
+            \Auth::user()->status = 1;
+            return  \Auth::user()->save();
+        });
+        return $bRes ?? false;
+
+    }
+
 
 }
