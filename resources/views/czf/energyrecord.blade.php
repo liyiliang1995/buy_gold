@@ -25,13 +25,6 @@
 ])
 @section('content')
     <body ontouchstart style="background: #fff;">
-    <!--头部-->
-    <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
-        <div class="weui-flex__item">能量值明细</div>
-    </div>
-
-
     <div class="weui-tab">
         <div class="weui-navbar">
             <a class="weui-navbar__item weui-bar__item--on no_is_send" href="#tab1">

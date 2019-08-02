@@ -39,12 +39,6 @@
         }
     </style>
     <body ontouchstart>
-    <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
-        <div class="weui-flex__item">交易记录</div>
-    </div>
-
-
     <div class="weui-tab">
         <div class="weui-navbar">
             <div class="weui-navbar__item weui-navbar__item--on no_is_send" href="#tab1">

@@ -1,15 +1,15 @@
 @extends('czf.base',['header'=>'首页 - 翠竹坊',
 'css' => [
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
-        'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css',
+        'css/weui.min.css',
+        'css/jquery-weui.min.css',
         'css/swiper.min.css',
         'css/style.css'
     ],
 'js' => [
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
+        'js/jquery-weui.min.js',
         'js/swiper.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
+        'js/city-picker.min.js'
     ],
 'script' => [
         "var swiper = new Swiper('.swiper-container', {
