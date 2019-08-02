@@ -107,6 +107,27 @@ class MemberController extends Controller
     }
 
     /**
+     *
+     * @see 帮助中心
+     */
+    public function helpCenter(){
+
+
+
+        return view('czf.helpcenter');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 通知公告
+     */
+public function notificationList(){
+
+
+    return view('czf.notification');
+}
+
+    /**
      * @param MemberLogic $memberLogic
      * @param $oMdel
      * @see 获取逻辑
