@@ -78,13 +78,13 @@
     <div class="weui-footer_fixed-bottom" style="bottom: 0;">
 
         <div class="weui-tabbar">
-            <a href="javascript:;" class="weui-tabbar__item weui-bar__item--on">
+            <a href="{{route('home')}}" class="weui-tabbar__item weui-bar__item--on">
                 <div class="weui-tabbar__icon">
                     <i class="iconfont icon-home-fill"></i>
                 </div>
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="{{}}" class="weui-tabbar__item">
+            <a href="{{route('member_index')}}" class="weui-tabbar__item">
                 <div class="weui-tabbar__icon">
                     <i class="iconfont icon-user-fill"></i>
                 </div>

@@ -17,7 +17,16 @@
         .weui-btn_primary {
             background: #07C160;
         }
-
+        .weui-label{
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+        .weui-cells{
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
         #set_value input {
             color: #666;
         }

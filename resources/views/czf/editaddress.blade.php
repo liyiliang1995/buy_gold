@@ -21,6 +21,18 @@
         ]
 ])
 @section('content')
+    <style>
+        .weui-label{
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+        .weui-cell__bd{
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+    </style>
 <body>
 <!--头部-->
 <div class="weui-flex" id="header_top">

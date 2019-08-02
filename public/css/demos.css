@@ -67,19 +67,21 @@ footer a {
     line-height: 60px;
     color: #fff;
     font-weight: bold;
+    font-size: 21px;
 }
 
 #user_value {
     text-align: center;
     color: #fff;
     padding: 20px 10px;
+    font-size: 14px;
 
 }
 
 #user_gold {
     font-size: 12px;
     line-height: 25px;
-    color: #333;
+    color: #666;
     padding: 15px;
 }
 
@@ -98,7 +100,7 @@ footer a {
 
 .weui-cell__ft {
     line-height: 32px;
-    margin-top: 15px;
+
 }
 
 #weui-tab {

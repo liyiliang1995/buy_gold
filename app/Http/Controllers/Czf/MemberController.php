@@ -22,6 +22,16 @@ class MemberController extends Controller
         $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet','setUser']);
     }
 
+    public function memberIndex(){
+
+        $member = \Auth::guard()->user();
+
+        return view('czf.member',compact('member'));
+
+    }
+
+
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 获取用户设置
