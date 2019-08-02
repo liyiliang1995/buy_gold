@@ -98,12 +98,31 @@ class BuyGold extends Model
 
     /**
      * @param $value
-     * @see 燃烧金币
+     * @see 燃烧金币合计5%
      */
     public function getBurnGoldAttribute():string
     {
-        return burn_gold($this->gold);
+        return bcadd($this->true_burn_gold,$this->return_burn_gold,2);
     }
+
+    /**
+     * @return string
+     * @see 返回金币池的4%
+     */
+    public function getReturnBurnGoldAttribute():string
+    {
+        return burn_gold($this->gold,0.04);
+    }
+
+    /**
+     * @return string
+     * @see 真正燃烧的1%
+     */
+    public function getTrueBurnGoldAttribute():string
+    {
+        return burn_gold($this->gold,0.01);
+    }
+
 
     /**
      * @return float

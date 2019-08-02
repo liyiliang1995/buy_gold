@@ -152,7 +152,9 @@ class GoodsLogic extends BaseLogic
             // 购物扣除
             $this->getBuyGoldGoldFlowDetail(0,1,userId(),$this->gold,"购物消耗金币")('App\OrderDetail'),
             // 返回金币池
-            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->getBurnGold(),"购物燃烧金币返回金币池")('App\OrderDetail'),
+            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->getReturnBurnGold(),"购物金币返回金币池")('App\OrderDetail'),
+            // 彻底燃烧
+            $this->getBuyGoldGoldFlowDetail(0,11,userId(),$this->getTrueBurnGold(),"购物金币彻底燃烧")('App\OrderDetail'),
             // 赠送10倍积分
             $this->getBuyGoldIntegralFlowDetail(1,userId(),$this->getGiveIntegral(),"购物赠送积分")('App\OrderDetail'),
         ]);
@@ -168,16 +170,34 @@ class GoodsLogic extends BaseLogic
         \Auth::user()->integral = bcadd(\Auth::user()->integral,$this->getGiveIntegral(),0);
         \Auth::user()->save();
         //燃烧金币未完成
-        set_gold_pool($this->getBurnGold());
+        set_gold_pool($this->getReturnBurnGold());
     }
 
     /**
      * @return float
-     * @see 燃烧金币
+     * @see 燃烧金币总计
      */
     public function getBurnGold():float
     {
-        return burn_gold($this->gold);
+        return bcadd($this->getTrueBurnGold(),$this->getReturnBurnGold(),2);
+    }
+
+    /**
+     * @return float
+     * @see 真正燃烧金币
+     */
+    public function getTrueBurnGold():float
+    {
+        return burn_gold($this->gold,0.01);
+    }
+
+    /**
+     * @return float
+     * @see 燃烧返回金币池
+     */
+    public function getReturnBurnGold():float
+    {
+        return burn_gold($this->gold,0.04);
     }
 
     /**

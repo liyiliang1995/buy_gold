@@ -112,7 +112,7 @@ class TradeLogic extends BaseLogic
         $this->oBuyGoldDetail->member->gold = bcadd($this->oBuyGoldDetail->member->gold,$this->oBuyGoldDetail->gold,2);
         $this->oBuyGoldDetail->member->energy = bcadd($this->oBuyGoldDetail->member->energy,$this->oBuyGoldDetail->energy,0);
         $this->oBuyGoldDetail->member->save();
-        set_gold_pool($this->oBuyGoldDetail->gold);
+        set_gold_pool($this->oBuyGoldDetail->return_burn_gold);
     }
 
     /**
@@ -145,8 +145,10 @@ class TradeLogic extends BaseLogic
             $this->getBuyGoldGoldFlowDetail(0,2,userId(),$this->oBuyGoldDetail->sum_gold,"出售金币")('App\BuyGoldDetail'),
             // 买家增加金币流水
             $this->getBuyGoldGoldFlowDetail(1,3,$this->oBuyGoldDetail->user_id,$this->oBuyGoldDetail->gold,"求购金币")('App\BuyGoldDetail'),
-            // 燃烧金币流水
-            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->oBuyGoldDetail->burn_gold,"出售金币燃烧金币返回金币池")('App\BuyGoldDetail'),
+            // 燃烧金币返回流水
+            $this->getBuyGoldGoldFlowDetail(0,5,userId(),$this->oBuyGoldDetail->return_burn_gold,"出售金币返回金币池")('App\BuyGoldDetail'),
+            // 出售金币彻底燃烧
+            $this->getBuyGoldGoldFlowDetail(0,11,userId(),$this->oBuyGoldDetail->true_burn_gold,"出售金币彻底燃烧")('App\BuyGoldDetail'),
             // 卖家消耗积分流水
             $this->getBuyGoldIntegralFlowDetail(2,userId(),$this->oBuyGoldDetail->consume_integral,"出售金币消耗积分")('App\BuyGoldDetail'),
 
