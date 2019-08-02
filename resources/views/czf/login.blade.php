@@ -29,8 +29,8 @@
             height: 100%;
         }
     </style>
-    <body class="login-page">
-
+    <body class="login-page" style="background: none">
+    <img src="/images/bolang.png" style="position: fixed; width: 100%; bottom: 0;height: auto;">
     <div class="weui-flex">
         <div class="weui-flex__item">
             <div class="weui-login">
