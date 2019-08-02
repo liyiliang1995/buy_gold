@@ -18,13 +18,19 @@ class MemberController extends Controller
      */
 
     public function __construct()
-    {
+    {       // dd(get_gold_pool());
         $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet','setUser']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 会员中心
+     */
     public function memberIndex(){
 
         $member = \Auth::guard()->user();
+
+
 
         return view('czf.member',compact('member'));
 

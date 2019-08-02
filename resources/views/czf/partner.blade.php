@@ -20,17 +20,9 @@
         }
     </style>
     <body>
-    <!--头部-->
-    <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="./img/fh.png" alt=""></a>
-        <div class="weui-flex__item">我的伙伴</div>
-    </div>
-
     <div class="weui-flex">
         <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">注册新用户</div>
     </div>
-
-
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">

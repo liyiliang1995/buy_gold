@@ -1,15 +1,15 @@
 @extends('czf.base',['header'=>'用户 - 完善信息',
 'css' => [
        'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
-        'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css',
+        'css/weui.min.css',
+        'css/jquery-weui.min.css',
         'css/demos.css',
     ],
 'js' => [
         'js/fastclick.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
+        'js/jquery-weui.min.js',
+        'js/swiper.min.js',
+        'js/city-picker.min.js'
     ]
 ])
 @section('content')
@@ -36,11 +36,6 @@
         }
     </style>
     <body>
-    <!--头部-->
-    <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
-        <div class="weui-flex__item">设置</div>
-    </div>
 
     <!--设置-->
     <div class="weui-cells weui-cells_form" id="set_value">

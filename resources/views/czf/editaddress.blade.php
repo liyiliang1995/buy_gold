@@ -1,7 +1,7 @@
 @extends('czf.base',['header'=>'编辑地址',
 'css' => [
-        'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css',
+        'css/weui.min.css',
+        'css/jquery-weui.min.css',
         'css/jquery-weui.css',
         'css/demos.css'
     ],
@@ -34,11 +34,6 @@
         }
     </style>
 <body>
-<!--头部-->
-<div class="weui-flex" id="header_top">
-    <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
-    <div class="weui-flex__item">编辑地址</div>
-</div>
 
 <form action="{{ route("postEditAddress",['url'=>request()->input('url') ?? ''])}}" method="post" id="address">
 <div class="weui-cells weui-cells_form" style="margin-top: 0">

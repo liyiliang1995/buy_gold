@@ -1,15 +1,14 @@
 @extends('czf.base',['header'=>'用户 - 完善信息',
 'css' => [
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
-        'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css',
+        'css/weui.min.css',
+        'css/jquery-weui.min.css',
         'css/style.css'
     ],
 'js' => [
-        'https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js',
-        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
+        'js/jquery-weui.min.js',
+        'js/swiper.min.js',
+        'js/city-picker.min.js'
     ]
 ])
 @section('content')
