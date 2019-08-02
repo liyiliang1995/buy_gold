@@ -1,7 +1,7 @@
 @extends('czf.base',['header'=>'用户 - 完善信息',
 'css' => [
-        'https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/weui/2.0.1/style/weui.css',
+         'css/weui.min.css',
+        '/css/weui.css',
         'css/demos.css',
     ],
 'js' => [
@@ -14,6 +14,11 @@
 ])
 
 @section('content')
+    <style>
+        #partner_list{
+            font-size: 12px;
+        }
+    </style>
     <body>
     <!--头部-->
     <div class="weui-flex" id="header_top">

@@ -10,6 +10,11 @@
     ],
 ])
 @section('content')
+    <style>
+        .weui-cell__bd{
+            font-size: 14px;
+        }
+    </style>
     <body>
     <!--头部-->
     <div class="weui-flex" id="header_top">
