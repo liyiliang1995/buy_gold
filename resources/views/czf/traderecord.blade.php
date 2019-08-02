@@ -35,6 +35,7 @@
         .weui-flex__item{
             color: #666;
             font-size: 14px;
+
         }
     </style>
     <body ontouchstart>
