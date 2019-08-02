@@ -46,6 +46,7 @@ Route::group([],function($router){
         $router->get('member_index','MemberController@memberIndex')->name('member_index');
         $router->get('help_center','MemberController@helpCenter')->name('help_center');
         $router->get('notification_list','MemberController@notificationList')->name('notification_list');
+        $router->get('article_content/{id}','MemberController@articleContent')->name('article_content');
     });
 });
 Auth::routes();

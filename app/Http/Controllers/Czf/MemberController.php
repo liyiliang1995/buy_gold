@@ -19,23 +19,22 @@ class MemberController extends Controller
 
     public function __construct()
     {       // dd(get_gold_pool());
-        $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet','setUser']);
+        $this->middleware(['auth', 'checkmbr'])->except(['sendMsg', 'getUserSet', 'setUser']);
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 会员中心
      */
-    public function memberIndex(){
+    public function memberIndex()
+    {
 
         $member = \Auth::guard()->user();
 
 
-
-        return view('czf.member',compact('member'));
+        return view('czf.member', compact('member'));
 
     }
-
 
 
     /**
@@ -52,11 +51,11 @@ class MemberController extends Controller
     /**
      * 用户设置
      */
-    public function setUser(Request $request,Member $member)
+    public function setUser(Request $request, Member $member)
     {
-        $aData = [];
-        $aData['name'] = $request->post('name');
-        $aData['phone'] = $request->post('phone');
+        $aData           = [];
+        $aData['name']   = $request->post('name');
+        $aData['phone']  = $request->post('phone');
         $aData['phone2'] = $request->post('phone2');
         $aData['wechat'] = $request->post('wechat');
         if (!empty($request->post('pw1'))) {
@@ -102,8 +101,8 @@ class MemberController extends Controller
      */
     public function agentRegister(AgentRegister $agentRegister, Request $request)
     {
-        $aParam['user_id'] = userId();
-        $aParam['phone'] = $request->post('phone');
+        $aParam['user_id']  = userId();
+        $aParam['phone']    = $request->post('phone');
         $aParam['password'] = $request->post('password');
         if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
             return $this->success('注册成功');
@@ -116,10 +115,8 @@ class MemberController extends Controller
      *
      * @see 帮助中心
      */
-    public function helpCenter(){
-
-
-
+    public function helpCenter()
+    {
         return view('czf.helpcenter');
     }
 
@@ -127,11 +124,18 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 通知公告
      */
-public function notificationList(){
+    public function notificationList()
+    {
+        return view('czf.notification');
+    }
+
+    public function articleContent(int $id){
 
 
-    return view('czf.notification');
-}
+        return view('czf.articlecontent');
+    }
+
+
 
     /**
      * @param MemberLogic $memberLogic
