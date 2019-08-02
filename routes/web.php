@@ -44,6 +44,8 @@ Route::group([],function($router){
         $router->get('integral/record','TradeController@integralRecord')->name('integral_record');
         $router->get('order_gold_detail/{id}','TradeController@orderGoldDetail')->name('order_gold_detail');
         $router->get('member_index','MemberController@memberIndex')->name('member_index');
+        $router->get('help_center','MemberController@helpCenter')->name('help_center');
+        $router->get('notification_list','MemberController@notificationList')->name('notification_list');
     });
 });
 Auth::routes();

@@ -31,6 +31,13 @@
     ]
 ])
 @section('content')
+    <style>
+        .weui-flex__item{
+            color: #666;
+            font-size: 14px;
+
+        }
+    </style>
     <body ontouchstart>
     <div class="weui-flex" id="header_top">
         <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>

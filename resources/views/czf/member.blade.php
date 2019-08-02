@@ -124,7 +124,7 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="{{route('order_list')}}">
+        <a class="weui-cell weui-cell_access" href="{{route('help_center')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-bulb"></i></div>
             <div class="weui-cell__bd">
                 <p>帮助中心</p>
@@ -132,7 +132,7 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="{{route('order_list')}}">
+        <a class="weui-cell weui-cell_access" href="{{route('notification_list')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-sound"></i></div>
             <div class="weui-cell__bd">
                 <p>通知公告</p>

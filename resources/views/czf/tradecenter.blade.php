@@ -36,6 +36,15 @@
         .weui-icon-success{
             color:#07c160 ;
         }
+        #trading_va{
+            font-size: 14px;
+        }
+        .weui-flex__item{
+            font-size: 14px;
+        }
+        .weui-cell{
+            font-size: 14px;
+        }
     </style>
     <body>
     <!--头部-->
