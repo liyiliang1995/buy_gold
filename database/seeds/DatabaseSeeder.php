@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             'user_sum_gold' => 0.00,
             'date' => date('Y-m-d'),
             // 用户购物消耗总金额
-            'shop_gold' => 0.00,
+            'burn_gold' => 0.00,
         ]);
     }
 }

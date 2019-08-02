@@ -216,7 +216,7 @@ class GoodsLogic extends BaseLogic
     {
         $fTrueRate = bcmul(config('czf.stockholders_rate'),$fRate,2);
         $fTmp = bcmul($this->gold,$fTrueRate,2);
-        $fStockholderGold = bcdiv($fTmp,100,2);
+        $fStockholderGold = bcdiv($fTmp,100,5);
         return $fStockholderGold ?? 0.00;
     }
 
