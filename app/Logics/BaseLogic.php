@@ -256,7 +256,21 @@ class BaseLogic {
 
     /**
      * @param  int $iIsIncome 是否收入 0 支出 1收入
-     * @param int $iType 业务类型 1 用户消费 2 用户出售 3 用户求购 4领取金币 5返回金币池 6代理注册扣除 7代理扣除增加 8 15天为登陆扣除 9 后台充值增加 10后台充值减少 11彻底燃烧
+     * @param int $iType
+     * 业务类型
+     * 1 用户消费
+     * 2 用户出售
+     * 3 用户求购
+     * 4 领取金币
+     * 5 返回金币池
+     * 6 代理注册扣除
+     * 7 代理扣除增加
+     * 8 15天为登陆扣除
+     * 9 后台充值增加
+     * 10 后台充值减少
+     * 11 彻底燃烧
+     * 12 购物金币流向金币池
+     * 13 购物消耗金币流向股东
      * @param int $iUserId
      * @param float $fGold
      * @return object
@@ -274,8 +288,6 @@ class BaseLogic {
         $oGoldModel->save();
         $flow_id = $oGoldModel->id;
         return $this->getCreateDetailFlow($flow_id,1);
-
-
     }
     /**
      * @param int $iType 业务类型 1消费获得 2 出售金币消耗

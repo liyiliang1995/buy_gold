@@ -38,6 +38,7 @@ class MemberController extends AdminController
         $grid->column('parent_user_id', __('上级用户'));
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
+        $grid->column('rate', __('股东分成比列'));
         $grid->column('status', __('状态'));
         $grid->column('is_admin', __('是否股东'));
         $grid->column('ship_address.ship_address', __('收获地址'));
@@ -97,7 +98,7 @@ class MemberController extends AdminController
         $form->text('name', __('名称'));
         $form->mobile('phone', __('手机号码'));
         $form->text('phone2', __('联系手机'));
-//        $form->decimal('gold', __('金币'))->default(0.00);
+        $form->decimal('rate', __('股东金币分成比列(例如输入12为12%)'))->default(0.00);
 //        $form->decimal('energy', __('能量值'))->default(0.00);
 //        $form->decimal('integral', __('积分值'))->default(0.00);
 //        $form->number('parent_user_id', __('Parent user id'));
@@ -152,5 +153,25 @@ class MemberController extends AdminController
     {
         return new MemberLogic($oModel);
     }
+
+    /**
+     * @param int $id
+     * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed|null|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update($id)
+    {
+        $member = new Member();
+        $fRate = request()->input('rate');
+        if ($fRate < 0)
+            throw new \Exception("分成比列不能小于0");
+        $is_admin = request()->input('is_admin');
+        if ($is_admin) {
+            $haverate = $member->where(['is_admin' =>1,['id','<>',$id]])->sum('rate');
+            if (bcadd($haverate, $fRate, 5) > 100)
+                throw new \Exception("所有股东分成比例之和不能超过100");
+        }
+        return $this->form()->update($id);
+    }
+
 
 }

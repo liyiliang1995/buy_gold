@@ -19,4 +19,5 @@ return [
         's4' => "str:send_msg:log",     // 短信异常日志
         's5' => 'str:gold_pool_num',    // 金币池总价格
     ],
+    'stockholders_rate' => 0.5,         // 购买商品给股东分成比列
 ];
