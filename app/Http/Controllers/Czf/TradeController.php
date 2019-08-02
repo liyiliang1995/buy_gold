@@ -202,6 +202,14 @@ class TradeController extends Controller
     }
 
     /**
+     * @获取金币池剩余金币数量
+     */
+    public function ajaxGetGoldPool()
+    {
+        return $this->success('',['gold'=>get_gold_pool()]);
+    }
+
+    /**
      * @param object|null $oModel
      * @return TradeLogic
      */

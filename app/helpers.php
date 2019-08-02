@@ -282,3 +282,61 @@ if (!function_exists('redis_get')) {
         return $result;
     }
 }
+
+if (!function_exists('get_gold_pool')) {
+    /**
+     * @return foot
+     * @获取金币池金币数量
+     */
+    function get_gold_pool():float
+    {
+        $sKey = config('czf.redis_key.s5');
+        $val = redis_get($sKey);
+        if (!$val) {
+            $aData = gold_compute();
+            $val = $aData['gold'];
+            redis_set(config('czf.redis_key.s5'),$val,3600*24);
+        }
+        return $val;
+    }
+}
+if (!function_exists('set_gold_pool')) {
+    /**
+     * @param float $fVal
+     * $param bool $bFlag true 增加 false 减少
+     * @see 设置金币池剩下数量
+     */
+    function set_gold_pool(float $fVal,bool $bFlag = true):float
+    {
+        $gold = get_gold_pool();
+        $fTmp = $bFlag ? bcadd($gold,$fVal,2) : bcsub($gold,$fVal,2);
+        redis_set(config('czf.redis_key.s5'),$fTmp,3600*24);
+        return $fTmp;
+    }
+}
+if (!function_exists('gold_compute')) {
+    /**
+     * @return array
+     */
+    function gold_compute(): array
+    {
+        // 上一次统计的金币池总数量
+        $oGoldChangeDayModel = new \App\GoldChangeDay;
+        $oGoldFlowModel = new \App\GoldFlow;
+        $oMemberModel = new \App\Member;
+        $oLastGoldPool = $oGoldChangeDayModel->getLastData();
+        // 统计时间里面金币池支出数量(1 后台充值金币）
+        $fGoldOutNum = $oGoldFlowModel->getGoldPullOut();
+        // 统计时间里面金币池入账数量(1 后台充值扣除金币 2燃烧金币）
+        $fGoldInNum = $oGoldFlowModel->getGoldPullIn();
+        // 所有用户手中金币
+        $fMemberGoldNum = $oMemberModel->getAllMemberGold();
+        // 用户购物消耗金币
+        $fShopGoldNum = $oGoldFlowModel->getShopGoldNum();
+        $fTmp = bcsub($oLastGoldPool['gold'], $fGoldOutNum, 2);
+        $aData['gold'] = bcadd($fTmp, $fGoldInNum);
+        $aData['user_sum_gold'] = $fMemberGoldNum;
+        $aData['shop_gold'] = $fShopGoldNum;
+        return $aData;
+    }
+}

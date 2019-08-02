@@ -168,6 +168,7 @@ class GoodsLogic extends BaseLogic
         \Auth::user()->integral = bcadd(\Auth::user()->integral,$this->getGiveIntegral(),0);
         \Auth::user()->save();
         //燃烧金币未完成
+        set_gold_pool($this->getBurnGold());
     }
 
     /**

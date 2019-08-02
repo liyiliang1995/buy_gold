@@ -142,10 +142,13 @@ class MemberLogic extends BaseLogic
         $member = $this->find($aParam['member_id']);
         if ($aParam['gold'] < 0 && abs($aParam['gold']) > $member->gold)
             throw new \Exception('扣除金额大于用户实际金额！');
-        if ($aParam['gold'] > 0 )
-            $member->gold = bcadd($member->gold,$aParam['gold'],2);
-        else
-            $member->gold = bcsub($member->gold,abs($aParam['gold']),2);
+        if ($aParam['gold'] > 0 ) {
+            $member->gold = bcadd($member->gold, $aParam['gold'], 2);
+            set_gold_pool($aParam['gold'],false);
+        } else {
+            $member->gold = bcsub($member->gold, abs($aParam['gold']), 2);
+            set_gold_pool($aParam['gold']);
+        }
         $member->save();
     }
 
