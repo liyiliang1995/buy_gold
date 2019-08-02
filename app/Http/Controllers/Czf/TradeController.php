@@ -36,7 +36,7 @@ class TradeController extends Controller
         $aParams['gold']  = request()->post('gold');
         $aParams['price'] = round(request()->post('price'), 2);
         $this->Logic($buyGold)->buyGold($aParams);
-        return redirect()->route("trade_center");
+        return redirect()->route("trade_record");
     }
 
     /**
@@ -71,7 +71,7 @@ class TradeController extends Controller
     public function sellGoldOrder(int $id, BuyGold $buyGold)
     {
         if ($this->Logic($buyGold)->sellGold($id)) {
-            return redirect(route('trade_center'));
+            return redirect(route('trade_record'));
         } else {
             abort(500);
         }

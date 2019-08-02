@@ -19,7 +19,7 @@ class MemberController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet']);
+        $this->middleware(['auth','checkmbr'])->except(['sendMsg','getUserSet','setUser']);
     }
 
     /**
@@ -43,16 +43,11 @@ class MemberController extends Controller
         $aData['phone'] = $request->post('phone');
         $aData['phone2'] = $request->post('phone2');
         $aData['wechat'] = $request->post('wechat');
-        if (!empty($request->post('pw1'))){
+        if (!empty($request->post('pw1'))) {
             $aData['password'] = $request->post('pw1');
         }
-        $res = $this->Logic($member)->update(userId(),$aData);
-
-        if ($res){
-            echo '1';
-        }else{
-            echo '2';
-        }
+        $res = $this->Logic($member)->setUser($aData);
+        return $res ? $this->success() : $this->server_error();
     }
 
     /**

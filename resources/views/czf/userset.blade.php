@@ -7,7 +7,7 @@
     ],
 'js' => [
         'js/fastclick.js',
-         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
+        'https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js',
         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js',
         'https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js'
     ]
@@ -29,7 +29,7 @@
     <body>
     <!--头部-->
     <div class="weui-flex" id="header_top">
-        <a href="javascript:history.back(-1)"><img src="./img/fh.png" alt=""></a>
+        <a href="javascript:history.back(-1)"><img src="/img/fh.png" alt=""></a>
         <div class="weui-flex__item">设置</div>
     </div>
 
@@ -147,15 +147,12 @@
                         return;
                     },
                     success: function (result) {
-
-                        if (result == 1) {
-                            $.toast("操作成功！", 'text');
-                            return;
-                        } else {
-                            $.toast("操作失败！", 'text');
-                            return;
+                        if(result.code == 200) {
+                            console.log("{{request()->input('url')}}");
+                            window.location.href = "{{request()->input('url')}}";
                         }
-
+                         else
+                            $.toast(result.message, 'text');
                     },
                 })
 

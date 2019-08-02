@@ -149,6 +149,21 @@ class MemberLogic extends BaseLogic
         $member->save();
     }
 
+    /**
+     * @param array $aParam
+     */
+    public function setUser(array $aParam):bool
+    {
+        if (phoneVerif($aParam['phone']) === false)
+            throw new  CzfException("手机号码格式不正确");
+        if (\Auth::user()->phone != $aParam['phone'] && $this->model->isExistsPhone($aParam['phone']))
+            throw new CzfException("注册手机号码已经存在！");
+        if (\Auth::user()->status == 0)
+            $aParam['status'] = 1;
+        return $this->update(userId(),$aParam);
+
+    }
+
 
 
 

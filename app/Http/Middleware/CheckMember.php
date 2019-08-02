@@ -27,7 +27,7 @@ class CheckMember
     {
         if (\Auth::user()->status == 0) {
             throw new CheckMbrException(
-                '请先完善用户信息', $guards, route('userset')
+                '请先完善用户信息', $guards, route('userset',['url'=>url()->full()])
             );
         }
     }
