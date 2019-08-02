@@ -152,15 +152,17 @@
             }
         };
         $(function () {
-            @if($errors->has('user_id'))
-                $.toast("{{$errors->get('user_id')[0]}}", 'text');
+            @php
+                $errors = session()->get('lock');
+            @endphp
+            @if($errors)
+                $.toast("{{$errors}}", 'text');
             @endif
-
+            var show = "{{request()->input("show") ?? ''}}";
             var url1 = "{{route('ajaxGetBuyGoldType',['type'=>1])}}";
             var url2 = "{{route('ajaxGetBuyGoldType',['type'=>2])}}";
-            trade_record.url = url1;
-            trade_record.obj = $("#tab1_item");
-            trade_record.ajaxGetBuyGoldType();
+
+
             $(".no_is_send").on('click',function () {
                 trade_record.url = url1;
                 trade_record.obj = $("#tab1_item");
@@ -181,6 +183,11 @@
                     trade_record.ajaxGetBuyGoldType();
                 }, 500);   //模拟延迟
             })
+            if (show.trim() == '2') {
+                $(".is_send").trigger('click');
+            } else {
+                $(".no_is_send").trigger('click');
+            }
         })
     </script>
 

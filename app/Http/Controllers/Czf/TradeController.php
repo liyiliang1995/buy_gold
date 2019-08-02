@@ -36,7 +36,7 @@ class TradeController extends Controller
         $aParams['gold']  = request()->post('gold');
         $aParams['price'] = round(request()->post('price'), 2);
         $this->Logic($buyGold)->buyGold($aParams);
-        return redirect()->route("trade_record");
+        return redirect()->route("trade_record",['show'=>3]);
     }
 
     /**
@@ -71,7 +71,7 @@ class TradeController extends Controller
     public function sellGoldOrder(int $id, BuyGold $buyGold)
     {
         if ($this->Logic($buyGold)->sellGold($id)) {
-            return redirect(route('trade_record'));
+            return redirect(route('trade_record',['show'=>2]));
         } else {
             abort(500);
         }
@@ -188,7 +188,7 @@ class TradeController extends Controller
     public function applyCancelOrder(int $id,BuyGold $buyGold)
     {
         $this->Logic($buyGold)->applyCancelOrder($id);
-        return redirect(route('trade_record'));
+        return redirect(route('trade_record',['show'=>3]));
     }
 
     /**
@@ -198,7 +198,7 @@ class TradeController extends Controller
     public function confirmOrder(int $id,BuyGold $buyGold)
     {
         $this->Logic($buyGold)->confirmOrder($id);
-        return redirect(route('trade_record'));
+        return redirect(route('trade_record',['show'=>2]));
     }
 
     /**
@@ -206,7 +206,10 @@ class TradeController extends Controller
      */
     public function ajaxGetGoldPool()
     {
-        return $this->success('',['gold'=>get_gold_pool()]);
+        $aData = gold_compute();
+        $aData['test'] = array_sum($aData);
+        $aData['redis'] = get_gold_pool();
+        return $this->success('',$aData);
     }
 
     /**
