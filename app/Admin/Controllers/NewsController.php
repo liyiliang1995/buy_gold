@@ -25,16 +25,26 @@ class NewsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new News);
-
-        $grid->column('id', __('Id'));
-        $grid->column('title', __('标题'));
-        $grid->column('type', __('类型'));
-        $grid->column('content', __('内容'));
-        $grid->column('is_recommend', __('推荐'));
+        $grid->column('id', __('Id'))->width(10);
+        $grid->column('title', __('标题'))->width(300);
+        $grid->column('type',__('类型'))->display(function ($type){
+            if ($type==1){
+                return '通知公告';
+            }else{
+                return '帮助文章';
+            }
+        })->width(100);
+        $grid->column('content', __('内容'))->width(800);
+//        $grid->column('is_recommend', __('推荐'))->display(function ($is_recommend){
+//            if ($is_recommend==1){
+//                return '是';
+//            }else{
+//                return '否';
+//            }
+//        })->width(60);
         //$grid->column('deleted_at', __('Deleted at'));
-        $grid->column('created_at', __('创建时间'));
-        $grid->column('updated_at', __('更新时间'));
-
+        $grid->column('created_at', __('创建时间'))->width(150);
+        $grid->column('updated_at', __('更新时间'))->width(150);
         return $grid;
     }
 
@@ -52,7 +62,7 @@ class NewsController extends AdminController
         $show->field('title', __('标题'));
         $show->field('type', __('类型'));
         $show->field('content', __('内容'));
-        $show->field('is_recommend', __('推荐'));
+        //$show->field('is_recommend', __('推荐'));
      //   $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
@@ -70,9 +80,9 @@ class NewsController extends AdminController
         $form = new Form(new News);
 
         $form->text('title', __('标题'));
-        $form->switch('type', __('类型'));
+        $form->switch('type', __('公告'));
         $form->textarea('content', __('内容'));
-        $form->switch('is_recommend', __('推荐'));
+       // $form->switch('is_recommend', __('推荐'));
 
         return $form;
     }
