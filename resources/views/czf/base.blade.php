@@ -9,7 +9,7 @@
     @foreach($css as $c)
         <link rel="stylesheet" href="{{ asset("$c") }}?version=1.02">
     @endforeach
-    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 </head>
 @yield('content')
 @foreach($js as $j)

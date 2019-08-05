@@ -32,7 +32,12 @@
         .weui-cell__hd i{
             padding: 10px;
         }
-
+        #member_but p{
+            color: red;
+        }
+        #member_but i{
+            color: red;
+        }
     </style>
     <body>
     <!--个人中心-->
@@ -160,7 +165,7 @@
                 </div>
                 <p class="weui-tabbar__label">首页</p>
             </a>
-            <a href="{{route('member_index')}}" class="weui-tabbar__item">
+            <a href="{{route('member_index')}}" class="weui-tabbar__item" id="member_but">
                 <div class="weui-tabbar__icon">
                     <i class="iconfont icon-user-fill"></i>
                 </div>
@@ -170,7 +175,5 @@
     </div>
 
     </body>
-
-
 
 @endsection
