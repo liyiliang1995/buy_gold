@@ -46,7 +46,7 @@
             <div class="weui-flex__item" id="user_tx">
                 <div class="weui-flex">
                     <div class="weui-flex__item"><img src="./img/logo.png" alt=""></div>
-                    <div class="weui-flex__item"><p>{{$member->name}}</p></div>
+                    <div class="weui-flex__item" style="width: 200px;"><p>{{$member->name}}</p></div>
                 </div>
             </div>
             <div class="weui-flex__item">
@@ -110,10 +110,18 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="{{route('order_list')}}">
+        <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-Dollar"></i></div>
             <div class="weui-cell__bd">
                 <p>手机充值</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
+            <div class="weui-cell__hd"><i class="iconfont icon-Dollar"></i></div>
+            <div class="weui-cell__bd">
+                <p>充值记录</p>
             </div>
             <div class="weui-cell__ft">
             </div>

@@ -129,12 +129,20 @@ class MemberController extends Controller
         return view('czf.notification');
     }
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 文章内容
+     */
     public function articleContent(int $id){
-
 
         return view('czf.articlecontent');
     }
 
+    public function phoneCenter(){
+
+        return view('czf.phonecenter');
+    }
 
 
     /**
