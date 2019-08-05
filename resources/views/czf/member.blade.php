@@ -118,7 +118,7 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
+        <a class="weui-cell weui-cell_access" href="{{route('phone_record')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-Dollar"></i></div>
             <div class="weui-cell__bd">
                 <p>充值记录</p>

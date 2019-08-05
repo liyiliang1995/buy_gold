@@ -139,11 +139,30 @@ class MemberController extends Controller
         return view('czf.articlecontent');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 手机充值中心
+     */
     public function phoneCenter(){
 
         return view('czf.phonecenter');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 手机充值列表
+     */
+    public function phoneRecord(){
+        return view('czf.phonerecord');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 手机充值详情
+     */
+    public function phoneDetails(){
+        return view('czf.phonedetails');
+    }
 
     /**
      * @param MemberLogic $memberLogic

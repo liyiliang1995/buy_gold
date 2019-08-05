@@ -48,6 +48,8 @@ Route::group([],function($router){
         $router->get('notification_list','MemberController@notificationList')->name('notification_list');
         $router->get('article_content/{id}','MemberController@articleContent')->name('article_content');
         $router->get('phone_center','MemberController@phoneCenter')->name('phone_center');
+        $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
+        $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
     });
 });
 Auth::routes();
