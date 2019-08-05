@@ -50,6 +50,7 @@ Route::group([],function($router){
         $router->get('phone_center','MemberController@phoneCenter')->name('phone_center');
         $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
         $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
+        $router->get('add/auto_gold/{type}','MemberController@addAutoGoldMembers')->name('add_auto_gold');
     });
 });
 Auth::routes();

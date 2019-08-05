@@ -157,6 +157,7 @@ class MemberController extends Controller
         return view('czf.phonecenter');
     }
 
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值列表
@@ -173,6 +174,22 @@ class MemberController extends Controller
     public function phoneDetails()
     {
         return view('czf.phonedetails');
+    }
+
+    /**
+     * @param $type 1 开启 2关闭
+     * @see 加入自动领取金币
+     */
+    public function addAutoGoldMembers(int $type,Member $member)
+    {
+        $id = userId();
+        if (in_array($type,[0,1])) {
+            $this->Logic($member)->addAutoGoldMembers($id, $type);
+            return $this->success();
+        } else {
+            return $this->params_error();
+        }
+
     }
 
     /**

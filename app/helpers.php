@@ -340,3 +340,116 @@ if (!function_exists('gold_compute')) {
         return $aData;
     }
 }
+
+if (!function_exists('redis_hset')) {
+    /**
+     * @param $sKey
+     * @param $field
+     * @param $content
+     * @return bool
+     */
+    function redis_hset($sKey,$field,$content):bool
+    {
+        if (is_array($content) || is_object($content)) {
+            $bRes = Redis::hset($sKey,$field,json_encode($content,true));
+        } else {
+            $bRes = Redis::hset($sKey,$field,$content);
+        }
+        return $bRes;
+    }
+}
+if (!function_exists('redis_hget')) {
+    /**
+     * @param $sKey
+     * @param $field
+     * @param null $db
+     */
+    function redis_hget($sKey,$field)
+    {
+        $sData = Redis::hget($sKey,$field);
+        $aData = json_decode($sData,true);
+        if ($aData && (is_object($aData)) || (is_array($aData) && !empty($aData))) {
+            $result = $aData;
+        } else {
+            $result = $sData;
+        }
+        return $result;
+    }
+}
+if (!function_exists('redis_hdel')) {
+    /**
+     * @param $sKey
+     * @param $field
+     * @param null $db
+     */
+    function redis_hdel($sKey,$field)
+    {
+        return Redis::hdel($sKey,$field);
+    }
+}
+
+if (!function_exists('redis_hexists')) {
+    /**
+     * @param $sKey
+     * @param $field
+     * @查看哈希表 key 中，给定域 field 是否存在。
+     */
+    function redis_hexists($sKey,$field)
+    {
+        return Redis::hexists($sKey,$field);
+    }
+}
+
+if (!function_exists('redis_hgetall')) {
+    /**
+     * @param $sKey
+     * @see 获取hash 所有的key
+     */
+    function redis_hgetall($sKey)
+    {
+        return Redis::hgetall($sKey);
+    }
+}
+if (!function_exists('redis_hincrby')) {
+    /**
+     * @param $sKey
+     * @see 获取hash 所有的key
+     */
+    function redis_hincrby($sKey,$field,$increment)
+    {
+        return Redis::hincrby($sKey,$field,$increment);
+    }
+}
+
+
+if (!function_exists('set_auto_gold_time')) {
+    /**
+     * @param $iAutoDay 领取金币的天数
+     */
+    function get_auto_gold_time(int $iAutoDay = 1)
+    {
+        $iAutoDay = $iAutoDay < 1 ? 1 : $iAutoDay;
+        $interval_time = ($iAutoDay - 1) * 30;
+        $auto_gold_time = 20 + $interval_time;
+        return $auto_gold_time;
+    }
+}
+
+if (!function_exists('member_is_auto_gold')) {
+    /**
+     * @param $is_auto 是否开启自动领取 1是 2否
+     * @param $id
+     */
+    function member_is_auto_gold($is_auto,$id,$gold = 0)
+    {
+        $sKey = config('czf.redis_key.h1');
+        $res = redis_hget($sKey,$id);
+        if (!$res) {
+            redis_hset($sKey,$id,['gold' => 0.00,'is_auto' => $is_auto]);
+        } else {
+            redis_hset($sKey,$id,['gold' => bcadd($gold,$res['gold'],2),'is_auto' => $is_auto]);
+        }
+    }
+}
+
+

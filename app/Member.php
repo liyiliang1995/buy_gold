@@ -177,5 +177,16 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->sum('gold') ?? 0.00;
     }
 
+    /**
+     * @see 自己+代理注册人金币总数量
+     */
+    public function getSelfAndChildGoldAttribute():float
+    {
+        $selfGold = $this->gold;
+        $childsGold = $this->where('parent_user_id',$this->id)->sum('gold');
+        $fSumGold = bcadd($selfGold,$childsGold,2);
+        return $fSumGold;
+    }
+
 
 }

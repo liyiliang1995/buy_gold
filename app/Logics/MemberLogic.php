@@ -6,6 +6,7 @@
  * Time: 10:04 AM
  */
 namespace App\Logics;
+use App\HourAvgPrice;
 use Illuminate\Support\Arr;
 use App\Exceptions\CzfException;
 use Illuminate\Support\Facades\DB;
@@ -76,10 +77,8 @@ class MemberLogic extends BaseLogic
      */
     public function agentRegisterIncreaseAndDecrease()
     {
-        \Auth::user()->gold = bcsub(\Auth::user()->gold,100,2);
-        $this->member->gold = bcadd($this->member->gold,100,2);
-        $this->member->save();
-        \Auth::user()->save();
+        \Auth::user()->decrement('gold',100);
+        $this->member->increment('gold',100);
     }
 
     /**
@@ -168,6 +167,119 @@ class MemberLogic extends BaseLogic
         if (\Auth::user()->status == 0)
             $aParam['status'] = 1;
         return $this->update(userId(),$aParam);
+
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @see 增加自动领取金币的用户
+     */
+    public function addAutoGoldMembers(int $id,int $type)
+    {
+        member_is_auto_gold($type,$id);
+    }
+
+    /**
+     * @param float $fRnum 以领取的金币数量
+     * @see 领取金币逻辑
+     * @see 自己+代理注册人金币总数量 $sum
+     * $sum < 1000 领取千分之一
+     * 1000 <= $sum < 5000 领取千分之一点一
+     * 5000 <= $sum 20000 千分之一点二
+     * 20000 <= $sum 领取千分之一点三
+     * @see 金币池数量为10亿  每减少一亿 领取数量减少10%
+     * @see 每日最高领取上限当日日均价价值500元
+     */
+    public function receiveGold(int $id,float $fRnum)
+    {
+        get_gold_pool();
+        $this->model = $this->model->findOrFail($id);
+        if ($this->model->energy >= 1) {
+
+            // 本次领取数量
+            $fNum = $this->getReceiveGoldNum();
+            // 验证
+            $bRes = $this->receiveGoldValidate($fRnum,$fNum);
+
+            if ($bRes) {
+                DB::transaction(function () use($fNum,$id) {
+                    $this->receiveGoldFlow($fNum, $id);
+                    $this->IncreaseAndDecrease($fNum);
+                });
+                // 用户领取金币数量 redis
+                member_is_auto_gold(1,$id,$fNum);
+                // 金币池变化
+                set_gold_pool($fNum,false);
+            }
+        }
+    }
+
+    /**
+     * @return float
+     * @see  获得领取金币数量
+     */
+    public function getReceiveGoldNum():float
+    {
+        // 自己和代理总金币数量
+        $fSumGold = $this->model->self_and_child_gold;
+        // $sum < 1000 领取千分之一
+        if ($fSumGold < 1000)
+            $rate = 0.0010;
+        // 1000 <= $sum < 5000 领取千分之一点一
+        else if (1000 <= $fSumGold &&  $fSumGold < 5000)
+            $rate = 0.0011;
+        // 5000 <= $sum 20000 千分之一点二
+        else if (5000 <= $fSumGold && $fSumGold < 20000)
+            $rate = 0.0012;
+        else
+            $rate = 0.0013;
+        // 领取数量
+        $fNum = bcmul($fSumGold,$rate,2);
+        // 金币池每减少1亿减少百分10
+        $gold_pole = get_gold_pool();
+        // 金币池减少了多少个一亿
+        $iReduceBillion = 10 - ceil($gold_pole/100000000);
+        $iReduceGold = bcmul($fNum,0.1*$iReduceBillion,2);
+        return bcsub($fNum,$iReduceGold,2);
+
+    }
+
+    /**
+     * @param float $fRnum 以领取金币数
+     * @param float $fNum 本次领取金币数量
+     * @return float
+     * @see 领取金币验证
+     */
+    public function receiveGoldValidate(float $fRnum,float $fNum):bool
+    {
+        //每日最高领取上限当日日均价价值500元
+        $oHourAvgPriceModel = new HourAvgPrice;
+        $gold_unit_price = $oHourAvgPriceModel->getBestNewAvgPrice();
+        $fLimitNum = bcdiv(500,$gold_unit_price,2);
+        $fTmp = bcadd($fNum,$fRnum,2);
+        return $fLimitNum > $fTmp;
+    }
+
+    /**
+     * @param float $fNum 领取数量
+     * @see 领取金币流水表
+     */
+    public function receiveGoldFlow(float $fNum,int $id)
+    {
+        // 自动领取一次扣除 1能量值
+        $this->getBuyGoldGoldFlowDetail(1,4,$id,$fNum,"自动领取获得金币");
+        $this->getBuyGoldEnergyFlowDetail(1, $id, 1,'自动领取金币消耗能量值');
+    }
+
+    /**
+     * @param float $fNum
+     * @param int $id
+     */
+    public function IncreaseAndDecrease(float $fNum)
+    {
+        $this->model->increment('gold',$fNum);
+        $this->model->decrement('energy',1);
 
     }
 
