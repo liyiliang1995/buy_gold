@@ -82,12 +82,32 @@
         <div class="weui-col-50" id="user_but">
             <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
             <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
-                <p>自动领取</p><input class="weui-switch" type="checkbox">
+                <p>自动领取</p><input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)">
             </div>
         </div>
     </div>
+    <script>
+        function checkboxOnclick(checkbox) {
 
-
+        if ( checkbox.checked == true){
+            var url = "{{route('add_auto_gold',['type'=>1])}}";
+            }else{
+            var url = "{{route('add_auto_gold',['type'=>0])}}";
+            }
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: "json",
+                error: function (data) {
+                    $.toast("服务器繁忙, 请联系管理员！",'text');
+                    return;
+                },
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+        }
+    </script>
 
     </div>
 
