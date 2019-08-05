@@ -334,7 +334,7 @@ if (!function_exists('gold_compute')) {
         // 用户实际燃烧金币
         $fBurnGoldNum = $oGoldFlowModel->getBurnGoldSum();
         $fTmp = bcsub($oLastGoldPool['gold'], $fGoldOutNum, 2);
-        $aData['gold'] = bcadd($fTmp, $fGoldInNum);
+        $aData['gold'] = bcadd($fTmp, $fGoldInNum,2);
         $aData['user_sum_gold'] = $fMemberGoldNum;
         $aData['burn_gold'] = $fBurnGoldNum;
         return $aData;

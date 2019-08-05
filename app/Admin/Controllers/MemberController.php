@@ -48,6 +48,7 @@ class MemberController extends AdminController
 //        $grid->column('password', __('Password'));
 
         $grid->actions(function ($actions){
+            $actions->disableDelete();
             $actions->disableView();
             $url = route("admin.recharge",['id'=>$actions->getKey()]);
             $actions->append('<a href="'.$url.'">用户充值</a>');
