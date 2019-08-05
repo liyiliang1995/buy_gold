@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Czf;
 
+use App\News;
 use App\Member;
 use App\AgentRegister;
 use App\Logics\MemberLogic;
@@ -115,19 +116,22 @@ class MemberController extends Controller
      *
      * @see 帮助中心
      */
-    public function helpCenter()
+    public function helpCenter(News $news)
     {
-        $member = \Auth::guard()->user();
-        return view('czf.helpcenter');
+        $newslist = $news->where('type', 0)->orderBy('id', 'desc')->get();
+
+        return view('czf.helpcenter', compact('newslist'));
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 通知公告
      */
-    public function notificationList()
+    public function notificationList(News $news)
     {
-        return view('czf.notification');
+        $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
+
+        return view('czf.notification',compact('newslist'));
     }
 
     /**
@@ -135,16 +139,20 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 文章内容
      */
-    public function articleContent(int $id){
+    public function articleContent(int $id, News $news)
+    {
 
-        return view('czf.articlecontent');
+        $newscontent = $this->Logic($news)->find($id);
+
+        return view('czf.articlecontent', compact('newscontent'));
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值中心
      */
-    public function phoneCenter(){
+    public function phoneCenter()
+    {
 
         return view('czf.phonecenter');
     }
@@ -153,7 +161,8 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值列表
      */
-    public function phoneRecord(){
+    public function phoneRecord()
+    {
         return view('czf.phonerecord');
     }
 
@@ -161,7 +170,8 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值详情
      */
-    public function phoneDetails(){
+    public function phoneDetails()
+    {
         return view('czf.phonedetails');
     }
 
