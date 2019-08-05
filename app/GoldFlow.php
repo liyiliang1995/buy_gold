@@ -60,7 +60,10 @@ class GoldFlow extends Model
      */
     public function getGoldPullOut():float
     {
-        return $this->getRechargeNum(9);
+        // 领取扣除
+        $fGoldA = $this->getAutoGoldSum();
+        $fGoldR = $this->getRechargeNum(9);
+        return bcadd($fGoldA,$fGoldR,2);
     }
 
     /**
@@ -112,6 +115,14 @@ class GoldFlow extends Model
     public function getBurnGoldSum():float
     {
         return $this->where(['is_statistical' => 0,'type'=>11])->sum('gold');
+    }
+
+    /**
+     * @return float
+     */
+    public function getAutoGoldSum():float
+    {
+        return $this->where(['is_statistical' => 0,'type'=> 4])->sum('gold');
     }
 
 }

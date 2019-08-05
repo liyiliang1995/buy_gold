@@ -47,6 +47,7 @@ Route::group([],function($router){
         $router->get('help_center','MemberController@helpCenter')->name('help_center');
         $router->get('notification_list','MemberController@notificationList')->name('notification_list');
         $router->get('article_content/{id}','MemberController@articleContent')->name('article_content');
+        $router->get('add/auto_gold/{type}','MemberController@addAutoGoldMembers')->name('add_auto_gold');
     });
 });
 Auth::routes();

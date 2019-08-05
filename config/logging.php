@@ -46,6 +46,14 @@ return [
             'level' => 'debug',
         ],
 
+        // 脚本日志
+        'script' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/script.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

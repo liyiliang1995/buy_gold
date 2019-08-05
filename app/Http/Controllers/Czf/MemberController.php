@@ -134,8 +134,20 @@ class MemberController extends Controller
 
         return view('czf.articlecontent');
     }
-
-
+    /**
+     * @param $type 1 开启 2关闭
+     * @see 加入自动领取金币
+     */
+    public function addAutoGoldMembers(int $type,Member $member)
+    {
+        $id = userId();
+        if (in_array($type,[0,1])) {
+            $this->Logic($member)->addAutoGoldMembers($id, $type);
+            return $this->success();
+        } else {
+            return $this->params_error();
+        }
+    }
 
     /**
      * @param MemberLogic $memberLogic
