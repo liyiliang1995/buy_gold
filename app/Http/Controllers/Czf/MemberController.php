@@ -117,6 +117,7 @@ class MemberController extends Controller
      */
     public function helpCenter()
     {
+        $member = \Auth::guard()->user();
         return view('czf.helpcenter');
     }
 
