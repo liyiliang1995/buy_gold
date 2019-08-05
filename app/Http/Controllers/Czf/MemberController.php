@@ -19,7 +19,8 @@ class MemberController extends Controller
      */
 
     public function __construct()
-    {       // dd(get_gold_pool());
+    {
+        // dd(get_gold_pool());
         $this->middleware(['auth', 'checkmbr'])->except(['sendMsg', 'getUserSet', 'setUser']);
     }
 
@@ -29,11 +30,10 @@ class MemberController extends Controller
      */
     public function memberIndex()
     {
-
+        $gold_pool = get_gold_pool();
         $member = \Auth::guard()->user();
 
-
-        return view('czf.member', compact('member'));
+        return view('czf.member', compact('member','gold_pool'));
 
     }
 

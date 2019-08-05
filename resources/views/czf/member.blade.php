@@ -38,6 +38,12 @@
         #member_but i{
             color: red;
         }
+        #user_gold{
+            width: 60%;
+        }
+        #user_but{
+            width: 40%;
+        }
     </style>
     <body>
     <!--个人中心-->
@@ -66,20 +72,23 @@
         </div>
     </div>
 
-    <div class="weui-flex" id="user_bg">
-        <div class="weui-flex__item" id="user_gold">
+    <div class="weui-row" id="user_bg">
+        <div class="weui-col-50" id="user_gold">
             <p>当前金币总数：99999999</p>
-            <p>其中币池剩余：99999</p>
+            <p>其中币池剩余：{{$gold_pool}}</p>
             <p>本次可领取：<span>200</span></p>
             <p>距下次领取：2分40秒</p>
         </div>
-        <div class="weui-flex__item" id="user_but">
+        <div class="weui-col-50" id="user_but">
             <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
             <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                 <p>自动领取</p><input class="weui-switch" type="checkbox">
             </div>
         </div>
     </div>
+
+
+
     </div>
 
     <div class="weui-cells">

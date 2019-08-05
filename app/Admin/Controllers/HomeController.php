@@ -13,24 +13,11 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
+
         return $content
-            ->title('仪表盘')
-            ->description('')
-            ->breadcrumb(['text'=>'仪表盘'])
-            ->row(Dashboard::title())
-            ->row(function (Row $row) {
+             ->title('翠竹坊管理中心')
+            ->description('欢迎您')
+            ->breadcrumb(['text'=>'欢迎页']);
 
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            });
     }
 }
