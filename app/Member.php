@@ -28,7 +28,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = Hash::make($value);
+        $this->attributes['password'] = Hash::needsRehash($value) ? Hash::make($value) :$value;
     }
 
     /**

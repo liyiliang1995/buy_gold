@@ -78,27 +78,40 @@ class GoldFlow extends Model
     public function getGoldPullIn():float
     {
         // 金币燃烧返回金币池
-        $bNum = $this->getBurnGoldSum();
-        // 充值扣除
+        $bNum = $this->getReturnBurnGoldSum();
+        // 金币购物返回金币池
+        $sNum = $this->getReturnShopGoldNum();
+        // 充值扣除返回金币池
         $rNum = $this->getRechargeNum(10);
-        return bcadd($bNum,$rNum,2);
+
+        return bcadd(bcadd($bNum,$sNum,5),$rNum,2);
     }
 
     /**
      * @return float
      * @see 购物消耗
+     * @see 购物金币流向金币池
      */
-    public function getShopGoldNum():float
+    public function getReturnShopGoldNum():float
     {
-        return $this->where(['is_statistical' => 0,'type'=>1])->sum('gold');
+        return $this->where(['is_statistical' => 0,'type'=>12])->sum('gold');
     }
 
     /**
      * @return float
      */
-    public function getBurnGoldSum():float
+    public function getReturnBurnGoldSum():float
     {
         return $this->where(['is_statistical' => 0,'type'=>5])->sum('gold');
+    }
+
+    /**
+     * @return float
+     * @彻底燃烧金币
+     */
+    public function getBurnGoldSum():float
+    {
+        return $this->where(['is_statistical' => 0,'type'=>11])->sum('gold');
     }
 
 }

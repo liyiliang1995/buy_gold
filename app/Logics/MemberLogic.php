@@ -88,6 +88,8 @@ class MemberLogic extends BaseLogic
      */
     public function recharge(array $aParam):bool
     {
+        // 首先计算之前让redis 金币池有值 防止最后统计的时候重复统计
+        get_gold_pool();
         $this->rechargeValidate($aParam);
         $bRes = DB::transaction(function () use($aParam){
             $this->rechargeFlow($aParam);
@@ -129,6 +131,7 @@ class MemberLogic extends BaseLogic
             $iType = 10;
             $sOther = "后台充值扣除";
         }
+
         $this->getBuyGoldGoldFlowDetail($isIncomde,$iType,$aParam['member_id'],abs($aParam['gold']),$sOther);
     }
 
@@ -140,14 +143,15 @@ class MemberLogic extends BaseLogic
     public function rechargeIncreaseAndDecrease(array $aParam)
     {
         $member = $this->find($aParam['member_id']);
+
         if ($aParam['gold'] < 0 && abs($aParam['gold']) > $member->gold)
             throw new \Exception('扣除金额大于用户实际金额！');
         if ($aParam['gold'] > 0 ) {
-            $member->gold = bcadd($member->gold, $aParam['gold'], 2);
-            set_gold_pool($aParam['gold'],false);
+            $member->increment('gold',abs($aParam['gold']));
+            set_gold_pool(abs($aParam['gold']),false);
         } else {
-            $member->gold = bcsub($member->gold, abs($aParam['gold']), 2);
-            set_gold_pool($aParam['gold']);
+            $member->decrement('gold',abs($aParam['gold']));
+            set_gold_pool(abs($aParam['gold']));
         }
         $member->save();
     }

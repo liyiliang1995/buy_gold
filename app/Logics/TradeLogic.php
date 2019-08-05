@@ -79,6 +79,8 @@ class TradeLogic extends BaseLogic
      */
     public function sellGold(int $id):bool
     {
+        // 首先计算之前让redis 金币池有值 防止最后统计的时候重复统计
+        get_gold_pool();
         $bRes = DB::transaction(function () use($id){
             $this->oBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
             // 验证
@@ -106,12 +108,10 @@ class TradeLogic extends BaseLogic
      */
     public function sellGoldIncreaseAndDecrease()
     {
-        \Auth::user()->gold = bcsub(\Auth::user()->gold,$this->oBuyGoldDetail->sum_gold,2);
-        \Auth::user()->integral = bcsub(\Auth::user()->integral,$this->oBuyGoldDetail->consume_integral,0);
-        \Auth::user()->save();
-        $this->oBuyGoldDetail->member->gold = bcadd($this->oBuyGoldDetail->member->gold,$this->oBuyGoldDetail->gold,2);
-        $this->oBuyGoldDetail->member->energy = bcadd($this->oBuyGoldDetail->member->energy,$this->oBuyGoldDetail->energy,0);
-        $this->oBuyGoldDetail->member->save();
+        \Auth::user()->decrement('gold',$this->oBuyGoldDetail->sum_gold);
+        \Auth::user()->decrement('integral',$this->oBuyGoldDetail->consume_integral);
+        $this->oBuyGoldDetail->member->increment('gold',$this->oBuyGoldDetail->gold);
+        $this->oBuyGoldDetail->member->increment('energy',$this->oBuyGoldDetail->energy);
         set_gold_pool($this->oBuyGoldDetail->return_burn_gold);
     }
 

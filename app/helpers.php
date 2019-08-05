@@ -331,12 +331,12 @@ if (!function_exists('gold_compute')) {
         $fGoldInNum = $oGoldFlowModel->getGoldPullIn();
         // 所有用户手中金币
         $fMemberGoldNum = $oMemberModel->getAllMemberGold();
-        // 用户购物消耗金币
-        $fShopGoldNum = $oGoldFlowModel->getShopGoldNum();
+        // 用户实际燃烧金币
+        $fBurnGoldNum = $oGoldFlowModel->getBurnGoldSum();
         $fTmp = bcsub($oLastGoldPool['gold'], $fGoldOutNum, 2);
-        $aData['gold'] = bcadd($fTmp, $fGoldInNum);
+        $aData['gold'] = bcadd($fTmp, $fGoldInNum,2);
         $aData['user_sum_gold'] = $fMemberGoldNum;
-        $aData['shop_gold'] = $fShopGoldNum;
+        $aData['burn_gold'] = $fBurnGoldNum;
         return $aData;
     }
 }
