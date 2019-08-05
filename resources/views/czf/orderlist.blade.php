@@ -89,6 +89,7 @@
                         if (result.data.data != null){
                             $('.weui-loadmore').hide();
                         }
+                        console.log(result);
                         var html = '';
                         $.each(result.data.data,function (index,val) {
                             html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
