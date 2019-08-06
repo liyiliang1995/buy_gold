@@ -26,6 +26,12 @@
 ])
 
 @section('content')
+    <style>
+        #goods_detail_but a{
+            height: 50px !important;
+            line-height: 50px !important;
+        }
+    </style>
     <body class="details-page">
     <!-- Swiper -->
     <div class="swiper-container">
@@ -66,7 +72,7 @@
     <!-- footer -->
     <div class="weui-footer_fixed-bottom">
 
-        <div class="weui-tabbar">
+        <div class="weui-tabbar" id="goods_detail_but">
             <a href="{{route('confirmOrder',['goodsId'=>$oGoods->id])}}" class="weui-btn">
                 立即购买
             </a>
