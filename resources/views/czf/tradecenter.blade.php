@@ -7,7 +7,6 @@
 'js' => [
         'js/fastclick.js',
         'js/jquery-weui.js',
-        'js/echarts.min.js'
         //'js/Chart.min.js',
        // 'js/index.js'
     ],
