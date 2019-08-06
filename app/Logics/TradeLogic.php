@@ -170,7 +170,7 @@ class TradeLogic extends BaseLogic
     {
         return [
             "gold" => 'required|integer|min:1',
-            "price" => 'required|numeric|min:0.5',
+            "price" => 'required|numeric|min:1',
         ];
     }
 
