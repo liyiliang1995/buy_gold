@@ -30,10 +30,11 @@ class MemberController extends Controller
      */
     public function memberIndex()
     {
-        $gold_pool = get_gold_pool();
+        $gold_pool = \Auth::user()->gold_pool;
         $member = \Auth::guard()->user();
+        $is_auto = \Auth::user()->is_auto;
 
-        return view('czf.member', compact('member','gold_pool'));
+        return view('czf.member', compact('member','gold_pool','is_auto'));
 
     }
 

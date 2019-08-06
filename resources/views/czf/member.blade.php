@@ -82,7 +82,12 @@
         <div class="weui-col-50" id="user_but">
             <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
             <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
-                <p>自动领取</p><input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)">
+                <p>自动领取</p>
+                @if($is_auto == 1)
+                <input class="weui-switch" type="checkbox"  onclick="checkboxOnclick(this)" checked>
+                    @else
+                    <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" >
+                @endif
             </div>
         </div>
     </div>

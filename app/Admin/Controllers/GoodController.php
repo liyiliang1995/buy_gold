@@ -29,7 +29,7 @@ class GoodController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('name', __('名称'));
 //        $grid->column('describe', __('描述'));
-        $grid->column('list_img', __('列表图片'))->image();
+        $grid->column('list_img', __('商品图片'))->image();
         $grid->column('amount', __('价格'));
 //        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
@@ -51,7 +51,7 @@ class GoodController extends AdminController
         $show->field('id', __('Id'));
         $show->field('name', __('名称'));
         $show->field('describe', __('描述'));
-        $show->field('list_img', __('列表图片'));
+        $show->field('list_img', __('商品图片'));
         $show->field('amount', __('价格'));
        // $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('创建时间'));
