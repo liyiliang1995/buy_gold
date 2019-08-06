@@ -54,12 +54,12 @@
     <div class="weui-flex" id="partner_list">
         <div class="weui-flex__item" id="partner_user">
             <p>{{$value['name'] ?: $value['phone']}}</p>
-            <p>{{$value['created_at']}} 加入</p>
+            <p>{{$value['created_at']}}</p>
         </div>
-        <div class="weui-flex__item" style="line-height: 45px">
-            金币数：<span>{{$value['gold']}}</span>
+        <div class="weui-flex__item" style="text-align: center;line-height: 30px;">
+            <p>金币数</p><p>{{$value['gold']}}</p>
         </div>
-        <div class="weui-flex__item">
+        <div class="weui-flex__item" style="margin-top: 10px;">
             {!! $value['stat'] !!}
         </div>
     </div>

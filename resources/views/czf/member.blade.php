@@ -9,11 +9,7 @@
         'js/jquery-weui.js',
         'js/fastclick.js',
     ],
-   'script'=> [
-   '$("#submit").bind("click",function () {
-        $.toast("领取成功");
-    });',
-    ],
+
 ])
 @section('content')
     <style>
@@ -80,12 +76,16 @@
             <p>距下次领取：2分40秒</p>
         </div>
         <div class="weui-col-50" id="user_but">
-            <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
-            <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
-                <p>自动领取</p>
+
                 @if($is_auto == 1)
-                <input class="weui-switch" type="checkbox"  onclick="checkboxOnclick(this)" checked>
+                <a class="weui-btn weui-btn_plain-primary" style="color: #666;border: 1px solid #666;">自动领取中</a>
+                <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
+                    <p>自动领取</p>
+                    <input class="weui-switch" type="checkbox"  onclick="checkboxOnclick(this)" checked>
                     @else
+                        <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
+                        <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
+                            <p>自动领取</p>
                     <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" >
                 @endif
             </div>
@@ -93,11 +93,14 @@
     </div>
     <script>
         function checkboxOnclick(checkbox) {
-
         if ( checkbox.checked == true){
             var url = "{{route('add_auto_gold',['type'=>1])}}";
+            window.location.href=window.location.href;
+            window.location.reload;
             }else{
             var url = "{{route('add_auto_gold',['type'=>0])}}";
+            window.location.href=window.location.href;
+            window.location.reload;
             }
             $.ajax({
                 url: url,
@@ -108,10 +111,31 @@
                     return;
                 },
                 success: function (result) {
-                    console.log(result);
+                    console.log(ok);
                 }
             });
         }
+
+        $("#submit").bind("click",function () {
+        var url = "{{route('manual_give_gold')}}";
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            error: function (data) {
+                $.toast("服务器繁忙, 请联系管理员！","text");
+                return;
+            },
+            success: function (result) {
+                if (result.code == 200){
+                    $.toast("领取成功");
+                }else{
+                    $.toast(result.message, "forbidden");
+                }
+                console.log(result);
+            }
+        });
+ });
     </script>
 
     </div>
