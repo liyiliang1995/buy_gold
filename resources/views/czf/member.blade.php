@@ -73,8 +73,66 @@
             <p>当前金币总数：1000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>本次可领取：<span>{{$gold_num}}</span></p>
-            <p>距下次领取：{{$gold_time}}</p>
+            <p>距下次领取：<b id="next_time">{{$gold_time}}</b></p>
         </div>
+        <script>
+            $(function(){
+               function set_time() {
+                   var url = "{{route('getAutoGold')}}";
+                   $.ajax({
+                       url:url,
+                       type: 'get',
+                       dataType: "json",
+                       error: function (data) {
+                           $.toast("服务器繁忙, 请联系管理员！",'text');
+                           return;
+                       },
+                       success: function (result) {
+                           console.log(result);
+                           var ssss = formatSeconds(result);
+                           document.getElementById("next_time").innerHTML = ssss;
+                       }
+                   });
+               }
+                setInterval (function ()
+                {
+                    set_time();
+                }, 1000);
+            });
+            function formatSeconds(value) {
+                var theTime = parseInt(value);// 需要转换的时间秒
+                var theTime1 = 0;// 分
+                var theTime2 = 0;// 小时
+                var theTime3 = 0;// 天
+                if(theTime > 60) {
+                    theTime1 = parseInt(theTime/60);
+                    theTime = parseInt(theTime%60);
+                    if(theTime1 > 60) {
+                        theTime2 = parseInt(theTime1/60);
+                        theTime1 = parseInt(theTime1%60);
+                        if(theTime2 > 24){
+                            //大于24小时
+                            theTime3 = parseInt(theTime2/24);
+                            theTime2 = parseInt(theTime2%24);
+                        }
+                    }
+                }
+                var result = '';
+                if(theTime > 0){
+                    result = ""+parseInt(theTime)+"秒";
+                }
+                if(theTime1 > 0) {
+                    result = ""+parseInt(theTime1)+"分"+result;
+                }
+                if(theTime2 > 0) {
+                    result = ""+parseInt(theTime2)+"小时"+result;
+                }
+                if(theTime3 > 0) {
+                    result = ""+parseInt(theTime3)+"天"+result;
+                }
+                return result;
+            }
+        </script>
         <div class="weui-col-50" id="user_but">
 
                 @if($is_auto == 1)
