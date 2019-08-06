@@ -73,7 +73,7 @@ class HourAvgPrice extends Command
             $this->items = $this->getItems();
         }
         if (empty($this->items) && empty($aData))
-            $fAvgPrice = 0.50;
+            $fAvgPrice = 1.00;
         else if (empty($this->items) && $aData)
             $fAvgPrice = $aData['avg_price'];
         else
