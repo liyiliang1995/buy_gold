@@ -224,25 +224,7 @@ class MemberLogic extends BaseLogic
     {
         // 自己和代理总金币数量
         $fSumGold = $this->model->self_and_child_gold;
-        // $sum < 1000 领取千分之一
-        if ($fSumGold < 1000)
-            $rate = 0.0010;
-        // 1000 <= $sum < 5000 领取千分之一点一
-        else if (1000 <= $fSumGold &&  $fSumGold < 5000)
-            $rate = 0.0011;
-        // 5000 <= $sum 20000 千分之一点二
-        else if (5000 <= $fSumGold && $fSumGold < 20000)
-            $rate = 0.0012;
-        else
-            $rate = 0.0013;
-        // 领取数量
-        $fNum = bcmul($fSumGold,$rate,2);
-        // 金币池每减少1亿减少百分10
-        $gold_pole = get_gold_pool();
-        // 金币池减少了多少个一亿
-        $iReduceBillion = 10 - ceil($gold_pole/100000000);
-        $iReduceGold = bcmul($fNum,0.1*$iReduceBillion,2);
-        return bcsub($fNum,$iReduceGold,2);
+        return compute_autogold($fSumGold);
 
     }
 

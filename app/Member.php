@@ -222,5 +222,14 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
 
     }
 
+    /**
+     * @return int
+     * @下一次领取金额
+     */
+    public function getNextGoldAttribute():float
+    {
+        return compute_autogold($this->self_and_child_gold);
+    }
+
 
 }
