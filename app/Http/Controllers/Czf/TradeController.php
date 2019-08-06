@@ -102,6 +102,17 @@ class TradeController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @see 金币记录
+     */
+    public function goldRecord()
+    {
+
+
+        return view('czf.goldrecored');
+    }
+
+    /**
      * @param int $iType 1 求购 2售出
      * @param BuyGold $buyGold
      * @see金币求购订单

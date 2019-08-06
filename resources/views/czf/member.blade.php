@@ -145,7 +145,7 @@
             </div>
         </a>
         <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-Dollar"></i></div>
+            <div class="weui-cell__hd"><i class="iconfont icon-icon_mobilephone"></i></div>
             <div class="weui-cell__bd">
                 <p>手机充值</p>
             </div>
@@ -153,9 +153,33 @@
             </div>
         </a>
         <a class="weui-cell weui-cell_access" href="{{route('phone_record')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-Dollar"></i></div>
+            <div class="weui-cell__hd"><i class="iconfont icon-mobile-check"></i></div>
             <div class="weui-cell__bd">
                 <p>充值记录</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="{{route('gold_record')}}">
+            <div class="weui-cell__hd"><i class="iconfont icon-qianbi101"></i></div>
+            <div class="weui-cell__bd">
+                <p>金币明细</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="{{route('integral_record')}}">
+            <div class="weui-cell__hd"><i class="iconfont icon-accountbook"></i></div>
+            <div class="weui-cell__bd">
+                <p>积分明细</p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="{{route('energy_record')}}">
+            <div class="weui-cell__hd"><i class="iconfont icon-rocket"></i></div>
+            <div class="weui-cell__bd">
+                <p>能量明细</p>
             </div>
             <div class="weui-cell__ft">
             </div>
