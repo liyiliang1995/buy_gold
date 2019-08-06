@@ -7,8 +7,9 @@
 'js' => [
         'js/fastclick.js',
         'js/jquery-weui.js',
-        //'js/Chart.min.js',
-       // 'js/index.js'
+        'js/echarts.min.js',
+        'js/echarts-gl.min.js',
+        'js/ecStat.min.js'
     ],
 'script'=> [
     '$("#job").select({
@@ -20,12 +21,39 @@
         buy_gold.sum_val = $("#job").val();
         buy_gold.submit_buy();
     });',
-    '$("#pre").on("blur",function(){
-        var item = $("#job").val();
-        var price = $(this).val().trim();
-        var sum = buy_gold.intToFloat(price*item);
-        $("#intext>b").empty().html("￥"+sum);
-    })',
+
+    '    var myDate = new Date(); //获取今天日期
+    myDate.setDate(myDate.getDate() - 7);
+    var dateArray = [];
+    var dateTemp;
+    var flag = 1;
+    for (var i = 0; i < 7; i++) {
+        dateTemp = (myDate.getMonth()+1)+"-"+myDate.getDate();
+        dateArray.push(dateTemp);
+        myDate.setDate(myDate.getDate() + flag);
+    }
+    console.log(dateArray);
+    var dom = document.getElementById("p1");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            xAxis: {
+                type: "category",
+                data: dateArray
+            },
+            yAxis: {
+                type: "value"
+            },
+            series: [{
+                data: [1, 1.2, 1.5, 1.7, 1.2, 1, 1.1],
+                type: "line"
+            }]
+        };
+        ;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }'
     ],
 ])
 @section('content')
@@ -49,6 +77,9 @@
         .weui-cell {
             font-size: 14px;
         }
+        #p1{
+            height: 300px;
+        }
     </style>
     <body>
 
@@ -57,7 +88,7 @@
     </div>
     <div class='wrapper'>
         <div class='chart' id='p1'>
-            <canvas id='c1'></canvas>
+
         </div>
     </div>
     </div>
@@ -81,7 +112,7 @@
             <div class="weui-cell weui-cell_vcode" style="padding: 15px;">
                 <div class="weui-cell__hd" style="width: 10%"><label class="weui-label">价格</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" id="pre" type="text" name="price" value="{{old('price')}}"
+                    <input class="weui-input" id="pre" type="number" name="price" value="{{old('price')}}"
                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
                            placeholder="请输入价格">
                 </div>
@@ -128,6 +159,8 @@
     @endforeach
     </body>
     <script>
+        var min = {{$fGuidancePrice['min']}};
+        var max = {{$fGuidancePrice['max']}};
         // 购买金币
         var buy_gold = {
             unit_price_val: 0,
@@ -136,7 +169,11 @@
                 if (!this.unit_price_val || this.unit_price_val < 0) {
                     $.toast("请输入正确的购买价格！", 'text');
                     return;
-                } else {
+                } else if(this.unit_price_val < min || this.unit_price_val > max){
+
+                    $.toast("请输入区间内价格!", 'text');
+                    return;
+                }else {
                     return this.unit_price_val;
                 }
             },
@@ -176,7 +213,22 @@
             @if($errors->has('price'))
             $.toast("{{$errors->get('price')[0]}}", 'text');
             @endif
-        })
-    </script>
+        });
 
+        $("#pre").on("blur",function(){
+
+        var item = $("#job").val();
+        var price = $(this).val().trim();
+        var min = {{$fGuidancePrice['min']}};
+        var max = {{$fGuidancePrice['max']}};
+        if(price >=min && price <= max){
+            var sum = buy_gold.intToFloat(price*item);
+            $("#intext>b").empty().html("￥"+sum);
+        }else{
+            $.toast("请输入区间内价格！", "text");
+            return false;
+        }
+
+        });
+    </script>
 @endsection
