@@ -33,8 +33,8 @@ class MemberController extends Controller
         $gold_pool = \Auth::user()->gold_pool;
         $member = \Auth::guard()->user();
         $is_auto = \Auth::user()->is_auto;
-        dd($gold_pool);
-        return view('czf.member', compact('member','gold_pool'));
+
+        return view('czf.member', compact('member','gold_pool','is_auto'));
 
     }
 
