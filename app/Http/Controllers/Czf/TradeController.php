@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Czf;
 use App\BuyGold;
 use App\GoldFlow;
 use App\EnergyFlow;
+use App\HourAvgPrice;
 use App\IntegralFlow;
+use App\DayBuyGoldSum;
 use App\Logics\TradeLogic;
 use App\Http\Controllers\Controller;
 
@@ -21,12 +23,12 @@ class TradeController extends Controller
     /**
      * @see 交易中心
      */
-    public function index(BuyGold $buyGold)
+    public function index(BuyGold $buyGold,HourAvgPrice $hourAvgPrice)
     {
         $aBuyGold       = $this->Logic($buyGold)->query(['_sort' => 'price,desc']);
         $fGuidancePrice = $this->Logic(null)->getGuidancePrice();
-        $member = \Auth::guard()->user();
-        return view('czf.tradecenter', compact('aBuyGold', 'fGuidancePrice'));
+        $avgPrice = $hourAvgPrice->getBestNewAvgPrice();
+        return view('czf.tradecenter', compact('aBuyGold', 'fGuidancePrice','avgPrice'));
     }
 
     /**
@@ -222,6 +224,16 @@ class TradeController extends Controller
         $aData['test'] = array_sum($aData);
         $aData['redis'] = get_gold_pool();
         return $this->success('',$aData);
+    }
+
+    /**
+     * @see ajax 获取15天均价走势
+     */
+    public function ajaxGetTrend(DayBuyGoldSum $dayBuyGoldSum)
+    {
+        $aParams['_sort']   = "id,desc";
+        $aRes = $this->Logic($dayBuyGoldSum)->query($aParams)->toArray();
+        return $this->success('',$aRes);
     }
 
     /**

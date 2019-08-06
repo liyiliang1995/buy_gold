@@ -53,6 +53,7 @@ Route::group([],function($router){
         $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
         $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
         $router->get('add/auto_gold/{type}','MemberController@addAutoGoldMembers')->name('add_auto_gold');
+        $router->get('ajax/get_trend','TradeController@ajaxGetTrend')->name('get_trend');
     });
 });
 Auth::routes();
