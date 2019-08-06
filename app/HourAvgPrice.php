@@ -15,7 +15,7 @@ class HourAvgPrice extends Model
      * @var float
      * @默认价格
      */
-    protected $default_avg_price = 0.50;
+    protected $default_avg_price = 1.00;
 
     /**
      * 获取最新均价

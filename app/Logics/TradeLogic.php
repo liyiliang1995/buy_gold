@@ -27,12 +27,8 @@ class TradeLogic extends BaseLogic
         $price = $hapModel->getBestNewAvgPrice();
         // 精度2位
         bcscale(2);
-        if (bccomp($price,0.5) >= 0 && bccomp($price,0.52) < 0) {
-            $fTmp = bcmul($price,0.04);
-            $min =  bcadd($price,0);
-        }
         // 0.52<price<1 上下浮动4%
-        if (bccomp($price,0.52) >= 0  && bccomp($price,1) < 0) {
+        if (bccomp($price,0.5) >= 0  && bccomp($price,1) < 0) {
             $fTmp = bcmul($price,0.04);
         }
         // 1<=price<5 上下浮动3%
@@ -48,7 +44,7 @@ class TradeLogic extends BaseLogic
             $fTmp = bcmul($price,0.01);
         }
         $aRes['max'] = bcadd($price,$fTmp,2);
-        $aRes['min'] = $min ?? bcsub($price,$fTmp);
+        $aRes['min'] = bcsub($price,$fTmp) < 1 ? "1.00" : bcsub($price,$fTmp);
         return $aRes;
     }
 
@@ -174,7 +170,7 @@ class TradeLogic extends BaseLogic
     {
         return [
             "gold" => 'required|integer|min:1',
-            "price" => 'required|numeric|min:0.5',
+            "price" => 'required|numeric|min:1',
         ];
     }
 
@@ -189,7 +185,7 @@ class TradeLogic extends BaseLogic
             'gold.min' => '购买数量最小值不能小于1！',
             'price.required' => '购买价格不能为空',
             'price.float' => '购买价格必须是个数字！',
-            'price.min' => '购买价格最小值不能小于0.5！'
+            'price.min' => '购买价格最小值不能小于1！'
         ];
     }
 

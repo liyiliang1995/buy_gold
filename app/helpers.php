@@ -445,7 +445,7 @@ if (!function_exists('member_is_auto_gold')) {
         $sKey = config('czf.redis_key.h1');
         $res = redis_hget($sKey,$id);
         if (!$res) {
-            redis_hset($sKey,$id,['gold' => 0.00,'is_auto' => $is_auto]);
+            redis_hset($sKey,$id,['gold' => $gold,'is_auto' => $is_auto]);
         } else {
             redis_hset($sKey,$id,['gold' => bcadd($gold,$res['gold'],2),'is_auto' => $is_auto]);
         }

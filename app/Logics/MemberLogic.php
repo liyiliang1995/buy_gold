@@ -303,11 +303,10 @@ class MemberLogic extends BaseLogic
      */
     public function manualGiveGoldValidate($fRes,$fNum)
     {
-        $sRes = redis_get(config('czf.redis_key.s6'));
-        $iTime = $sRes['time'] ?? 1800;
-        if (redis_idempotent('',['manualGiveGold',userId()],$iTime) === false)
+        $skey  = "str:member_id_".$this->model->id;
+        if (redis_get($skey))
             throw new CzfException("不能多次领取，请在下一个时间段在领取！");
-
+        redis_set($skey,true,$this->model->next_auto_gold_time);
         if (!$this->receiveGoldValidate($fRes,$fNum))
             throw new CzfException("今日领取金额已经达到上限！");
 
