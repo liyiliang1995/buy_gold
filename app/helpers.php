@@ -387,6 +387,17 @@ if (!function_exists('redis_hdel')) {
         return Redis::hdel($sKey,$field);
     }
 }
+if (!function_exists('redis_del')) {
+    /**
+     * @param $sKey
+     * @param $field
+     * @param null $db
+     */
+    function redis_del($sKey)
+    {
+        return Redis::del($sKey);
+    }
+}
 
 if (!function_exists('redis_hexists')) {
     /**
