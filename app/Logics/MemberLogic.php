@@ -9,6 +9,7 @@ namespace App\Logics;
 use App\HourAvgPrice;
 use Illuminate\Support\Arr;
 use App\Exceptions\CzfException;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 class MemberLogic extends BaseLogic
 {
@@ -268,7 +269,7 @@ class MemberLogic extends BaseLogic
     public function receiveGoldFlow(float $fNum,int $id)
     {
         // 自动领取一次扣除 1能量值
-        $this->getBuyGoldGoldFlowDetail(1,4,$id,$fNum,"自动领取获得金币");
+        $this->getBuyGoldGoldFlowDetail(1,4,$id,$fNum,"领取获得金币");
         $this->getBuyGoldEnergyFlowDetail(1, $id, 1,'自动领取金币消耗能量值');
     }
 
@@ -280,6 +281,53 @@ class MemberLogic extends BaseLogic
     {
         $this->model->increment('gold',$fNum);
         $this->model->decrement('energy',1);
+
+    }
+
+    /**
+     * @see
+     * @see 手动领取
+     * @see 上一次领取时间
+     *
+     */
+    public function manualGiveGold()
+    {
+        get_gold_pool();
+        $this->model = \Auth::user();
+        $id = $this->model->id;
+        // 已经领取数量
+        $result = redis_hget(config("czf.redis_key.h1"),$id);
+        $fRes = $result['gold'] ?? 0;
+        // 本次领取数量
+        $fNum = $this->getReceiveGoldNum();
+        // 验证
+        $this->manualGiveGoldValidate($fRes,$fNum);
+        DB::transaction(function () use($fNum,$id) {
+            // 明细
+            $this->getBuyGoldGoldFlowDetail(1, 4, $id, $fNum, "领取获得金币");
+            // 增加
+            $this->model->increment('gold', $fNum);
+        });
+        // 用户领取金币数量 redis
+        member_is_auto_gold(0,$id,$fNum);
+        // 金币池变化
+        set_gold_pool($fNum,false);
+    }
+
+    /**
+     * @param $fRes
+     * @param $fNum
+     * @throws CzfException
+     */
+    public function manualGiveGoldValidate($fRes,$fNum)
+    {
+        $sRes = redis_get(config('czf.redis_key.s6'));
+        $iTime = $sRes['time'] ?? 1800;
+        if (redis_idempotent('',['manualGiveGold',userId()],$iTime) === false)
+            throw new CzfException("不能多次领取，请在下一个时间段在领取！");
+
+        if (!$this->receiveGoldValidate($fRes,$fNum))
+            throw new CzfException("今日领取金额已经达到上限！");
 
     }
 
