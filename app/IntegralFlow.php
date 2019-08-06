@@ -24,6 +24,14 @@ class IntegralFlow extends Model
      */
     protected $and_fields = ['user_id','type'];
     /**
+     * @var array
+     */
+    protected $hidden = ['other'];
+    /**
+     * @var array
+     */
+    protected $appends = ["show_type"];
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function buy_gold_detail()
@@ -36,6 +44,11 @@ class IntegralFlow extends Model
     public function getAndFieds():array
     {
         return $this->and_fields??[];
+    }
+
+    public function getShowTypeAttribute()
+    {
+        return config("czf.integral_show_type")[$this->type];
     }
 
 }
