@@ -188,5 +188,22 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $fSumGold;
     }
 
+    /**
+     * @see 是否自动领取
+     */
+    public function getIsAutoAttribute():int
+    {
+        $val = redis_hget(config('czf.redis_key.h1'),$this->id);
+        return $val['is_auto'] ?? 0;
+    }
+
+    /**
+     * 金币池金额
+     */
+    public function getGoldPoolAttribute()
+    {
+        return get_gold_pool();
+    }
+
 
 }
