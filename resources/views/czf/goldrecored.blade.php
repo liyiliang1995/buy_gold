@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'积分明细',
+@extends('czf.base',['header'=>'金币明细',
 'css' => [
         'css/weui.min.css',
         'css/jquery-weui.css',
