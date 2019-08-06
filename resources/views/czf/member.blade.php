@@ -70,7 +70,7 @@
 
     <div class="weui-row" id="user_bg">
         <div class="weui-col-50" id="user_gold">
-            <p>当前金币总数：99999999</p>
+            <p>当前金币总数：1000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>本次可领取：<span>200</span></p>
             <p>距下次领取：2分40秒</p>
