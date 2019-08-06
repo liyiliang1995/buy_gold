@@ -41,7 +41,7 @@ class MemberController extends AdminController
         $grid->column('rate', __('股东分成比列'));
         $grid->column('status', __('状态'));
         $grid->column('is_admin', __('是否股东'));
-        $grid->column('ship_address.ship_address', __('收获地址'));
+        $grid->column('ship_address.ship_address', __('收货地址'));
 //        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('Updated at'));
