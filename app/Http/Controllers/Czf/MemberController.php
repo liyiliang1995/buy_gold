@@ -33,9 +33,9 @@ class MemberController extends Controller
         $gold_pool = \Auth::user()->gold_pool;
         $member = \Auth::guard()->user();
         $is_auto = \Auth::user()->is_auto;
-
-        return view('czf.member', compact('member','gold_pool','is_auto'));
-
+        $gold_num = $this->Logic($member)->getNextGoldAttribute();
+        $gold_time = $this->Logic($member)->getNextAutoGoldTimeAttribute();
+        return view('czf.member', compact('member','gold_pool','is_auto','gold_num','gold_time'));
     }
 
 

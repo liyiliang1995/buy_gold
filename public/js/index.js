@@ -4,7 +4,7 @@ c1.width = parent.offsetWidth - 40;
 c1.height = parent.offsetHeight - 40;
 
 var data1 = {
-  labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+  labels : ["1","2","3","4","5","6","7","8","9","10","11","12","13"],
   datasets : [
     {
       fillColor : "rgba(63, 81, 181,.1)",
@@ -22,8 +22,8 @@ var options1 = {
   scaleGridLineColor : "transparent",
   bezierCurve : false,
   scaleOverride : true,
-  scaleSteps : 15,
-  scaleStepWidth : 0.1,
+  scaleSteps : 10,
+  scaleStepWidth : 0.5,
   scaleStartValue : 0
 }
 

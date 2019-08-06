@@ -7,8 +7,9 @@
 'js' => [
         'js/fastclick.js',
         'js/jquery-weui.js',
-        'js/Chart.min.js',
-        'js/index.js'
+        'js/echarts.min.js'
+        //'js/Chart.min.js',
+       // 'js/index.js'
     ],
 'script'=> [
     '$("#job").select({
@@ -51,6 +52,7 @@
         }
     </style>
     <body>
+
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
         <div class="weui-flex__item" id="trading_va">今日均价：<b>0.82</b></div>
     </div>
