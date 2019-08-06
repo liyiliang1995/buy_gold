@@ -25,6 +25,11 @@
     ]
 ])
 @section('content')
+    <style>
+        .title{
+            font-size: 14px;
+        }
+    </style>
     <body class="index-page">
     <div class="weui-flex">
         <!-- Swiper -->
@@ -53,23 +58,29 @@
     </div>
     <div class="weui-flex">
         <div class="weui-row">
-           @foreach($aGoods as $value)
-            <div class="weui-col-50">
-                <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>
-                <div class="weui-col__bd">
-                    <p class="title">{{$value['name']}}</p>
-                </div>
-                <div class="weui-col__ft">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <em>¥</em>
-                            <span>{{$value['amount']}}</span>
+            @foreach($aGoods as $value)
+
+                <div class="weui-col-50">
+                    <a href="{{route('goodsDetail',['id'=>$value['id']])}}" style="color: #666;border: none;">
+                        <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>
+                        <div class="weui-col__bd">
+                            <p class="title">{{$value['name']}}</p>
                         </div>
-                        <a href="{{route('goodsDetail',['id'=>$value['id']])}}" class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
+                    </a>
+                    <div class="weui-col__ft">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <em>¥</em>
+                                <span>{{$value['amount']}}</span>
+                            </div>
+                                <a href="{{route('goodsDetail',['id'=>$value['id']])}}"
+                                   style="width: 80px !important;"
+                                   class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-           @endforeach
+
+            @endforeach
         </div>
     </div>
 
