@@ -18,7 +18,7 @@ class GoldFlow extends Model
     /**
      * @var array
      */
-    protected $hidden = ['buy_gold_detail'];
+    protected $hidden = ['buy_gold_detail','other'];
     /**
      * @var int
      */
@@ -30,7 +30,7 @@ class GoldFlow extends Model
     /**
      * @var array
      */
-    protected $appends = ["order"];
+    protected $appends = ["order","show_type"];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -131,6 +131,14 @@ class GoldFlow extends Model
     public function getLastAutoGold()
     {
         return $this->where('user_id',userId())->where('type',4)->orderBy('id','desc')->first() ?? [];
+    }
+
+    /**
+     * @see
+     */
+    public function getShowTypeAttribute()
+    {
+        return config("czf.gold_show_type")[$this->type];
     }
 
 }
