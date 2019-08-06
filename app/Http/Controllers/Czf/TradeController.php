@@ -25,6 +25,7 @@ class TradeController extends Controller
     {
         $aBuyGold       = $this->Logic($buyGold)->query(['_sort' => 'price,desc']);
         $fGuidancePrice = $this->Logic(null)->getGuidancePrice();
+        $member = \Auth::guard()->user();
         return view('czf.tradecenter', compact('aBuyGold', 'fGuidancePrice'));
     }
 

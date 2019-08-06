@@ -82,7 +82,7 @@
                         var html = '';
                             $.each(result.data.data,function (index,val) {
                                 html +='<div class="weui-flex" id="integral"><div class="weui-flex__item">';
-                                html +='<p style="font-weight: bold;font-size: 14px;color: #666">'+val.other+'</p>';
+                                html +='<p style="font-weight: bold;font-size: 14px;color: #666">'+val.show_type+'</p>';
                                 html +='<p style="font-size: 12px;color: #999">'+ val.created_at +'</p></div>';
                                 html +='<div class="weui-flex__item" style="color: red;text-align: right">'+val.energy+'</div></div>';
                             });
