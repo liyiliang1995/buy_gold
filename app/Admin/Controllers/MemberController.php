@@ -39,19 +39,34 @@ class MemberController extends AdminController
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
         $grid->column('rate', __('股东分成比列'));
-        $grid->column('status', __('状态'));
-        $grid->column('is_admin', __('是否股东'));
+        $grid->column('status', __('状态'))->display(function ($status) {
+            if ($status == 1) {
+                return '已激活';
+            } else {
+                if ($status == 2 || $status == 3) {
+                    return '已锁定';
+                } else {
+                    return '未激活';
+                }
+            }
+        });
+        $grid->column('is_admin', __('是否股东'))->display(function ($is_admin) {
+            if ($is_admin == 1) {
+                return '是';
+            } else {
+                return '否';
+            }
+        });
         $grid->column('ship_address.ship_address', __('收货地址'));
 //        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('Updated at'));
 //        $grid->column('password', __('Password'));
-
-        $grid->actions(function ($actions){
+        $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableView();
-            $url = route("admin.recharge",['id'=>$actions->getKey()]);
-            $actions->append('<a href="'.$url.'">用户充值</a>');
+            $url = route("admin.recharge", ['id' => $actions->getKey()]);
+            $actions->append('<a href="' . $url . '">用户充值</a>');
         });
 
         return $grid;
@@ -105,7 +120,7 @@ class MemberController extends AdminController
 //        $form->number('parent_user_id', __('Parent user id'));
 //        $form->number('child_user_num', __('Child user num'));
         $form->text('wechat', __('微信'));
-        $form->select('is_admin', __('是否股东'))->options([0 => '否',1 => '是'])->default(0);
+        $form->select('is_admin', __('是否股东'))->options([0 => '否', 1 => '是'])->default(0);
 
         $form->password('password', __('密码'));
 
@@ -115,7 +130,7 @@ class MemberController extends AdminController
     public function form2(int $id)
     {
         $member = Member::find($id);
-        $form = new Form($member);
+        $form   = new Form($member);
         $form->text('name', __('名称'))->default($member->name)->disable();
         $form->mobile('phone', __('手机号码'))->default($member->phone)->disable();
         $form->decimal('not', __('已有金额'))->default($member->gold)->disable();
@@ -123,9 +138,10 @@ class MemberController extends AdminController
         return $form;
     }
 
-    public function recharge(int $id,Content $content){
+    public function recharge(int $id, Content $content)
+    {
         $form = $this->form2($id);
-        $form->setAction(route('admin.post_recharge',['id'=>$id]));
+        $form->setAction(route('admin.post_recharge', ['id' => $id]));
         return $content
             ->title("会员充值")
             ->description("金币充值(正数增加负数扣除)")
@@ -138,9 +154,9 @@ class MemberController extends AdminController
      * @param Member $member
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function postRecharge(int $id,Member $member)
+    public function postRecharge(int $id, Member $member)
     {
-        $aData['gold'] = (float)request()->input('gold');
+        $aData['gold']      = (float)request()->input('gold');
         $aData['member_id'] = $id;
         $this->Logic($member)->recharge($aData);
         return redirect(route('members.index'));
@@ -162,14 +178,16 @@ class MemberController extends AdminController
     public function update($id)
     {
         $member = new Member();
-        $fRate = request()->input('rate');
-        if ($fRate < 0)
+        $fRate  = request()->input('rate');
+        if ($fRate < 0) {
             throw new \Exception("分成比列不能小于0");
+        }
         $is_admin = request()->input('is_admin');
         if ($is_admin) {
-            $haverate = $member->where(['is_admin' =>1,['id','<>',$id]])->sum('rate');
-            if (bcadd($haverate, $fRate, 5) > 100)
+            $haverate = $member->where(['is_admin' => 1, ['id', '<>', $id]])->sum('rate');
+            if (bcadd($haverate, $fRate, 5) > 100) {
                 throw new \Exception("所有股东分成比例之和不能超过100");
+            }
         }
         return $this->form()->update($id);
     }
