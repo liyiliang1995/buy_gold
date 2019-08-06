@@ -7,7 +7,6 @@
 'js' => [
         'js/fastclick.js',
         'js/jquery-weui.js',
-        'js/echarts.min.js',
         'js/echarts-gl.min.js',
         'js/ecStat.min.js'
     ],
@@ -21,39 +20,6 @@
         buy_gold.sum_val = $("#job").val();
         buy_gold.submit_buy();
     });',
-
-    '    var myDate = new Date(); //获取今天日期
-    myDate.setDate(myDate.getDate() - 7);
-    var dateArray = [];
-    var dateTemp;
-    var flag = 1;
-    for (var i = 0; i < 7; i++) {
-        dateTemp = (myDate.getMonth()+1)+"-"+myDate.getDate();
-        dateArray.push(dateTemp);
-        myDate.setDate(myDate.getDate() + flag);
-    }
-    console.log(dateArray);
-    var dom = document.getElementById("p1");
-        var myChart = echarts.init(dom);
-        var app = {};
-        option = null;
-        option = {
-            xAxis: {
-                type: "category",
-                data: dateArray
-            },
-            yAxis: {
-                type: "value"
-            },
-            series: [{
-                data: [1, 1.2, 1.5, 1.7, 1.2, 1, 1.1],
-                type: "line"
-            }]
-        };
-        ;
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-        }'
     ],
 ])
 @section('content')
@@ -84,7 +50,7 @@
     <body>
 
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
-        <div class="weui-flex__item" id="trading_va">今日均价：<b>0.82</b></div>
+        <div class="weui-flex__item" id="trading_va">今日均价：<b>{{$avgPrice}}</b></div>
     </div>
     <div class='wrapper'>
         <div class='chart' id='p1'>
@@ -230,5 +196,43 @@
         }
 
         });
+    </script>
+    <script src="{{asset("js/echarts.min.js")}}"></script>
+    <script>
+        var url = "{{route('get_trend')}}";
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            error: function (data) {
+                $.toast("服务器繁忙, 请联系管理员！","text");
+                return;
+            },
+            success: function (result) {
+                console.log(result.data.adata);
+                var dom = document.getElementById("p1");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                option = {
+                    xAxis: {
+                        type: "category",
+                        data: result.data.adata
+                    },
+                    yAxis: {
+                        type: "value"
+                    },
+                    series: [{
+                        type: "line",
+                        data: result.data.bdata
+                    }]
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            }
+        });
+
+
     </script>
 @endsection
