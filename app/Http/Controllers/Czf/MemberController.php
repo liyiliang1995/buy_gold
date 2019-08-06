@@ -177,7 +177,7 @@ class MemberController extends Controller
     }
 
     /**
-     * @param $type 1 开启 2关闭
+     * @param $type 1 开启 0关闭
      * @see 加入自动领取金币
      */
     public function addAutoGoldMembers(int $type,Member $member)

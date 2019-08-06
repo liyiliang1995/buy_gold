@@ -36,7 +36,13 @@ class OrderController extends AdminController
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         $grid->column('other', __('买家留言'));
-        $grid->column('is_send', __('状态'));
+        $grid->column('is_send', __('状态'))->display(function ($is_send){
+            if ($is_send == 1){
+                return '已发货';
+            }else{
+                return '未发货';
+            }
+        });
 
         return $grid;
     }
@@ -61,7 +67,7 @@ class OrderController extends AdminController
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
         $show->field('other', __('买家留言'));
-        $show->field('is_send', __('状态'));
+        $show->field('is_send', __('是否发货'));
 
         return $show;
     }
@@ -81,7 +87,7 @@ class OrderController extends AdminController
         $form->decimal('amount', __('订单金额'))->default(0.00);
         $form->text('express', __('快递单号'));
         $form->text('other', __('买家留言'));
-        $form->switch('is_send', __('状态'));
+        $form->switch('is_send', __('是否发货'));
 
         return $form;
     }
