@@ -125,4 +125,12 @@ class GoldFlow extends Model
         return $this->where(['is_statistical' => 0,'type'=> 4])->sum('gold');
     }
 
+    /**
+     * @see 获取最后一条领取数据
+     */
+    public function getLastAutoGold()
+    {
+        return $this->where('user_id',userId())->where('type',4)->orderBy('id','desc')->first() ?? [];
+    }
+
 }

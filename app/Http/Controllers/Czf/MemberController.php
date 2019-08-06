@@ -94,6 +94,7 @@ class MemberController extends Controller
     {
         $oPartner = $member->where('parent_user_id', userId())->orderBy('id', 'desc')->get();
         $dSum     = array_sum(array_column($oPartner->toArray(), 'gold'));
+        $dSum     = bcadd($dSum,0,2);
         return view('czf.partner', compact('oPartner', 'dSum'));
     }
 
@@ -190,6 +191,15 @@ class MemberController extends Controller
             return $this->params_error();
         }
 
+    }
+
+    /**
+     * @see 手动获取金币
+     */
+    public function manualGiveGold(Member $member)
+    {
+        $this->Logic($member)->manualGiveGold();
+        return $this->success();
     }
 
     /**
