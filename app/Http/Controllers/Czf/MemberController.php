@@ -38,6 +38,14 @@ class MemberController extends Controller
         return view('czf.member', compact('member','gold_pool','is_auto','gold_num','gold_time'));
     }
 
+    public function getAutoGold(Member $member){
+
+        $gold_time = $this->Logic($member)->getNextAutoGoldTimeAttribute();
+        if ($gold_time){
+            return $gold_time;
+        }
+    }
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
