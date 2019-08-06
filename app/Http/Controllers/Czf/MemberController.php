@@ -107,6 +107,7 @@ class MemberController extends Controller
         return view('czf.partner', compact('oPartner', 'dSum'));
     }
 
+
     /**
      * @see 代理注册
      */

@@ -114,7 +114,7 @@ class GoldFlow extends Model
      */
     public function getBurnGoldSum():float
     {
-        return $this->where(['is_statistical' => 0,'type'=>11])->sum('gold');
+        return $this->where('type',11)->sum('gold');
     }
 
     /**
