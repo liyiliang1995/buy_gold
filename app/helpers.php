@@ -430,7 +430,7 @@ if (!function_exists('set_auto_gold_time')) {
     {
         $iAutoDay = $iAutoDay < 1 ? 1 : $iAutoDay;
         $interval_time = ($iAutoDay - 1) * 30;
-        $auto_gold_time = 20 + $interval_time;
+        $auto_gold_time = config('czf.default_auto_gold') + $interval_time;
         return $auto_gold_time;
     }
 }

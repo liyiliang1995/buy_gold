@@ -84,6 +84,12 @@ class AutoGold extends Command
         }
         return $auto_time;
     }
+
+    /**
+     * @param $time
+     * @param int $day
+     * @return array
+     */
     public function setAutoInfo($time,$day = 1)
     {
         $auto_time  = [

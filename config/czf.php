@@ -22,4 +22,6 @@ return [
         'h1' => 'hash:auto_gold_members',//自动领取金币的人数
     ],
     'stockholders_rate' => 0.5,         // 购买商品给股东分成比列
+
+    'default_auto_gold' => 1800,          // 默认自动领取金币的时间 1800 1800+30
 ];
