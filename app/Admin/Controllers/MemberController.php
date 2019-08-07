@@ -68,6 +68,9 @@ class MemberController extends AdminController
             $url = route("admin.recharge", ['id' => $actions->getKey()]);
             $actions->append('<a href="' . $url . '">用户充值</a>');
         });
+//        $grid->actions(function ($actions){
+//            $url = route("admin.particulars",['id' => $actions->getKey()]);
+//        });
 
         return $grid;
     }

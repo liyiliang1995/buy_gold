@@ -73,28 +73,20 @@
             <p>当前金币总数：1000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>本次可领取：<span>{{$gold_num}}</span></p>
-            <p>距下次领取：<b id="next_time">{{$gold_time}}</b></p>
+            <p>距下次领取：<b id="next_time">{{$gold_time}}</b><input type="text" style="display: none" value="{{$gold_time}}" id="next_time_f"></p>
+
         </div>
         <script>
             $(function(){
                function set_time() {
-                   var url = "{{route('getAutoGold')}}";
-                   $.ajax({
-                       url:url,
-                       type: 'get',
-                       dataType: "json",
-                       error: function (data) {
-                           $.toast("服务器繁忙, 请联系管理员！",'text');
-                           return;
-                       },
-                       success: function (result) {
-                           console.log(result);
-                           var ssss = formatSeconds(result);
-                           document.getElementById("next_time").innerHTML = ssss;
-                       }
-                   });
+                var res = document.getElementById('next_time_f').value;
+                var resa = res-1;
+                   var ssss = formatSeconds(resa);
+                   console.log(ssss);
+                   document.getElementById("next_time").innerHTML = ssss;
+                   document.getElementById("next_time_f").value = resa;
                }
-                setInterval (function ()
+              setInterval (function ()
                 {
                     set_time();
                 }, 1000);
