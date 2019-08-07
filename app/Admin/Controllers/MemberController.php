@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\GoldFlow;
 use App\Member;
 use App\Logics\MemberLogic;
 use Encore\Admin\Controllers\AdminController;
@@ -66,12 +67,10 @@ class MemberController extends AdminController
             $actions->disableDelete();
             $actions->disableView();
             $url = route("admin.recharge", ['id' => $actions->getKey()]);
-            $actions->append('<a href="' . $url . '">用户充值</a>');
+//            $url2 = route("admin.particulars", ['id' => $actions->getKey()]);
+            $actions->append('<a href="' . $url . '">充值</a>');
+//            $actions->append('<a href ="' . $url2 . '">  明细</a>');
         });
-//        $grid->actions(function ($actions){
-//            $url = route("admin.particulars",['id' => $actions->getKey()]);
-//        });
-
         return $grid;
     }
 
@@ -194,6 +193,5 @@ class MemberController extends AdminController
         }
         return $this->form()->update($id);
     }
-
 
 }

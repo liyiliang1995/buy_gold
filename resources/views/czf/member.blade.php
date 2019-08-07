@@ -82,7 +82,6 @@
                 var res = document.getElementById('next_time_f').value;
                 var resa = res-1;
                    var ssss = formatSeconds(resa);
-                   console.log(ssss);
                    document.getElementById("next_time").innerHTML = ssss;
                    document.getElementById("next_time_f").value = resa;
                }
