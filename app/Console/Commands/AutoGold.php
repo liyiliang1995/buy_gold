@@ -53,13 +53,20 @@ class AutoGold extends Command
                 $sKey = config('czf.redis_key.h1');
                 $members = redis_hgetall($sKey);
                 \Log::channel('script')->info('脚本正在运行', ['自动领取的member_id' => $members]);
+                $bRes = ($auto_time['date'] == date('Y-m-d',time()));
                 foreach ($members as $key => $val) {
                     $val = json_decode($val,true);
+                    // 换天数以后重置每天领取金额
+                    if (!$bRes) {
+                        $val['gold'] = 0;
+                        redis_hset($sKey,$key,$val);
+                    }
+
                     if ($val['is_auto'] == 1)
                         $oMemberLogic->receiveGold($key,$val['gold']);
                 }
                 // 时间换了一天
-                if ($auto_time['date'] != date('Y-m-d',time())) {
+                if (!$bRes) {
                     $day = $auto_time['day'] + 1;
                 } else {
                     $day = $auto_time['day'];
@@ -103,7 +110,7 @@ class AutoGold extends Command
             'date' => date('Y-m-d'),
         ];
         \Log::channel('script')->info('脚本正在运行', ['下一次领取的信息' => $auto_time]);
-        redis_set(config('czf.redis_key.s6'),$auto_time);
+        redis_set(config('czf.redis_key.s6'),$auto_time,24*3600);
         return $auto_time;
     }
 }
