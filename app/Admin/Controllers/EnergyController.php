@@ -37,6 +37,9 @@ class EnergyController extends AdminController
             $actions->disableView();
             $actions->disableEdit();
         });
+        $grid->model()->orderBy('id', 'desc');
+        if (!empty(request()->input('user_id')))
+            $grid->model()->where('user_id',request()->input('user_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
 

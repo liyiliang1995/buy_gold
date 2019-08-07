@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
-        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1>";
+        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1><style>.box-title{display: none!important;}</style>";
 
         return $content
             ->title('翠竹坊管理中心')
@@ -21,18 +21,14 @@ class HomeController extends Controller
             ->breadcrumb(['text' => '欢迎页'])
             ->row($title)
             ->row(function (Row $row) {
-                $row->column(6, function (Column $column) {
-                    $column->append(Dashboard::environment());
+                $row->column(12, function (Column $column) {
+                    $column->append(Dashboard::ajaxGetGoldPool());
                 });
-                $row->column(6, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
+
             });
 
-    }
-
-    public function Gold_statistics()
-    {
 
     }
+
+
 }
