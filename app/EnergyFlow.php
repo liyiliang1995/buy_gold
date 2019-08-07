@@ -41,6 +41,14 @@ class EnergyFlow extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo('App\Member','user_id');
+    }
+
+    /**
      * @return array
      */
     public function getAndFieds():array

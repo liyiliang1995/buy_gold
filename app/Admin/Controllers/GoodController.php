@@ -26,7 +26,7 @@ class GoodController extends AdminController
     {
         $grid = new Grid(new Good);
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('名称'));
 //        $grid->column('describe', __('描述'));
         $grid->column('list_img', __('商品图片'))->image();
@@ -34,7 +34,7 @@ class GoodController extends AdminController
 //        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
 //        $grid->column('updated_at', __('Updated at'));
-
+        $grid->disableExport();
         return $grid;
     }
 

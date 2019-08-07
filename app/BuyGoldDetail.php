@@ -15,6 +15,10 @@ class BuyGoldDetail extends Model
      * @var string
      */
     protected $table = 'buy_gold_detail';
+    /**
+     * @var array
+     */
+    protected $appends = ["show_type"];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -35,9 +39,9 @@ class BuyGoldDetail extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @see 一对一 金币值流水
      */
-    public function glod_flow()
+    public function gold_flow()
     {
-        return $this->belongsTo('App\GlowFlow');
+        return $this->belongsTo('App\GoldFlow','flow_id');
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -45,6 +49,14 @@ class BuyGoldDetail extends Model
      */
     public function integral_flow()
     {
-        return $this->belongsTo('App\IntegralFlow');
+        return $this->belongsTo('App\IntegralFlow','flow_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowTypeAttribute()
+    {
+        return config("czf.flow_show_type")[$this->type];
     }
 }

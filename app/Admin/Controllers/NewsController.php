@@ -25,7 +25,7 @@ class NewsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new News);
-        $grid->column('id', __('Id'))->width(10);
+        $grid->column('id', __('Id'))->width(10)->sortable();
         $grid->column('title', __('标题'))->width(300);
         $grid->column('type',__('类型'))->display(function ($type){
             if ($type==1){
@@ -45,6 +45,7 @@ class NewsController extends AdminController
         //$grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'))->width(150);
         $grid->column('updated_at', __('更新时间'))->width(150);
+        $grid->disableExport();
         return $grid;
     }
 

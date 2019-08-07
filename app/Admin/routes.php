@@ -17,6 +17,13 @@ Route::group([
     $router->resource('news', NewsController::class);
     $router->resource('order', OrderController::class);
     $router->resource('goldflow', GoldflowController::class);
+    $router->resource('energy-flows', EnergyController::class);
+    $router->resource('integral-flows', IntegralFlowController::class);
+    $router->resource('buy-golds', BuyGoldController::class);
+    $router->resource('buy-gold-details', BuyGoldDetailController::class);
+    $router->resource('order-details', OrderDetailController::class);
+
+
     $router->get('getKvbyTypeId/{id}',"ConfigController@getKvbyTypeId")->name('admin.getKvbyTypeId');
     $router->post('postKvbyTypeId/{id}',"ConfigController@postKvbyTypeId")->name("admin.postKvbyTypeId");
     $router->get('recharge/{id}',"MemberController@recharge")->name('admin.recharge');

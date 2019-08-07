@@ -29,7 +29,7 @@ class MemberController extends AdminController
     {
         $grid = new Grid(new Member);
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('姓名'));
         $grid->column('phone', __('手机号码'));
         $grid->column('phone2', __('联系手机号'));
@@ -69,8 +69,13 @@ class MemberController extends AdminController
             $url = route("admin.recharge", ['id' => $actions->getKey()]);
 //            $url2 = route("admin.particulars", ['id' => $actions->getKey()]);
             $actions->append('<a href="' . $url . '">充值</a>');
+            $url2 = route('goldflow.index',['user_id'=>$actions->getKey()]);
+            $actions->append('<a href="' . $url2 . '"><span style="color:red">交易流水</span></a>');
 //            $actions->append('<a href ="' . $url2 . '">  明细</a>');
         });
+        $grid->model()->orderBy('id', 'desc');
+        $grid->disableExport();
+        $grid->disableCreateButton();
         return $grid;
     }
 

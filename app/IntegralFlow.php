@@ -46,6 +46,15 @@ class IntegralFlow extends Model
         return $this->and_fields??[];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo('App\Member','user_id');
+    }
+
+
     public function getShowTypeAttribute()
     {
         return config("czf.integral_show_type")[$this->type];

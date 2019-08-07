@@ -13,6 +13,14 @@ class Order extends Model
     protected $table = "order";
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo('App\Member','user_id');
+    }
+
+    /**
      * @return string
      * @see 获取单号
      */

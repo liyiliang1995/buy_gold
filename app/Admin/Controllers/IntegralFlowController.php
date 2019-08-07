@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\GoldFlow;
+use App\IntegralFlow;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class GoldflowController extends AdminController
+class IntegralFlowController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '金币流水';
+    protected $title = '积分明细';
 
     /**
      * Make a grid builder.
@@ -24,30 +24,21 @@ class GoldflowController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new GoldFlow);
+        $grid = new Grid(new IntegralFlow);
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('is_income', __('收入支出'))->display(function ($is_income){
-            return $is_income ? "收入" : '支出';
-        });
         $grid->column('show_type', __('业务类型'));
-        $grid->column('member.phone', __('用户'));
-        $grid->column('gold', __('金币数量'));
+        $grid->column('integral', __('积分值'));
+        $grid->column('user_id', __('用户'));
         $grid->column('other', __('备注'));
-        //$grid->column('is_statistical', __('Is statistical'));
-        //$grid->column('deleted_at', __('Deleted at'));
-        $grid->column('created_at', __('时间'));
-        //$grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableView();
             $actions->disableEdit();
         });
-        $grid->model()->orderBy('id', 'desc');
-        $grid->model()->where('user_id',request()->input('user_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
-
         return $grid;
     }
 
@@ -59,15 +50,13 @@ class GoldflowController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(GoldFlow::findOrFail($id));
+        $show = new Show(IntegralFlow::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('is_income', __('Is income'));
         $show->field('type', __('Type'));
+        $show->field('integral', __('Integral'));
         $show->field('user_id', __('User id'));
-        $show->field('gold', __('Gold'));
         $show->field('other', __('Other'));
-        $show->field('is_statistical', __('Is statistical'));
         $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -82,14 +71,12 @@ class GoldflowController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new GoldFlow);
+        $form = new Form(new IntegralFlow);
 
-        $form->switch('is_income', __('Is income'));
         $form->switch('type', __('Type'));
+        $form->number('integral', __('Integral'));
         $form->number('user_id', __('User id'));
-        $form->decimal('gold', __('Gold'))->default(0.00);
         $form->text('other', __('Other'));
-        $form->switch('is_statistical', __('Is statistical'));
 
         return $form;
     }

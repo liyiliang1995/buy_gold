@@ -16,7 +16,7 @@ class OrderController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Order';
+    protected $title = '购物订单';
 
     /**
      * Make a grid builder.
@@ -27,11 +27,11 @@ class OrderController extends AdminController
     {
         $grid = new Grid(new Order);
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('order_no', __('订单号'));
-        $grid->column('user_id', __('用户id'));
-        $grid->column('pay_gold', __('支付金额'));
-        $grid->column('amount', __('订单金额'));
+        $grid->column('member.phone', __('用户'));
+        $grid->column('pay_gold', __('支付金币'));
+        $grid->column('amount', __('价值金额'));
         $grid->column('express', __('快递单号'));
         //$grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
@@ -44,6 +44,13 @@ class OrderController extends AdminController
                 return '未发货';
             }
         });
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+            $actions->disableView();
+            $url = route("order-details.index", ['order_id' => $actions->getKey()]);
+            $actions->append('<a href="' . $url . '">流水详情</a>');
+        });
+        $grid->disableExport();
 
         return $grid;
     }
@@ -61,8 +68,8 @@ class OrderController extends AdminController
         $show->field('id', __('Id'));
         $show->field('order_no', __('订单号'));
         $show->field('user_id', __('用户id'));
-        $show->field('pay_gold', __('支付金额'));
-        $show->field('amount', __('订单金额'));
+        $show->field('pay_gold', __('支付金币'));
+        $show->field('amount', __('价值金额'));
         $show->field('express', __('快递单号'));
        // $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('创建时间'));
@@ -84,8 +91,8 @@ class OrderController extends AdminController
 
         $form->text('order_no', __('订单号'))->disable();
        // $form->number('user_id', __('用户id'));
-        $form->decimal('pay_gold', __('支付金额'))->default(0.00)->disable();
-        $form->decimal('amount', __('订单金额'))->default(0.00)->disable();
+        $form->decimal('pay_gold', __('支付金币'))->default(0.00)->disable();
+        $form->decimal('amount', __('价值金额'))->default(0.00)->disable();
         $form->text('express', __('快递单号'));
         $form->text('other', __('买家留言'));
         $form->select('is_send', __('是否发货'))->options([0 => '否', 1 => '是']);
