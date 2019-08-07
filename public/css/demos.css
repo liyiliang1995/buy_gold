@@ -239,8 +239,8 @@ footer a {
 
 #but_money {
     text-align: center;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: red;
     border-radius: 50%;
     padding: 15px;
@@ -248,11 +248,11 @@ footer a {
     margin: 0 auto;
     display: block;
     margin-top: 20px;
-    font-size: 45px !important;
+    font-size: 35px !important;
 }
 
 .buy_conter {
-    padding: 0 30px;
+    padding: 0 15px;
 
     padding-bottom: 40px;
 }

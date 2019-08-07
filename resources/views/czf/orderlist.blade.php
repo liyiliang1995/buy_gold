@@ -92,7 +92,7 @@
                         console.log(result);
                         var html = '';
                         $.each(result.data.data,function (index,val) {
-                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 5px solid #eee;">';
+                            html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;border-top: 10px solid #eee;">';
                             html += '<div class="weui-flex__item" id="order_sn">订单号：'+val.order_no+'</div>';
                             html += '</div>';
                             html += '<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="background: #f9f9f9;">';

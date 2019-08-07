@@ -40,6 +40,16 @@
         #user_but{
             width: 40%;
         }
+        .weui-cell{
+            padding: 10px !important;
+        }
+        .user_num{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .weui-cells{
+            margin-top: 10px !important;
+        }
     </style>
     <body>
     <!--个人中心-->
@@ -53,17 +63,17 @@
             </div>
             <div class="weui-flex__item">
                 <a href="{{route('userset')}}">
-                    <i style="float: right;margin: 5%;color: #fff" class="iconfont icon-setting"></i>
+                    <i style="float: right;margin: 5%;color: #fff;font-size: 24px;" class="iconfont icon-setting"></i>
                 </a>
             </div>
         </div>
 
         <div class="weui-flex" id="user_value">
-            <div class="weui-flex__item"><p>{{$member->gold}}</p>
+            <div class="weui-flex__item"><p class="user_num">{{$member->gold}}</p>
                 <p>当前金币</p></div>
-            <div class="weui-flex__item"><p>{{$member->integral}}</p>
+            <div class="weui-flex__item"><p class="user_num">{{$member->integral}}</p>
                 <p>当前积分</p></div>
-            <div class="weui-flex__item"><p>{{$member->energy}}</p>
+            <div class="weui-flex__item"><p class="user_num">{{$member->energy}}</p>
                 <p>能量值</p></div>
         </div>
     </div>
@@ -284,10 +294,10 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a class="weui-cell weui-cell_access" href="tel:">
             <div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>
             <div class="weui-cell__bd">
-                <p>问题建议</p>
+                <p>联系客服</p>
             </div>
             <div class="weui-cell__ft">
             </div>
