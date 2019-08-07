@@ -21,18 +21,14 @@ class HomeController extends Controller
             ->breadcrumb(['text' => '欢迎页'])
             ->row($title)
             ->row(function (Row $row) {
-                $row->column(6, function (Column $column) {
-                    $column->append(Dashboard::environment());
+                $row->column(12, function (Column $column) {
+                    $column->append(Dashboard::ajaxGetGoldPool());
                 });
-                $row->column(6, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
+
             });
 
-    }
-
-    public function Gold_statistics()
-    {
 
     }
+
+
 }

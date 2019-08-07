@@ -67,11 +67,15 @@ class MemberController extends AdminController
             $actions->disableDelete();
             $actions->disableView();
             $url = route("admin.recharge", ['id' => $actions->getKey()]);
-//            $url2 = route("admin.particulars", ['id' => $actions->getKey()]);
             $actions->append('<a href="' . $url . '">充值</a>');
             $url2 = route('goldflow.index',['user_id'=>$actions->getKey()]);
-            $actions->append('<a href="' . $url2 . '"><span style="color:red">交易流水</span></a>');
-//            $actions->append('<a href ="' . $url2 . '">  明细</a>');
+            $actions->append('<a href="' . $url2 . '"><span style="color:red"> 金币</span></a>');
+
+            $url3 = route('energy-flows.index',['user_id'=>$actions->getKey()]);
+            $actions->append('<a href="' . $url3 . '"><span style="color:red"> 能量</span></a>');
+
+            $url4 = route('integral-flows.index',['user_id'=>$actions->getKey()]);
+            $actions->append('<a href="' . $url4 . '"><span style="color:red"> 积分</span></a>');
         });
         $grid->model()->orderBy('id', 'desc');
         $grid->disableExport();
