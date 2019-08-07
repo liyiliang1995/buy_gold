@@ -9,7 +9,6 @@ namespace App\Logics;
 use App\HourAvgPrice;
 use Illuminate\Support\Arr;
 use App\Exceptions\CzfException;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 class MemberLogic extends BaseLogic
 {

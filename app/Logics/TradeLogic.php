@@ -6,6 +6,7 @@
  * Time: 10:47 AM
  */
 namespace App\Logics;
+use App\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 class TradeLogic extends BaseLogic
@@ -235,14 +236,31 @@ class TradeLogic extends BaseLogic
             $oBuyGold->status = 1;
             $oBuyGold->is_show = 0;
             $oBuyGold->member->status = 1;
+            $oBuyGold->seller->status = 1;
             $oBuyGold->push();
+            $this->parentReleaseLock([$oBuyGold->seller->parent_user_id,$oBuyGold->member->parent_user_id]);
             redis_srem(config("czf.redis_key.set1"),$oBuyGold->seller_id);
-            redis_srem(config("czf.redis_key.set1"),$id);
-            \Auth::user()->status = 1;
-            return  \Auth::user()->save();
+            redis_srem(config("czf.redis_key.set1"),$oBuyGold->user_id);
+            return true;
         });
         return $bRes ?? false;
 
+    }
+
+    /**
+     * @param array $aParams
+     * @解除上级代理的状态
+     */
+    public function parentReleaseLock(array $aParams)
+    {
+        $oMemberMolde = new Member;
+        $aData = $oMemberMolde->where('status',4)->whereIn('id',$aParams)->get();
+        if ($aData) {
+            foreach ($aData as $item) {
+                $item->update(['status'=>1]);
+                redis_srem(config("czf.redis_key.set1"),$item->id);
+            }
+        }
     }
 
 
