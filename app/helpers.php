@@ -462,6 +462,21 @@ if (!function_exists('member_is_auto_gold')) {
         }
     }
 }
+if (!function_exists('check_auto_date')) {
+    /**
+     * @see 检测领取的时间是不是变化了一天
+     */
+    function check_auto_date():bool
+    {
+        $bRes = true;
+        $auto_time = redis_get(config('czf.redis_key.s6'));
+        if (!empty($auto_time['date']) && $auto_time['date'] != date('Y-m-d',time())) {
+             $bRes = false;
+        }
+        return $bRes;
+    }
+}
+
 if (!function_exists('compute_autogold')) {
 
     function compute_autogold(float $fSumGold):float
