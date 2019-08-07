@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
-        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1>";
+        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1><style>.box-title{display: none!important;}</style>";
 
         return $content
             ->title('翠竹坊管理中心')
