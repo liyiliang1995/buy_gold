@@ -75,7 +75,7 @@ class MemberController extends AdminController
         });
         $grid->model()->orderBy('id', 'desc');
         $grid->disableExport();
-        $grid->disableCreateButton();
+//        $grid->disableCreateButton();
         return $grid;
     }
 
