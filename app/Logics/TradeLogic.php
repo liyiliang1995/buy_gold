@@ -139,7 +139,7 @@ class TradeLogic extends BaseLogic
             // 买家增加能量值流水
             $this->getBuyGoldEnergyFlowDetail(2, $this->oBuyGoldDetail->user_id, $this->oBuyGoldDetail->energy,'出售金币获取能量')('App\BuyGoldDetail'),
             // 卖家扣除金币流水
-            $this->getBuyGoldGoldFlowDetail(0,2,userId(),$this->oBuyGoldDetail->sum_gold,"出售金币")('App\BuyGoldDetail'),
+            $this->getBuyGoldGoldFlowDetail(0,2,userId(),$this->oBuyGoldDetail->gold,"出售金币")('App\BuyGoldDetail'),
             // 买家增加金币流水
             $this->getBuyGoldGoldFlowDetail(1,3,$this->oBuyGoldDetail->user_id,$this->oBuyGoldDetail->gold,"求购金币")('App\BuyGoldDetail'),
             // 燃烧金币返回流水
