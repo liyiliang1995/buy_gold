@@ -21,7 +21,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     /**
      * @var array
      */
-    protected $fillable = ['name', 'password', 'phone', 'parent_user_id'];
+    protected $fillable = ['name', 'password', 'phone', 'parent_user_id','status'];
 
     /**
      * @param $value
