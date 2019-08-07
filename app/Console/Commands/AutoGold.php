@@ -56,13 +56,14 @@ class AutoGold extends Command
                 $bRes = ($auto_time['date'] == date('Y-m-d',time()));
                 foreach ($members as $key => $val) {
                     $val = json_decode($val,true);
+
                     // 换天数以后重置每天领取金额
                     if (!$bRes) {
                         $val['gold'] = 0;
                         redis_hset($sKey,$key,$val);
                     }
-
-                    if ($val['is_auto'] == 1)
+                    // 设置为自动领取 冻结的不领取
+                    if ($val['is_auto'] == 1 && !redis_sismember(config('czf.redis_key.set1'),$key))
                         $oMemberLogic->receiveGold($key,$val['gold']);
                 }
                 // 时间换了一天

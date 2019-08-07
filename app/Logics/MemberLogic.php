@@ -303,6 +303,8 @@ class MemberLogic extends BaseLogic
      */
     public function manualGiveGoldValidate($fRes,$fNum)
     {
+        if (redis_sismember(config('czf.redis_key.set1'),$this->model->id))
+            throw new CzfException("用户当前处于冻结状态，请完成交易在来领取！");
         $skey  = "str:member_id_".$this->model->id;
         if (redis_get($skey))
             throw new CzfException("不能多次领取，请在下一个时间段在领取！");

@@ -20,6 +20,7 @@ return [
         's5' => 'str:gold_pool_num',    // 金币池总价格
         's6' => 'str:auto_gold_time',
         'h1' => 'hash:auto_gold_members',//自动领取金币的人数
+        'set1' => "set:freeze_members",  // 用户冻结人数
     ],
     'stockholders_rate' => 0.5,         // 购买商品给股东分成比列
 
