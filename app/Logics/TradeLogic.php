@@ -157,6 +157,7 @@ class TradeLogic extends BaseLogic
      */
     public function freezeSeller()
     {
+        redis_sadd(config("czf.redis_key.set1"),userId());
         //出售金币的状态 为冻结
         \Auth::user()->status = 2;
         \Auth::user()->save();
@@ -211,6 +212,7 @@ class TradeLogic extends BaseLogic
             \Auth::user()->status = 1;
             return  \Auth::user()->save();
         });
+        redis_srem(config("czf.redis_key.set1"),userId());
         return $bRes ?? false;
     }
 
@@ -234,6 +236,8 @@ class TradeLogic extends BaseLogic
             $oBuyGold->is_show = 0;
             $oBuyGold->member->status = 1;
             $oBuyGold->push();
+            redis_srem(config("czf.redis_key.set1"),$oBuyGold->seller_id);
+            redis_srem(config("czf.redis_key.set1"),$id);
             \Auth::user()->status = 1;
             return  \Auth::user()->save();
         });

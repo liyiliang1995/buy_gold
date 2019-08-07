@@ -81,6 +81,7 @@ class BuyGold extends Model
      */
     public function freezeBuyer()
     {
+        redis_sadd(config("czf.redis_key.set1"),userId());
         //购买金币的状态 为冻结
         \Auth::user()->status = 3;
         \Auth::user()->save();

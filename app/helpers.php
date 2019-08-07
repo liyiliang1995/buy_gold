@@ -411,6 +411,52 @@ if (!function_exists('redis_hexists')) {
     }
 }
 
+if (!function_exists('redis_sadd')) {
+    /**
+     * @param $key
+     * @param $content
+     * @return bool
+     * @see redis 集合操作
+     */
+    function redis_sadd($sKey,$content):bool
+    {
+
+        if (is_array($content) || is_object($content)) {
+            $bRes = Redis::sadd($sKey,json_encode($content,true));
+        } else {
+            $bRes = Redis::sadd($sKey,$content);
+        }
+        return $bRes;
+    }
+}
+if (!function_exists('redis_sismember')) {
+    /**
+     * @param $sKey
+     * @param $member
+     * @param $db
+     * @return bool
+     */
+    function redis_sismember($sKey,$member):bool
+    {
+        return Redis::sismember($sKey,$member);
+    }
+
+}
+
+if (!function_exists('redis_srem')) {
+    /**
+     * @param $sKey
+     * @param $member
+     * @param $db
+     * @return int
+     */
+    function redis_srem($sKey,$member):int
+    {
+        return Redis::srem($sKey,$member);
+    }
+}
+
+
 if (!function_exists('redis_hgetall')) {
     /**
      * @param $sKey
