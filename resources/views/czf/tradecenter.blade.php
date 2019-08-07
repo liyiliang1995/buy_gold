@@ -86,7 +86,7 @@
                     <span>指导价：{{$fGuidancePrice['min']}}-{{$fGuidancePrice['max']}}</span>
                 </div>
                 <div class="weui-cell__bd" style="text-align: right;">
-                    <span id="intext">金额 <b style="color: red;">￥99</b></span>
+                    <span id="intext">金额 <b style="color: red;">￥0</b></span>
                 </div>
             </div>
             @csrf

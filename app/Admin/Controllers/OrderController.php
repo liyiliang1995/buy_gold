@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Order;
+use App\OrderItem;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -81,14 +82,25 @@ class OrderController extends AdminController
     {
         $form = new Form(new Order);
 
-        $form->text('order_no', __('订单号'));
+        $form->text('order_no', __('订单号'))->disable();
        // $form->number('user_id', __('用户id'));
-        $form->decimal('pay_gold', __('支付金额'))->default(0.00);
-        $form->decimal('amount', __('订单金额'))->default(0.00);
+        $form->decimal('pay_gold', __('支付金额'))->default(0.00)->disable();
+        $form->decimal('amount', __('订单金额'))->default(0.00)->disable();
         $form->text('express', __('快递单号'));
         $form->text('other', __('买家留言'));
-        $form->switch('is_send', __('是否发货'));
+        $form->select('is_send', __('是否发货'))->options([0 => '否', 1 => '是']);
 
         return $form;
+    }
+
+    public function update($id)
+    {
+        //dd(request()->input());
+        $oOrderModel = new Order();
+        $oOrderItemModel = new OrderItem();
+        $order_no = $oOrderModel->find($id)->order_no;
+        $oOrderItemModel->where('order_no',$order_no)->update(['is_send'=>request()->input('is_send') ?? 0]);
+//        oOrderItemModel->where();
+        return $this->form()->update($id);
     }
 }
