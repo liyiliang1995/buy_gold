@@ -60,7 +60,8 @@ class OrderDetailController extends AdminController
             $actions->disableEdit();
         });
         $grid->model()->orderBy('id', 'desc');
-        $grid->model()->where('order_id',request()->input('order_id'));
+        if (!empty(request()->input('order_id')))
+            $grid->model()->where('order_id',request()->input('order_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
 

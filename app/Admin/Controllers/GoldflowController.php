@@ -44,7 +44,8 @@ class GoldflowController extends AdminController
             $actions->disableEdit();
         });
         $grid->model()->orderBy('id', 'desc');
-        $grid->model()->where('user_id',request()->input('user_id'));
+        if (!empty(request()->input('user_id')))
+            $grid->model()->where('user_id',request()->input('user_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
 

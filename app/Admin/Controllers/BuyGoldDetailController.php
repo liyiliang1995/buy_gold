@@ -59,7 +59,8 @@ class BuyGoldDetailController extends AdminController
             $actions->disableEdit();
         });
         $grid->model()->orderBy('id', 'desc');
-        $grid->model()->where('buy_gold_id',request()->input('buy_gold_id'));
+        if (!empty(request()->input('buy_gold_id')))
+            $grid->model()->where('buy_gold_id',request()->input('buy_gold_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
 
