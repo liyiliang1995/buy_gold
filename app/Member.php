@@ -179,6 +179,23 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     }
 
     /**
+     * @return float
+     * @see 所有能量值
+     */
+    public function getAllMemberEnergy():float
+    {
+        return $this->sum('energy') ?? 0.00;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAllMemberIntegral():float
+    {
+        return $this->sum('integral') ?? 0.00;
+    }
+
+    /**
      * @see 自己+代理注册人金币总数量
      */
     public function getSelfAndChildGoldAttribute():float
