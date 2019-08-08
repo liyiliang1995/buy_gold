@@ -32,6 +32,7 @@ class GoodController extends AdminController
         $grid->column('created_at', __('创建时间'));
         $grid->disableExport();
         $grid->disableRowSelector();
+        $grid->disableFilter();
         return $grid;
     }
 
@@ -64,8 +65,8 @@ class GoodController extends AdminController
         $form = new Form(new Good);
         $form->text('name', __('名称'));
         $form->decimal('amount', __('价格'))->default(0.00);
-        $form->image('list_img', __('缩略图'));
-        $form->hasMany('goodsimgs', __('轮播图'),function(Form\NestedForm $form){
+        $form->image('list_img', __('缩略图(320*320)'));
+        $form->hasMany('goodsimgs', __('轮播图(640*640)'),function(Form\NestedForm $form){
             $form->image('img',__('轮播图'));
         });
         $form->kindeditor('describe', __('描述'));

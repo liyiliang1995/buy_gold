@@ -77,7 +77,7 @@
 
         <div class="weui-tabbar" id="goods_detail_but">
             <a href="{{route('confirmOrder',['goodsId'=>$oGoods->id])}}" class="weui-btn">
-                立即购买
+                确认出售
             </a>
         </div>
     </div>

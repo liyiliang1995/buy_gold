@@ -76,7 +76,9 @@ footer a {
     font-size: 14px;
 
 }
-
+#user_value a{
+    color: #fff;
+}
 #user_gold {
     font-size: 12px;
     line-height: 25px;
