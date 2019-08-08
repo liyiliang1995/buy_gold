@@ -14,7 +14,7 @@ class OrderItem extends Model
     /**
      * @var int
      */
-    public $query_page = 7;
+    public $query_page = 10;
     /**
      * @var array
      */
@@ -41,7 +41,7 @@ class OrderItem extends Model
      */
     public function order()
     {
-        return $this->belongsTo('App\Order','order_no');
+        return $this->belongsTo('App\Order','order_no','order_no');
     }
 
     /**
