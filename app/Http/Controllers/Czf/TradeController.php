@@ -221,8 +221,6 @@ class TradeController extends Controller
     public function ajaxGetGoldPool()
     {
         $aData = gold_compute();
-        $aData['test'] = array_sum($aData);
-        $aData['redis'] = get_gold_pool();
         return $this->success('',$aData);
     }
 
