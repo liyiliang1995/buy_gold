@@ -347,10 +347,12 @@ if (!function_exists('gold_compute')) {
         $aData['gold'] = bcadd($fTmp, $fGoldInNum,2);
         $aData['user_sum_gold'] = $fMemberGoldNum;
         $aData['burn_gold'] = $fBurnGoldNum;
+        $aData['sum_gold'] = bcadd(bcadd($aData['gold'],$aData['user_sum_gold'],2),$aData['burn_gold'],2);
         $aData['energy'] = $iEnergy;
         $aData['integral'] = $iIntegral;
         $aData['order_count'] = $iOrder;
         $aData['buygold_count'] = $iBuyGold;
+        $aData['members_count'] = $oMemberModel->count() ?? 0;
         return $aData;
     }
 }
