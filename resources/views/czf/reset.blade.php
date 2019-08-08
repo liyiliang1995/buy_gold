@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>'重置密码',
 'css' => [
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
@@ -17,7 +17,6 @@
             font-size: 14px;
             padding-left: 10px;
         }
-
     </style>
     <body class="password-page">
     <div class="weui-flex" style="margin-top: 2rem;">

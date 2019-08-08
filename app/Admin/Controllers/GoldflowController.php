@@ -50,7 +50,8 @@ class GoldflowController extends AdminController
             $grid->model()->where('user_id',request()->input('user_id'));
         $grid->disableExport();
         $grid->disableCreateButton();
-
+        $grid->disableRowSelector();
+        $grid->disableActions();
         return $grid;
     }
 

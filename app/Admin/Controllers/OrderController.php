@@ -51,7 +51,7 @@ class OrderController extends AdminController
             $actions->append('<a href="' . $url . '">流水详情</a>');
         });
         $grid->disableExport();
-
+        $grid->disableRowSelector();
         return $grid;
     }
 
@@ -96,7 +96,12 @@ class OrderController extends AdminController
         $form->text('express', __('快递单号'));
         $form->text('other', __('买家留言'));
         $form->select('is_send', __('是否发货'))->options([0 => '否', 1 => '是']);
-
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
         return $form;
     }
 

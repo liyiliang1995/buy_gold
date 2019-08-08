@@ -45,6 +45,7 @@ class BuyGoldController extends AdminController
         $grid->disableExport();
         $grid->disableCreateButton();
         $grid->model()->orderBy('id', 'desc');
+        $grid->disableRowSelector();
         return $grid;
     }
 
