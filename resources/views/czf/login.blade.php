@@ -143,7 +143,7 @@
                     url: "{{route('sendMsg')}}",
                     type:'post',
                     dataType: "json",
-                    data:{ phone:phone,_method:'post' ,_token:"{{csrf_token()}}"},
+                    data:{ 'is_check':1,phone:phone,_method:'post' ,_token:"{{csrf_token()}}"},
                     error:function(data){
                         $.toast("服务器繁忙, 请联系管理员！",'text');
                         return;

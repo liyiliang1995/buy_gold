@@ -46,7 +46,7 @@ class BuyGoldDetailController extends AdminController
         });
         $grid->column('user', __('用户'))->display(function (){
             if ($this->type == 1) {
-                return $this->gold_flow->member->phone;
+                return $this->gold_flow->member->phone ?? '金币池';
             } else if ($this->type == 2) {
                 return $this->integral_flow->member->phone;
             } else if ($this->type == 3)

@@ -119,6 +119,13 @@
             }
         }
         $(function () {
+            @php
+                $errors = session()->get('lock');
+            @endphp
+            @if($errors)
+                $.toast("{{$errors}}", 'text');
+            @endif
+
             $("#rg").on('click',function() {
                 rg.register();
             })

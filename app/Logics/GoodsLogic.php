@@ -116,12 +116,12 @@ class GoodsLogic extends BaseLogic
             throw new CzfException('购买数量必须是一个大于0的整数');
         if (isset($aParams['other']) && mb_strlen($aParams['other']) > 200)
             throw new CzfException("留言长度字符不能超过200字符");
-        if (empty($aParams['gold_price']) || $aParams['gold_price'] < 0.5)
+        if (empty($aParams['gold_price']) || $aParams['gold_price'] < 1)
             throw new CzfException("操作异常,购买价格不正常！");
-        if (\Auth::user()->checkMemberOneHalfGold($this->gold) === false)
-            throw new CzfException("出售金币数量不能超过持有数量的50%!");
         if (\Auth::user()->getChildMemberNum() < 1)
             throw new CzfException("至少激活一个用户才可以购物!");
+        if (\Auth::user()->checkMemberOneHalfGold($this->gold) === false)
+            throw new CzfException("出售金币数量不能超过持有数量的50%!");
     }
 
     /**
