@@ -31,8 +31,8 @@ class GoldflowController extends AdminController
             return $is_income ? "收入" : '支出';
         });
         $grid->column('show_type', __('业务类型'));
-        $grid->column('member.phone', __('用户'))->display(function (){
-            $this->member->phone ? $this->member->phone : "金币池";
+        $grid->column('user', __('用户'))->display(function (){
+            return $this->member->phone ?? "金币池";
         });
         $grid->column('gold', __('金币数量'));
         $grid->column('other', __('备注'));
