@@ -73,7 +73,7 @@
                      <input class="weui-input" name="gold"
                                                                                          id="job" type="text"
                                                                                          value="100"
-                                                                                         style="text-align: right;color: red;    padding-right: 30px;"><i class="weui-icon-success" style="position: absolute;"></i>
+                                                                                         style="text-align: right;color: red;     width: 200px;   padding-right: 30px;"><i class="weui-icon-success" style="position: absolute;"></i>
                 </div>
             </div>
             <div class="weui-cell weui-cell_vcode" style="padding: 15px;">

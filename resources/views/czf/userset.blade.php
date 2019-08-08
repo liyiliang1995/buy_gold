@@ -81,15 +81,6 @@
                 <input class="weui-input" name="password2" id="password2" type="password" placeholder="请输入密码">
             </div>
         </div>
-        <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="{{route('getEditAddress',['url'=>url()->full()])}}">
-                <div class="weui-cell__bd">
-                    <p>收货地址</p>
-                </div>
-                <div class="weui-cell__ft">
-                </div>
-            </a>
-        </div>
 
     </div>
     <div class="weui-flex" style="margin-top: 20px;">

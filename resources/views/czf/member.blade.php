@@ -67,10 +67,6 @@
                     <div class="weui-col-50"><img src="./img/logo.png" alt=""></div>
                     <div class="weui-col-50"><p>{{$member->name}}</p></div>
                 </div>
-                {{--<div class="weui-flex">--}}
-                    {{--<div class="weui-flex__item"><img src="./img/logo.png" alt=""></div>--}}
-                    {{--<div class="weui-flex__item" style="width: 200px;"><p>{{$member->name}}</p></div>--}}
-                {{--</div>--}}
             </div>
             <div class="weui-flex__item">
                 <a href="{{route('userset')}}">
@@ -148,12 +144,16 @@
         <div class="weui-col-50" id="user_but">
 
                 @if($is_auto == 1)
-                <a class="weui-btn weui-btn_plain-primary" style="color: #666;border: 1px solid #666;">自动领取中</a>
+                <div id="check_a">
+                    <a class="weui-btn weui-btn_plain-primary" style="color: #666;border: 1px solid #666;">自动领取中</a>
+                </div>
                 <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                     <p>自动领取</p>
                     <input class="weui-switch" type="checkbox"  onclick="checkboxOnclick(this)" checked>
                     @else
+                        <div id="check_a">
                         <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
+                        </div>
                         <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                             <p>自动领取</p>
                     <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" >
@@ -165,12 +165,10 @@
         function checkboxOnclick(checkbox) {
         if ( checkbox.checked == true){
             var url = "{{route('add_auto_gold',['type'=>1])}}";
-            window.location.href=window.location.href;
-            window.location.reload;
+            document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
             }else{
             var url = "{{route('add_auto_gold',['type'=>0])}}";
-            window.location.href=window.location.href;
-            window.location.reload;
+            document.getElementById('check_a').innerHTML = "<a href='javascript:;' id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
             }
             $.ajax({
                 url: url,
@@ -181,7 +179,7 @@
                     return;
                 },
                 success: function (result) {
-                    console.log(ok);
+                    console.log(result);
                 }
             });
         }

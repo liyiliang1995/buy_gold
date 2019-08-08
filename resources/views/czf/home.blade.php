@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'首页 - 翠竹坊',
+@extends('czf.base',['header'=>'翠竹坊',
 'css' => [
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
@@ -41,19 +41,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Add Pagination -->
-            <!--<div class="swiper-pagination swiper-pagination-white"></div>-->
-            <!-- Add Navigation -->
-            <!--<div class="swiper-button-prev"></div>-->
-            <!--<div class="swiper-button-next"></div>-->
         </div>
     </div>
     <div class="weui-flex notice">
-        <div class="weui-cell__hd">
-            <i></i>
-        </div>
-        <div class="weui-cell__bd">
-            <label class="weui-label" style="width: 100%"><marquee  direction="left">{{$newslist['0']['title']}}</marquee></label>
+        <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
+            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px"><marquee  direction="left" style="height: 30px;line-height: 30px">{{$newslist['0']['title']}}</marquee></label>
         </div>
     </div>
     <div class="weui-flex">
