@@ -98,6 +98,10 @@
                function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res-1;
+                if (resa < 1){
+                    window.location.reload();
+                    return;
+                }
                    var ssss = formatSeconds(resa);
                    document.getElementById("next_time").innerHTML = ssss;
                    document.getElementById("next_time_f").value = resa;

@@ -102,7 +102,7 @@
                             html += 'X'+val.num+'</span></p>';
                             html += '</div></a>';
                             html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                            html += '<div class="weui-flex__item" style="color: #FF2634">'+val.is_send_str+'</div>';
+                            html += '<div class="weui-flex__item" style="color: #FF2634">'+val.is_send_str+' 快递单号：'+val.express+'</div>';
                             html += '<div class="weui-flex__item" style="text-align: right">合计：<b style="color: #FF2634">'+val.sum_price+'</b></div></div>'
                         });
                         order_list.url = result.data.next_page_url;
