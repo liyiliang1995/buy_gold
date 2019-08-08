@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Czf;
 
 use Illuminate\Http\Request;
 use App\Good;
+use App\News;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -24,7 +25,9 @@ class HomeController extends Controller
     {
         $aConfig = getConfigByType(1);
         $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
-        return view('czf.home',compact('aConfig','aGoods'));
+        $news=new news();
+        $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
+        return view('czf.home',compact('aConfig','aGoods','newslist'));
     }
 
     /**

@@ -48,7 +48,7 @@ class HomeController extends Controller
         $aData['redis'] = get_gold_pool();
 
         $envs = [
-            ['name' => '金币池总数量', 'value' => $aData['test']],
+            ['name' => '金币池总数量', 'value' => (int)($aData['gold']+$aData['user_sum_gold']+$aData['burn_gold'])],
             ['name' => '金币池剩余数', 'value' => $aData['gold']],
             ['name' => '用户拥有金币数', 'value' => $aData['user_sum_gold']],
             ['name' => '金币燃烧数', 'value' =>$aData['burn_gold']],

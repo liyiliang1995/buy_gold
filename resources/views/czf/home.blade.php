@@ -53,7 +53,7 @@
             <i></i>
         </div>
         <div class="weui-cell__bd">
-            <label class="weui-label">测试通知信息</label>
+            <label class="weui-label" style="width: 100%"><marquee  direction="left">{{$newslist['0']['title']}}</marquee></label>
         </div>
     </div>
     <div class="weui-flex">
