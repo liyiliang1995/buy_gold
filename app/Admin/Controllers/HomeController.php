@@ -13,8 +13,8 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
+
         $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1> <style>.row{ width: 100%; margin: 0 auto;background: #fff; line-height: 70px;font-size: 18px;}.col-md-6{border: 1px solid #eee}</style>";
-//dd($this->ajaxGetGoldPool()['0']);
         return $content
             ->title('翠竹坊管理中心')
             ->description('欢迎您')

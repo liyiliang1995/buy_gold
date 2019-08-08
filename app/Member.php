@@ -66,7 +66,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     {
         $aData['parent_user_id'] = userId();
         $member = $this->create($aData);
-        $this->addChildUserNum();
+        // $this->addChildUserNum();
         return $member;
     }
 
@@ -75,7 +75,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function addChildUserNum(int $iNum = 1)
     {
-        $this->find(userId())->increment('child_user_num', $iNum);
+        $this->where('id',\Auth::user()->parent_user_id)->increment('child_user_num', $iNum);
     }
 
     /**
@@ -102,6 +102,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     {
 
     }
+
 
     /**
      * @param array $aData

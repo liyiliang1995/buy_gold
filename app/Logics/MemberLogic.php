@@ -166,7 +166,9 @@ class MemberLogic extends BaseLogic
             throw new CzfException("注册手机号码已经存在！");
         if (\Auth::user()->status == 0)
             $aParam['status'] = 1;
-        return $this->update(userId(),$aParam);
+        $bRes = $this->update(userId(),$aParam);
+        $this->model->addChildUserNum();
+        return $bRes;
 
     }
 
