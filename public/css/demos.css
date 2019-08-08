@@ -59,7 +59,7 @@ footer a {
 #user_tx img {
     width: 60px;
     margin: 0 auto;
-    display: block;
+    /*display: block;*/
 }
 
 #user_tx p {
@@ -150,11 +150,12 @@ footer a {
 }
 
 #partner_list {
-    width: 90%;
+    /*width: 96%;*/
+
     background: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 15px;
-    margin: 0 auto;
+    margin: 10px;
     color: #666;
     margin-bottom: 10px;
     border: 1px solid #eee;
@@ -166,7 +167,6 @@ footer a {
     width: 80px;
     padding: 5px;
     line-height: 25px;
-    margin-top: 5px;
     color: #fff;
     font-size: 12px;
 }

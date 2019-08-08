@@ -31,6 +31,9 @@
             height: 50px !important;
             line-height: 50px !important;
         }
+        .weui-panel__hd{
+            font-size: 16px !important;
+        }
     </style>
     <body class="details-page">
     <!-- Swiper -->

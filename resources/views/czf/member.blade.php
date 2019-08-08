@@ -27,6 +27,7 @@
         }
         .weui-cell__hd i{
             padding: 10px;
+            color: #666;
         }
         #member_but p{
             color: red;
@@ -50,16 +51,26 @@
         .weui-cells{
             margin-top: 10px !important;
         }
+        .weui-row{
+            padding: 10px 15px;
+        }
+        .weui-cell_access .weui-cell__ft:after{
+            border-color: #666 !important;
+        }
     </style>
     <body>
     <!--个人中心-->
     <div class="user_bg">
         <div class="weui-flex">
             <div class="weui-flex__item" id="user_tx">
-                <div class="weui-flex">
-                    <div class="weui-flex__item"><img src="./img/logo.png" alt=""></div>
-                    <div class="weui-flex__item" style="width: 200px;"><p>{{$member->name}}</p></div>
+                <div class="weui-row">
+                    <div class="weui-col-50"><img src="./img/logo.png" alt=""></div>
+                    <div class="weui-col-50"><p>{{$member->name}}</p></div>
                 </div>
+                {{--<div class="weui-flex">--}}
+                    {{--<div class="weui-flex__item"><img src="./img/logo.png" alt=""></div>--}}
+                    {{--<div class="weui-flex__item" style="width: 200px;"><p>{{$member->name}}</p></div>--}}
+                {{--</div>--}}
             </div>
             <div class="weui-flex__item">
                 <a href="{{route('userset')}}">
@@ -78,7 +89,7 @@
         </div>
     </div>
 
-    <div class="weui-row" id="user_bg">
+    <div class="weui-row" id="user_bg" style="padding: 0 !important;">
         <div class="weui-col-50" id="user_gold">
             <p>当前金币总数：1000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>

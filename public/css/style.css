@@ -160,9 +160,10 @@
     display: block;
     float: left;
     font-size: 18px;
+    font-weight: bold;
     height: 28px;
     line-height: 28px;
-    font-weight: 500;
+
 }
 
 .details-page .weui-footer_fixed-bottom {
@@ -202,7 +203,7 @@
 }
 
 .order-info {
-    padding: 16px;
+    padding:  16px;
 }
 
 .order-info .weui-media-box__thumb {

@@ -26,7 +26,7 @@
 ])
 @section('content')
     <style>
-        .title{
+        .title {
             font-size: 14px;
         }
     </style>
@@ -73,9 +73,9 @@
                                 <em>¥</em>
                                 <span>{{$value['amount']}}</span>
                             </div>
-                                <a href="{{route('goodsDetail',['id'=>$value['id']])}}"
-                                   style="width: 80px !important;"
-                                   class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
+                            <a href="{{route('goodsDetail',['id'=>$value['id']])}}"
+                               style="width: 80px !important;    width: 80px !important; height: 30px !important;  line-height: 30px;font-size: 14px;"
+                               class="weui-cell__bd weui-btn weui-btn_plain-primary">购买</a>
                         </div>
                     </div>
                 </div>

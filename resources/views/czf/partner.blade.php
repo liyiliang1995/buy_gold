@@ -18,6 +18,9 @@
         #partner_list{
             font-size: 12px;
         }
+        .weui-cells{
+         margin-top: 0 !important;
+        }
     </style>
     <body>
     <div class="weui-flex">
@@ -53,13 +56,13 @@
     @foreach($oPartner as $key=>$value)
     <div class="weui-flex" id="partner_list">
         <div class="weui-flex__item" id="partner_user">
-            <p>{{$value['name'] ?: $value['phone']}}</p>
-            <p>{{$value['created_at']}}</p>
+            <p style="font-weight: bold">{{$value['name'] ?: $value['phone']}}</p>
+            <p style="width:140px;">{{$value['created_at']}}</p>
         </div>
-        <div class="weui-flex__item" style="text-align: center;line-height: 30px;">
+        <div class="weui-flex__item" style="text-align: center;">
             <p>金币数</p><p>{{$value['gold']}}</p>
         </div>
-        <div class="weui-flex__item" style="margin-top: 10px;">
+        <div class="weui-flex__item" style="">
             {!! $value['stat'] !!}
         </div>
     </div>
