@@ -12,6 +12,13 @@
     ]
 ])
 @section('content')
+    <style>
+        .weui-input{
+            font-size: 14px;
+            padding-left: 10px;
+        }
+
+    </style>
     <body class="password-page">
     <div class="weui-flex" style="margin-top: 2rem;">
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
@@ -48,7 +55,7 @@
                 @csrf
             </div>
             <div class="weui-btn-area">
-                <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" style="width: 100%;background-color: #176d43;">提交</a>
+                <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" style="width: 100%;background-color: #176d43;">确认</a>
             </div>
             </form>
         </div>

@@ -59,10 +59,7 @@ class MemberController extends AdminController
             }
         });
         $grid->column('ship_address.ship_address', __('收货地址'));
-//        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
-//        $grid->column('updated_at', __('Updated at'));
-//        $grid->column('password', __('Password'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableView();
@@ -79,7 +76,7 @@ class MemberController extends AdminController
         });
         $grid->model()->orderBy('id', 'desc');
         $grid->disableExport();
-//        $grid->disableCreateButton();
+        $grid->disableRowSelector();
         return $grid;
     }
 
@@ -126,15 +123,16 @@ class MemberController extends AdminController
         $form->mobile('phone', __('手机号码'));
         $form->text('phone2', __('联系手机'));
         $form->decimal('rate', __('股东金币分成比列(例如输入12为12%)'))->default(0.00);
-//        $form->decimal('energy', __('能量值'))->default(0.00);
-//        $form->decimal('integral', __('积分值'))->default(0.00);
-//        $form->number('parent_user_id', __('Parent user id'));
-//        $form->number('child_user_num', __('Child user num'));
         $form->text('wechat', __('微信'));
         $form->select('is_admin', __('是否股东'))->options([0 => '否', 1 => '是'])->default(0);
 
         $form->password('password', __('密码'));
-
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
         return $form;
     }
 

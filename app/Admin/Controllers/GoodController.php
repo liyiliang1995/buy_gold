@@ -25,16 +25,13 @@ class GoodController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Good);
-
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('名称'));
-//        $grid->column('describe', __('描述'));
-        $grid->column('list_img', __('商品图片'))->image();
+        //$grid->column('list_img', __('商品图片'))->image()->width(10);
         $grid->column('amount', __('价格'));
-//        $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('创建时间'));
-//        $grid->column('updated_at', __('Updated at'));
         $grid->disableExport();
+        $grid->disableRowSelector();
         return $grid;
     }
 
@@ -53,10 +50,7 @@ class GoodController extends AdminController
         $show->field('describe', __('描述'));
         $show->field('list_img', __('商品图片'));
         $show->field('amount', __('价格'));
-       // $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('创建时间'));
-        //$show->field('updated_at', __('Updated at'));
-
         return $show;
     }
 
@@ -67,17 +61,20 @@ class GoodController extends AdminController
      */
     protected function form()
     {
-//        dd(request()->input());
         $form = new Form(new Good);
-
         $form->text('name', __('名称'));
-        $form->kindeditor('describe', __('描述'));
-        $form->image('list_img', __('图片'));
-        $form->hasMany('goodsimgs',function(Form\NestedForm $form){
-            $form->image('img');
+        $form->decimal('amount', __('价格'))->default(0.00);
+        $form->image('list_img', __('缩略图'));
+        $form->hasMany('goodsimgs', __('轮播图'),function(Form\NestedForm $form){
+            $form->image('img',__('轮播图'));
         });
-        //$form->multipleImage('img')->sortable();
-        $form->decimal('amount', __('Amount'))->default(0.00);
+        $form->kindeditor('describe', __('描述'));
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
         return $form;
     }
 }
