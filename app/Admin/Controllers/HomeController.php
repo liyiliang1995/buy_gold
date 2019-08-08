@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index(Content $content)
     {
 
-        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1> <style>.row{ width: 100%; margin: 0 auto;background: #fff; line-height: 70px;font-size: 18px;}.col-md-6{border: 1px solid #eee}</style>";
+        $title = "<h1 style='width: 100%;text-align: center;line-height: 80px'>欢迎登陆翠竹坊管理中心</h1> <style>.row{ width: 100%; margin: 0 auto;background: #fff; line-height: 50px;font-size: 16px;}.col-md-6{border: 1px solid #eee}</style>";
         return $content
             ->title('翠竹坊管理中心')
             ->description('欢迎您')
@@ -30,6 +30,16 @@ class HomeController extends Controller
                 $row->column(6, $this->ajaxGetGoldPool()['2']['value']);
                 $row->column(6, $this->ajaxGetGoldPool()['3']['name']);
                 $row->column(6, $this->ajaxGetGoldPool()['3']['value']);
+                $row->column(6, $this->ajaxGetGoldPool()['4']['name']);
+                $row->column(6, $this->ajaxGetGoldPool()['4']['value']);
+                $row->column(6, $this->ajaxGetGoldPool()['5']['name']);
+                $row->column(6, $this->ajaxGetGoldPool()['5']['value']);
+                $row->column(6, $this->ajaxGetGoldPool()['6']['name']);
+                $row->column(6, $this->ajaxGetGoldPool()['6']['value']);
+                $row->column(6, $this->ajaxGetGoldPool()['7']['name']);
+                $row->column(6, $this->ajaxGetGoldPool()['7']['value']);
+                $row->column(6, $this->ajaxGetGoldPool()['8']['name']);
+                $row->column(6, $this->ajaxGetGoldPool()['8']['value']);
                 $row->column(12,date('Y-m-d H:i:s'));
 
             });
@@ -48,12 +58,16 @@ class HomeController extends Controller
         $aData['redis'] = get_gold_pool();
 
         $envs = [
-            ['name' => '金币池总数量', 'value' => $aData['test']],
+            ['name' => '金币池总数量', 'value' => (int)($aData['gold']+$aData['user_sum_gold']+$aData['burn_gold'])],
             ['name' => '金币池剩余数', 'value' => $aData['gold']],
             ['name' => '用户拥有金币数', 'value' => $aData['user_sum_gold']],
             ['name' => '金币燃烧数', 'value' =>$aData['burn_gold']],
+            ['name' => '当前会员数', 'value' => $aData['members_count']],
+            ['name' => '总积分数', 'value' =>$aData['integral']],
+            ['name' => '总能量数', 'value' =>$aData['energy']],
+            ['name' => '购物订单数', 'value' =>$aData['order_count']],
+            ['name' => '金币交易订单数', 'value' =>$aData['buygold_count']],
         ];
-
         return $envs;
     }
 
