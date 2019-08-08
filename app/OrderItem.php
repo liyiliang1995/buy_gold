@@ -22,7 +22,7 @@ class OrderItem extends Model
     /**
      * @var
      */
-    protected $appends = ["goods_img","is_send_str"];
+    protected $appends = ["goods_img","is_send_str","express"];
     /**
      * @var array
      */
@@ -66,6 +66,14 @@ class OrderItem extends Model
     public function getIsSendStrAttribute():string
     {
         return $this->is_send ? "已发货" : "待发货";
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpressAttribute():string
+    {
+        return $this->order->express ?? "";
     }
 
 }
