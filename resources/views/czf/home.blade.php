@@ -44,8 +44,10 @@
         </div>
     </div>
     <div class="weui-flex notice">
+
         <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
-            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px"><marquee  direction="left" style="height: 30px;line-height: 30px">{{$newslist['0']['title']}}</marquee></label>
+            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px"><marquee  direction="left" style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee></label>
+
         </div>
     </div>
     <div class="weui-flex">
