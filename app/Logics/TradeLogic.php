@@ -7,6 +7,7 @@
  */
 namespace App\Logics;
 use App\Member;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 class TradeLogic extends BaseLogic
@@ -261,6 +262,41 @@ class TradeLogic extends BaseLogic
                 redis_srem(config("czf.redis_key.set1"),$item->id);
             }
         }
+    }
+
+    /**
+     * @param array $aParams
+     * @return array
+     * @see 前端支出显示页面  金币燃烧和返回扣点 统一为一条数据为金币燃烧
+     */
+    public function  ajaxGetGoldFlow(array $aParams):array
+    {
+        $aData                = $this->query($aParams)->toArray();
+        $aDataLast = Arr::last($aData['data']);
+        $aDataFirst =Arr::first($aData['data']);
+        // 分页最后一条为金币燃烧
+        if (!empty($aDataLast['type']) && $aDataLast['type'] == 11) {
+            $this->model->query_page += 1;
+            $aData = $this->query($aParams)->toArray();
+        }
+        // 分页第一条为扣点返回金币池
+        if (!empty($aDataFirst['type']) && $aDataFirst['type'] == 5) {
+            $aData['data'] = Arr::except($aData['data'],[0]);
+        }
+        $aTmp = $aData['data'];
+        $aTmp2 = [];
+        foreach ($aTmp as $key => $value) {
+            if ($value['type'] == 11)
+                continue;
+            else if ($value['type'] == 5) {
+                $aTmp[$key - 1]['gold'] = bcadd($aTmp[$key]['gold'],$aTmp[$key - 1]['gold'],2);
+                $aTmp2[] = $aTmp[$key - 1];
+            }
+            else
+                $aTmp2[] = $value;
+        }
+        $aData['data'] = $aTmp2;
+        return $aData ?? [];
     }
 
 
