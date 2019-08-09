@@ -34,16 +34,27 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name="name" placeholder="真实姓名">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
                     <input class="weui-input" type="password" name="password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><i class="iconfont icon-safetycertificate" style="font-size: 1rem"></i></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="number" name="code" pattern="[0-9]*" placeholder="请输入验证码">
+                </div>
+                <div class="weui-cell__ft">
+                    <a href="javascript:void(0)" class="weui-vcode-btn code">获取验证码</a>
                 </div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary"
-                                            style="width: 90%;margin-top: 30px;">注册</a></div>
+            <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary" style="width: 90%;margin-top: 30px;">注册</a></div>
         </div>
-
-
     <div class="weui-flex">
         <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">我的伙伴</div>
     </div>
