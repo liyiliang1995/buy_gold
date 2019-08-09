@@ -52,6 +52,15 @@ class OrderController extends AdminController
         });
         $grid->disableExport();
         $grid->disableRowSelector();
+        // 去掉默认的id过滤器
+        $grid->disableIdFilter();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('order_no', '订单号');
+            $filter->like('member.phone', '用户手机');
+        });
         return $grid;
     }
 

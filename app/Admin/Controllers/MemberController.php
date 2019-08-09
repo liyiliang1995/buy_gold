@@ -33,9 +33,9 @@ class MemberController extends AdminController
         $grid->column('name', __('姓名'));
         $grid->column('phone', __('手机号码'));
         $grid->column('phone2', __('联系手机号'));
-        $grid->column('gold', __('金币'));
-        $grid->column('energy', __('能量'));
-        $grid->column('integral', __('积分值'));
+        $grid->column('gold', __('金币'))->sortable();
+        $grid->column('energy', __('能量'))->sortable();
+        $grid->column('integral', __('积分值'))->sortable();
         $grid->column('parent_user_id', __('上级用户'));
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
@@ -77,6 +77,14 @@ class MemberController extends AdminController
         $grid->model()->orderBy('id', 'desc');
         $grid->disableExport();
         $grid->disableRowSelector();
+        // 去掉默认的id过滤器
+        $grid->disableIdFilter();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('phone', '手机号码');
+        });
         return $grid;
     }
 
@@ -125,7 +133,6 @@ class MemberController extends AdminController
         $form->decimal('rate', __('股东金币分成比列(例如输入12为12%)'))->default(0.00);
         $form->text('wechat', __('微信'));
         $form->select('is_admin', __('是否股东'))->options([0 => '否', 1 => '是'])->default(0);
-
         $form->password('password', __('密码'));
         // 去掉`查看`checkbox
         $form->disableViewCheck();
@@ -200,5 +207,6 @@ class MemberController extends AdminController
         }
         return $this->form()->update($id);
     }
+
 
 }

@@ -38,6 +38,14 @@ class NewsController extends AdminController
         $grid->column('updated_at', __('更新时间'));
         $grid->disableExport();
         $grid->disableRowSelector();
+        // 去掉默认的id过滤器
+        $grid->disableIdFilter();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('title', '标题');
+        });
         return $grid;
     }
 
