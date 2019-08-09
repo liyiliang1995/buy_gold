@@ -57,13 +57,14 @@ class LoginController extends Controller
         $request->validate(
             [
                 'phone' => 'required|string',
+                'captcha' => 'required|captcha',
                 'password' => 'required|string',
-                'code' => 'required|string',
             ],
             [
                 "phone.required" => "手机号不能为空！",
-                "password.required"  => "密码不能为空",
-                "code.required" => '验证码不能为空！'
+                "password.required"  => "密码不能为空！",
+                "captcha.required" => '验证码不能为空！',
+                "captcha.captcha" => "验证码不正确！"
             ]
         );
     }
@@ -76,8 +77,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        $phone = $request->post('phone');
-        $code = $request->post('code');
+//        $phone = $request->post('phone');
+//        $code = $request->post('code');
 
 //        if (false == comparisonCode( $code,$phone)) {
 //            return $this->sendCodeErrResponse($request);
