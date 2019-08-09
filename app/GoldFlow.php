@@ -18,11 +18,11 @@ class GoldFlow extends Model
     /**
      * @var array
      */
-    protected $hidden = ['buy_gold_detail','other'];
+    protected $hidden = ['buy_gold_detail','other','order'];
     /**
      * @var int
      */
-    public $query_page = 10;
+    public $query_page = 15;
     /**
      * @var array
      */
