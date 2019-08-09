@@ -53,7 +53,7 @@ footer a {
 }
 
 #user_tx {
-    padding: 2%;
+    /*padding: 2%;*/
 }
 
 #user_tx img {
@@ -68,11 +68,21 @@ footer a {
     font-weight: bold;
     font-size: 21px;
 }
+#user_dh{
+    padding: 10px 15px 20px 15px;
+}
+#user_dh a{
+    width: 180px;
+    font-size: 14px;
+    background: #f7e96c;
+    color: #ff2937;
+    border-radius: 20px;
+}
 
 #user_value {
     text-align: center;
     color: #fff;
-    padding: 20px 10px;
+    /*padding: 20px 10px;*/
     font-size: 14px;
 
 }

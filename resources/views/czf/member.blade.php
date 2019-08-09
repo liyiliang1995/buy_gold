@@ -83,6 +83,9 @@
             <div class="weui-flex__item"><a href="{{route('energy_record')}}"><p class="user_num">{{$member->energy}}</p>
                 <p>能量</p></a></div>
         </div>
+        <div class="weui-flex" id="user_dh">
+            <div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">100金币兑换900积分</a></div>
+        </div>
     </div>
 
     <div class="weui-row" id="user_bg" style="padding: 0 !important;">
@@ -213,7 +216,7 @@
 
     <div class="weui-cells">
         <a class="weui-cell weui-cell_access" href="{{route('order_list')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-setting"></i></div>
+            <div class="weui-cell__hd"><i class="iconfont icon-filesearch"></i></div>
             <div class="weui-cell__bd">
                 <p>我的订单</p>
             </div>
