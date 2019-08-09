@@ -106,13 +106,31 @@
                 }
 
             },
+            name:function() {
+                var name = $('input[name="name"]').val().trim();
+                if (name)
+                    return name;
+                else{
+                    $.toast("真实姓名不能为空！", 'text');
+                    return;
+                }
+            },
+            code:function() {
+                var code = $('input[name="code"]').val().trim();
+                if (code)
+                    return code;
+                else{
+                    $.toast("验证码不能为空！", 'text');
+                    return;
+                }
+            },
             register:function () {
-                if (this.pwd() && this.phone()) {
+                if (this.pwd() && this.phone() && this.name() && this.code()) {
                     $.ajax({
                         url: "{{route('agentRegister')}}",
                         type:'post',
                         dataType: "json",
-                        data:{ phone:this.phone(),password:this.pwd(),_method:'post' ,_token:"{{csrf_token()}}"},
+                        data:{ name:this.name(),phone:this.phone(),password:this.pwd(),code:this.code(),_method:'post' ,_token:"{{csrf_token()}}"},
                         error:function(data){
                             $.toast("服务器繁忙, 请联系管理员！",'text');
                             return;
@@ -127,7 +145,12 @@
                         },
                     })
                 }
-            }
+            },
+            isPhoneNo:function (phone) {
+                var pattern = /^1[349578]\d{9}$/;
+                return pattern.test(phone);
+            },
+            flag:0,
         }
         $(function () {
             @php
@@ -140,6 +163,61 @@
             $("#rg").on('click',function() {
                 rg.register();
             })
+            $(".code").on('click', function () {
+                if (rg.flag == 1)
+                    return;
+                var phone = $('input[name="phone"]').val().trim();
+                if (phone) {
+                    if (rg.isPhoneNo(phone)) {
+                        ajaxGetCode(phone);
+                    } else {
+                        $.toast("手机号码格式不正确！", 'text');
+                    }
+                } else {
+                    $.toast("手机号码不能为空", 'text');
+                }
+            })
+            /**
+             * @see 计数器
+            */
+            var countdown = 60;
+            function settime(obj) {
+                if (countdown == 0) {
+                    obj.html("获取验证码");
+                    obj.css('background','rgb(255, 255, 255)');
+                    rg.flag = 0;
+                    countdown = 60;
+                    return;
+                } else {
+                    obj.css('background','#fff');
+                    obj.html("重新发送(" + countdown + ")");
+                    rg.flag = 1;
+                    countdown--;
+                }
+                setTimeout(function(){settime(obj)},1000)
+            }
+            /**
+             * @param phone
+             */
+            function ajaxGetCode(phone) {
+                $.ajax({
+                    url: "{{route('sendMsg')}}",
+                    type:'post',
+                    dataType: "json",
+                    data:{phone:phone,_method:'post' ,_token:"{{csrf_token()}}"},
+                    error:function(data){
+                        $.toast("服务器繁忙, 请联系管理员！",'text');
+                        return;
+                    },
+                    success:function(result){
+                        if(result.code == 200){
+                            settime($(".code"));
+                        } else {
+                            $.toast(result.message,'text')
+                        }
+                    },
+                })
+            }
         })
     </script>
 @endsection
