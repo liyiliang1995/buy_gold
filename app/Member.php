@@ -125,7 +125,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
             if ($this->status == 1) {
                 $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #07C160">正常</a>';
             } else {
-                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #F44336">锁定</a>';
+                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #F44336">冻结</a>';
             }
         }
         return $sRes;
