@@ -75,7 +75,7 @@ class GoodsLogic extends BaseLogic
      * @param array $aParams
      * @see 保存订单
      * @金币购买时 商品消耗金币不能超过持有金币的50%
-     * @购物后赠送10倍积分
+     * @购物后赠送10倍积分  改为可变
      * @至少激活一个用户才可以购物
      * @扣除商品价格5%返回金币池
      */
@@ -281,7 +281,8 @@ class GoodsLogic extends BaseLogic
      */
     public function getGiveIntegral():int
     {
-        return bcmul($this->gold,10,0);
+        $rate = (int)(getConfigByType(1)['integral_rate'] ?? 10);
+        return bcmul($this->gold,$rate,0);
     }
 
 
