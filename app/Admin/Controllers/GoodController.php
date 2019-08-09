@@ -27,6 +27,7 @@ class GoodController extends AdminController
         $grid = new Grid(new Good);
         $grid->column('id', __('Id'))->sortable();
         $grid->column('name', __('名称'));
+        $grid->column('unit', __('单位'));
         //$grid->column('list_img', __('商品图片'))->image()->width(10);
         $grid->column('amount', __('价格'));
         $grid->column('created_at', __('创建时间'));
@@ -65,6 +66,7 @@ class GoodController extends AdminController
         $form = new Form(new Good);
         $form->text('name', __('名称'));
         $form->decimal('amount', __('价格'))->default(0.00);
+        $form->text('unit', __('单位'));
         $form->image('list_img', __('缩略图(320*320)'));
         $form->hasMany('goodsimgs', __('轮播图(640*640)'),function(Form\NestedForm $form){
             $form->image('img',__('轮播图'));
