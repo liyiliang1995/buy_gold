@@ -81,7 +81,7 @@
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <em style="">¥</em>
-                            <span style="" id="goods_unit_price">{{$oGoods->amount}}</span>
+                            <span style="" id="goods_unit_price">{{$oGoods->amount}}/{{$oGoods->unit}}</span>
                         </div>
                         <div class="weui-cell__ft">
                             <div class="weui-count">
