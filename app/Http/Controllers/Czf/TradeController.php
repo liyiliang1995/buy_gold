@@ -151,7 +151,7 @@ class TradeController extends Controller
         $aParams['_sort']     = "id,desc";
         $aParams['user_id']   = userId();
         $aParams['is_income'] = $iType;
-        $aData                = $this->Logic($goldFlow)->query($aParams)->toArray();
+        $aData                = $this->Logic($goldFlow)->ajaxGetGoldFlow($aParams);
         if ($aData) {
             return $this->success("请求成功", $aData);
         } else {
