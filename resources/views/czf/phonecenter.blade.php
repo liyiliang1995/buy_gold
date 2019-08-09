@@ -38,20 +38,87 @@
         .weui-cell {
             font-size: 14px;
         }
+        .radio_style {
+            overflow: hidden;
+            padding: 15px;
+        }
 
+        .radio_style label {
+            width: 25%;
+            float: left;
+            text-align: left;
+            line-height: 35px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: left;
+            line-height: 26px;
+        }
+
+        label input[type="radio"] {
+            display: none;
+        }
+
+        label input[type="radio"] + span {
+            box-sizing: border-box;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            padding: 2px;
+            border: 2px solid #ccc;
+            vertical-align: sub;
+            margin-right: 5px;
+        }
+
+        label input[type="radio"] + span > span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            float: left;
+            background: #33bb00;
+            opacity: 0;
+        }
+
+        label input[type="radio"]:checked + span {
+            border-color: #33bb00;
+            background: #33bb00;
+        }
+
+        label:hover input[type="radio"] + span > span {
+            opacity: 0.5;
+        }
+
+        label input[type="radio"]:checked + span > span {
+            opacity: 1;
+        }
+
+        label input[type="radio"]+span{ border-radius:50%; }
     </style>
     <body>
 
 
     <div class="weui-cells weui-cells_form" style="margin-top: 0;padding-top: 15px;">
         <form action="{{ route('buy_gold')}}" method="post" id="submit_buy">
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label for="name" class="weui-label"
-                                                  style="    width: 100%;">选择充值金额</label></div>
-                <div class="weui-cell__bd">
-                    <i class="weui-icon-success" style="position: absolute;"></i> <input class="weui-input" name="gold" id="job" type="text" value="100" style="text-align: right;color: red;">
-                </div>
+            <div class="radio_style">
+                <label><input name="gold" type="radio" value="200" checked/><span></span><span></span>200 </label>
+                <label><input name="gold" type="radio" value="500"/><span></span><span></span>500 </label>
+                <label><input name="gold" type="radio" value="1000"/><span></span><span></span>1000 </label>
+                <label><input name="gold" type="radio" value="1500"/><span></span><span></span>1500 </label>
+                <label><input name="gold" type="radio" value="2000"/><span></span><span></span>2000 </label>
+                <label><input name="gold" type="radio" value="2500"/><span></span><span></span>2500 </label>
+                <label><input name="gold" type="radio" value="5000"/><span></span><span></span>5000 </label>
+                <label><input name="gold" type="radio" value="10000"/><span></span><span></span>10000 </label>
             </div>
+
+            {{--<div class="weui-cell">--}}
+                {{--<div class="weui-cell__hd"><label for="name" class="weui-label"--}}
+                                                  {{--style="    width: 100%;">选择充值金额</label></div>--}}
+                {{--<div class="weui-cell__bd">--}}
+                    {{--<i class="weui-icon-success" style="position: absolute;"></i> <input class="weui-input" name="gold" id="job" type="text" value="100" style="text-align: right;color: red;">--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </form>
     </div>
     <div class="weui-flex" style="padding: 15px;background: #fff;padding-bottom: 0;">

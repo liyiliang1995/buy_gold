@@ -97,9 +97,9 @@
                function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res-1;
-                if (resa < 1){
+                if (resa == 0){
                     window.location.reload();
-                    return;
+                    // return;
                 }
                    var ssss = formatSeconds(resa);
                    document.getElementById("next_time").innerHTML = ssss;
