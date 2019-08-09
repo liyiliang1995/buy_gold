@@ -11,10 +11,6 @@
         'js/ecStat.min.js'
     ],
 'script'=> [
-    '$("#job").select({
-        title: "选择出售金币数",
-        items: ["100", "200", "500", "1000", "2000", "5000", "10000"]
-    });',
     '$("#submit").on("click",function () {
         buy_gold.unit_price_val = $("#pre").val().trim();
         buy_gold.sum_val = $("#job").val();
@@ -43,9 +39,68 @@
         .weui-cell {
             font-size: 14px;
         }
-        #p1{
+
+        #p1 {
             height: 300px;
         }
+
+        .radio_style {
+            overflow: hidden;
+            padding: 15px;
+        }
+
+        .radio_style label {
+            width: 25%;
+            float: left;
+            text-align: left;
+            line-height: 35px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+            text-align: left;
+            line-height: 26px;
+        }
+
+        label input[type="radio"] {
+            display: none;
+        }
+
+        label input[type="radio"] + span {
+            box-sizing: border-box;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            padding: 2px;
+            border: 2px solid #ccc;
+            vertical-align: sub;
+            margin-right: 5px;
+        }
+
+        label input[type="radio"] + span > span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            float: left;
+            background: #33bb00;
+            opacity: 0;
+        }
+
+        label input[type="radio"]:checked + span {
+            border-color: #33bb00;
+            background: #33bb00;
+        }
+
+        label:hover input[type="radio"] + span > span {
+            opacity: 0.5;
+        }
+
+        label input[type="radio"]:checked + span > span {
+            opacity: 1;
+        }
+
+        label input[type="radio"]+span{ border-radius:50%; }
     </style>
     <body>
 
@@ -53,7 +108,9 @@
         <div class="weui-flex__item" id="trading_va">今日均价：<b>{{$avgPrice}}</b></div>
     </div>
     <div class='wrapper' style="position: relative">
-        <div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">近15天币价走势</div>
+        <div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">
+            近15天币价走势
+        </div>
         <div class='chart' id='p1'>
 
         </div>
@@ -66,16 +123,26 @@
 
     <div class="weui-cells weui-cells_form" style="margin-top: 0;">
         <form action="{{ route('buy_gold')}}" method="post" id="submit_buy">
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><label for="name" class="weui-label"
-                                                  style="    width: 100%;">选择出售金币数</label></div>
-                <div class="weui-cell__bd">
-                     <input class="weui-input" name="gold"
-                                                                                         id="job" type="text"
-                                                                                         value="100"
-                                                                                         style="text-align: right;color: red;     width: 200px;   padding-right: 30px;"><i class="weui-icon-success" style="position: absolute;"></i>
-                </div>
+            <div class="radio_style">
+                <label><input name="gold" type="radio" value="200" checked/><span></span><span></span>200 </label>
+                <label><input name="gold" type="radio" value="500"/><span></span><span></span>500 </label>
+                <label><input name="gold" type="radio" value="1000"/><span></span><span></span>1000 </label>
+                <label><input name="gold" type="radio" value="1500"/><span></span><span></span>1500 </label>
+                <label><input name="gold" type="radio" value="2000"/><span></span><span></span>2000 </label>
+                <label><input name="gold" type="radio" value="2500"/><span></span><span></span>2500 </label>
+                <label><input name="gold" type="radio" value="5000"/><span></span><span></span>5000 </label>
+                <label><input name="gold" type="radio" value="10000"/><span></span><span></span>10000 </label>
             </div>
+            {{--<div class="weui-cell">--}}
+            {{--<div class="weui-cell__hd"><label for="name" class="weui-label"--}}
+            {{--style="    width: 100%;">选择出售金币数</label></div>--}}
+            {{--<div class="weui-cell__bd">--}}
+            {{--<input class="weui-input" name="gold"--}}
+            {{--id="job" type="text"--}}
+            {{--value="100"--}}
+            {{--style="text-align: right;color: red;     width: 200px;   padding-right: 30px;"><i class="weui-icon-success" style="position: absolute;"></i>--}}
+            {{--</div>--}}
+            {{--</div>--}}
             <div class="weui-cell weui-cell_vcode" style="padding: 15px;">
                 <div class="weui-cell__hd" style="width: 10%"><label class="weui-label">价格</label></div>
                 <div class="weui-cell__bd">
@@ -136,11 +203,11 @@
                 if (!this.unit_price_val || this.unit_price_val < 0) {
                     $.toast("请输入正确的购买价格！", 'text');
                     return;
-                } else if(this.unit_price_val < min || this.unit_price_val > max){
+                } else if (this.unit_price_val < min || this.unit_price_val > max) {
 
                     $.toast("请输入区间内价格!", 'text');
                     return;
-                }else {
+                } else {
                     return this.unit_price_val;
                 }
             },
@@ -182,19 +249,20 @@
             @endif
         });
 
-        $("#pre").on("blur",function(){
-
-        var item = $("#job").val();
-        var price = $(this).val().trim();
-        var min = {{$fGuidancePrice['min']}};
-        var max = {{$fGuidancePrice['max']}};
-        if(price >=min && price <= max){
-            var sum = buy_gold.intToFloat(price*item);
-            $("#intext>b").empty().html("￥"+sum);
-        }else{
-            $.toast("请输入区间内价格！", "text");
-            return false;
-        }
+        $("#pre").on("blur", function () {
+            // $('input[name="testradio"]:checked').val();
+            var item = $('input[name="gold"]:checked').val();
+            alert(item);
+            var price = $(this).val().trim();
+            var min = {{$fGuidancePrice['min']}};
+            var max = {{$fGuidancePrice['max']}};
+            if (price >= min && price <= max) {
+                var sum = buy_gold.intToFloat(price * item);
+                $("#intext>b").empty().html("￥" + sum);
+            } else {
+                $.toast("请输入区间内价格！", "text");
+                return false;
+            }
 
         });
     </script>
@@ -206,7 +274,7 @@
             type: "get",
             dataType: "json",
             error: function (data) {
-                $.toast("服务器繁忙, 请联系管理员！","text");
+                $.toast("服务器繁忙, 请联系管理员！", "text");
                 return;
             },
             success: function (result) {

@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'会员中心',
+@extends('czf.base',['header'=>'个人中心',
 'css' => [
         '//at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
@@ -76,12 +76,12 @@
         </div>
 
         <div class="weui-flex" id="user_value">
-            <div class="weui-flex__item"><p class="user_num">{{$member->gold}}</p>
-                <p>当前金币</p></div>
-            <div class="weui-flex__item"><p class="user_num">{{$member->integral}}</p>
-                <p>当前积分</p></div>
-            <div class="weui-flex__item"><p class="user_num">{{$member->energy}}</p>
-                <p>能量值</p></div>
+            <div class="weui-flex__item"><a href="{{route('gold_record')}}"><p class="user_num">{{$member->gold}}</p>
+                <p>金币</p></a></div>
+            <div class="weui-flex__item"><a href="{{route('integral_record')}}"><p class="user_num">{{$member->integral}}</p>
+                <p>积分</p></a></div>
+            <div class="weui-flex__item"><a href="{{route('energy_record')}}"><p class="user_num">{{$member->energy}}</p>
+                <p>能量</p></a></div>
         </div>
     </div>
 
@@ -89,7 +89,6 @@
         <div class="weui-col-50" id="user_gold">
             <p>当前金币总数：1000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
-            <p>本次可领取：<span>{{$gold_num}}</span></p>
             <p>距下次领取：<b id="next_time">{{$gold_time}}</b><input type="text" style="display: none" value="{{$gold_time}}" id="next_time_f"></p>
 
         </div>
@@ -98,9 +97,9 @@
                function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res-1;
-                if (resa < 1){
+                if (resa == 0){
                     window.location.reload();
-                    return;
+                    // return;
                 }
                    var ssss = formatSeconds(resa);
                    document.getElementById("next_time").innerHTML = ssss;

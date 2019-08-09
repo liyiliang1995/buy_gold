@@ -69,6 +69,7 @@ class ConfigController extends AdminController
             $filter->disableIdFilter();
             $filter->equal('type','所属配置')->select($this->getType());
         });
+
         return $grid;
     }
 
@@ -114,7 +115,12 @@ class ConfigController extends AdminController
         $form->select('text_type',__('文本类型'))->options($this->getTextType())->default(1);
         $form->number('sort', __('排序'))->default(0);
         $form->text('text_value', __('文本值'))->default('');
-
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
 
         return $form;
     }
@@ -129,6 +135,12 @@ class ConfigController extends AdminController
             ->title($this->getType()[$id])
             ->description($this->getType()[$id])
             ->body($form);
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
         return $form;
     }
 
@@ -145,6 +157,12 @@ class ConfigController extends AdminController
                 $oForm->options(explode(',',$value['text_value']));
             }
         }
+        // 去掉`查看`checkbox
+        $form->disableViewCheck();
+        // 去掉`继续编辑`checkbox
+        $form->disableEditingCheck();
+        // 去掉`继续创建`checkbox
+        $form->disableCreatingCheck();
         return $form;
     }
 
