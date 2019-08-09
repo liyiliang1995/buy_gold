@@ -74,9 +74,10 @@ footer a {
 #user_dh a{
     width: 180px;
     font-size: 14px;
-    background: #f7e96c;
+    background: #ffef92;
     color: #ff2937;
     border-radius: 20px;
+    box-shadow: 1px 2px 2px #917146;
 }
 
 #user_value {

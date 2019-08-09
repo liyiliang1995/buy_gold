@@ -46,6 +46,15 @@ class BuyGoldController extends AdminController
         $grid->disableCreateButton();
         $grid->model()->orderBy('id', 'desc');
         $grid->disableRowSelector();
+        // 去掉默认的id过滤器
+        $grid->disableIdFilter();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('member.phone', '买家手机');
+            $filter->like('seller.phone', '卖家手机');
+        });
         return $grid;
     }
 
