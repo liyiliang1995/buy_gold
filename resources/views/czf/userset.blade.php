@@ -47,7 +47,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
             <div class="weui-cell__bd">
-                <img style="width: 40px;float: right;border-radius: 50%" src="./img/logo.png" alt="">
+                <img style="width: 40px;float: right;border-radius: 50%" src="{{route('home')}}/img/logo.png" alt="">
             </div>
         </div>
         <div class="weui-cell">
@@ -89,22 +89,13 @@
 
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" class="weui-btn weui-btn_primary">修改</a></div>
+        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" style="    font-size: 16px; height: 45px; line-height: 45px;" class="weui-btn weui-btn_primary">修改</a></div>
     </div>
 
     <form action="{{route('logout')}}" method="POST" >
         @csrf
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><input type="submit" value="注销登陆" style="width: 90%;
-    height: 46px;
-    line-height: 1.6;
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    border: none;
-    background: red;
-    color: #fff;
-    border-radius: 5px;"></div>
+        <div class="weui-flex__item"><input type="submit" value="注销登陆" style="    font-size: 16px;width: 90%;  height: 45px;  text-align: center;  margin: 0 auto; display: block; border: none;background: red; color: #fff; border-radius: 5px;"></div>
     </div>
     </form>
     <script>
