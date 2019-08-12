@@ -31,9 +31,9 @@ class AuthMember
                 '还有订单交易未完成！无法继续交易', $guards, route('trade_record', ['show' => \Auth::user()->status])
             );
         } else if (\Auth::user()->status == 4) {
-            session()->flash("lock", "您的下级用户金币交易24小时未确认收款，导致您被锁定！");
+            session()->flash("lock", "检测是否有未完成订单或者下级用户超过24小时未确认收款");
             throw new CheckMbrException(
-                '您的下级用户金币交易24小时未确认收款，导致您被锁定！', $guards, route('myPartner')
+                '检测是否有未完成订单或者下级用户超过24小时未确认收款！', $guards, route('myPartner')
             );
         }
     }
