@@ -95,6 +95,8 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+            $this->guard()->user()->login_at = date('Y-m-d H:s:i',time());
+            $this->guard()->user()->save();
             return $this->sendLoginResponse($request);
         }
 

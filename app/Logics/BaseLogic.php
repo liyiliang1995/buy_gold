@@ -271,6 +271,7 @@ class BaseLogic {
      * 11 彻底燃烧
      * 12 购物金币流向金币池
      * 13 购物消耗金币流向股东
+     * 14 15天未登录流向金币池
      * @param int $iUserId
      * @param float $fGold
      * @return object

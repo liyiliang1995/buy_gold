@@ -94,8 +94,10 @@ class GoldFlow extends Model
         $sNum = $this->getReturnShopGoldNum();
         // 充值扣除返回金币池
         $rNum = $this->getRechargeNum(10);
+        // 15天没有登陆返回
+        $nNum = $this->getReturnNotLoginGoldNum();
 
-        return bcadd(bcadd($bNum,$sNum,5),$rNum,2);
+        return bcadd(bcadd($bNum,$sNum,5),bcadd($rNum,$nNum,5),2);
     }
 
     /**
@@ -114,6 +116,14 @@ class GoldFlow extends Model
     public function getReturnBurnGoldSum():float
     {
         return $this->where(['is_statistical' => 0,'type'=>5])->sum('gold');
+    }
+
+    /**
+     * @return float
+     */
+    public function getReturnNotLoginGoldNum():float
+    {
+        return $this->where(['is_statistical' => 0,'type'=>14])->sum('gold') ?? 0.00;
     }
 
     /**

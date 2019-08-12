@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use App\GoldFlow;
 use App\Member;
 use App\GoldChangeDay;
+use App\Logics\MemberLogic;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -32,6 +33,10 @@ class EveryDayGoldPool extends Command
      */
     protected $model_change_day;
     /**
+     * @var
+     */
+    protected $member_model;
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -50,6 +55,9 @@ class EveryDayGoldPool extends Command
     {
         $this->model = new GoldFlow;
         $this->model_change_day = new GoldChangeDay;
+        $this->member_model = new Member;
+        // 处理15天未登录的
+        $this->notLoginLoic();
         DB::transaction(function () {
             // 上一次统计数据
             $oLastGoldPool = $this->model_change_day->getLastData();
@@ -85,8 +93,7 @@ class EveryDayGoldPool extends Command
      */
     public function getAllMemberGold()
     {
-        $member = new Member;
-        return $member->lockForUpdate()->sum('gold') ?? 0.00;
+        return $this->member_model->lockForUpdate()->sum('gold') ?? 0.00;
     }
 
     /**
@@ -137,8 +144,9 @@ class EveryDayGoldPool extends Command
         $sNum = $this->getReturnShopGoldNum();
         // 充值扣除返回金币池
         $rNum = $this->getRechargeNum(10);
-
-        return bcadd(bcadd($bNum,$sNum,5),$rNum,2);
+        // 15天没有登陆返回
+        $nNum = $this->getReturnNotLoginGoldNum();
+        return bcadd(bcadd($bNum,$sNum,5),bcadd($rNum,$nNum,5),2);
     }
 
     public function goldPullInUpdate()
@@ -146,6 +154,7 @@ class EveryDayGoldPool extends Command
         $this->model->where(['is_statistical' => 0,'type'=>5])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>12])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>10])->update(['is_statistical'=>1]);
+        $this->model->where(['is_statistical' => 0,'type'=>14])->update(['is_statistical'=>1]);
     }
 
     /**
@@ -169,10 +178,31 @@ class EveryDayGoldPool extends Command
 
     /**
      * @return float
+     * @see 没有登陆返回
+     */
+    public function getReturnNotLoginGoldNum():float
+    {
+        return $this->model->where(['is_statistical' => 0,'type'=>14])->lockForUpdate()->sum('gold') ?? 0.00;
+    }
+
+    /**
+     * @return float
      */
     public function getReturnBurnGoldSum():float
     {
         return $this->model->where(['is_statistical' => 0,'type'=>5])->lockForUpdate()->sum('gold') ?? 0.00;
     }
+
+    /**
+     * @see 15天未登录逻辑处理
+     */
+    public function notLoginLoic()
+    {
+        $memberLogic = new MemberLogic($this->member_model);
+        $memberLogic->notLoginMembersLogic();
+
+    }
+
+
 
 }

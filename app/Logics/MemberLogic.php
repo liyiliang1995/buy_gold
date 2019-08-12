@@ -333,6 +333,50 @@ class MemberLogic extends BaseLogic
 
     }
 
+    /**
+     * @see 获取15天未登录的用户
+     */
+    public function getNotLoginMembers()
+    {
+        $date = date("Y-m-d H:i:s",strtotime("-15 day"));
+        $aMembers = $this->model->where('login_at','<',$date)->get();
+        return $aMembers;
+    }
+
+    /**
+     * @see 15天未登录逻辑处理
+     * @每天减少10%
+     * @不足10金币 全部返回币池
+     */
+    public function notLoginMembersLogic()
+    {
+        $aMembers = $this->getNotLoginMembers();
+        if ($aMembers) {
+            foreach ($aMembers as $member) {
+                // 减少10%
+                if ($member->gold > 10) {
+                    $reduceGold = bcmul($member->gold,0.1,2);
+                } else {
+                    $reduceGold = $member->gold;
+                }
+                DB::transaction(function () use($reduceGold,$member) {
+                    $this->notLoginMembersFlow($reduceGold, $member->id);
+                    $member->decrement('gold', $reduceGold);
+                });
+            }
+        }
+    }
+
+    /**
+     * @param float $reduceGold
+     * @see 115天未登录逻辑处理
+     */
+    public function notLoginMembersFlow(float $reduceGold,int $id)
+    {
+        $this->getBuyGoldGoldFlowDetail(0,8,$id,$reduceGold,"15天未登录每次扣除10%");
+        $this->getBuyGoldGoldFlowDetail(1,14,0,$reduceGold,"15天未登录金币流向金币池");
+    }
+
 
 
 
