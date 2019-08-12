@@ -21,7 +21,14 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-        });"
+        });",
+        "
+         $(function(){
+            if({$member_status}== 2 || {$member_status} == 3){
+            $.toast('您的账号已冻结','text');
+            }
+         });
+        ",
     ]
 ])
 @section('content')
@@ -46,7 +53,10 @@
     <div class="weui-flex notice">
 
         <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
-            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px"><marquee  direction="left" style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee></label>
+            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px">
+                <marquee direction="left"
+                         style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee>
+            </label>
 
         </div>
     </div>
@@ -78,7 +88,8 @@
         </div>
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><img src="/images/footer.png" alt="" style="width: 90%;display: block;margin: 0 auto;"></div>
+        <div class="weui-flex__item"><img src="/images/footer.png" alt=""
+                                          style="width: 90%;display: block;margin: 0 auto;"></div>
     </div>
     <!-- footer -->
     <div class="weui-footer_fixed-bottom" style="bottom: 0;">

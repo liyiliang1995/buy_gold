@@ -23,11 +23,13 @@ class HomeController extends Controller
      */
     public function index(Good $good)
     {
+        $member = \Auth::guard()->user();
+        $member_status = $member['status'];
         $aConfig = getConfigByType(1);
         $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
         $news=new news();
         $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
-        return view('czf.home',compact('aConfig','aGoods','newslist'));
+        return view('czf.home',compact('aConfig','aGoods','newslist','member_status'));
     }
 
     /**
