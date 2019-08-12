@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('gold_change_day')->insert([
             // 金币池总金额
-            'gold' => 1000000000.00,
+            'gold' => 2000000000.00,
             // 用户手中总金额
             'user_sum_gold' => 0.00,
             'date' => date('Y-m-d'),

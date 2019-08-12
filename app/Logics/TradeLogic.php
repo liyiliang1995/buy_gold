@@ -30,23 +30,26 @@ class TradeLogic extends BaseLogic
         // 精度2位
         bcscale(2);
         // 0.52<price<1 上下浮动4%
-        if (bccomp($price,0.5) >= 0  && bccomp($price,1) < 0) {
-            $fTmp = bcmul($price,0.04);
-        }
-        // 1<=price<5 上下浮动3%
-        else if (bccomp($price,1) >= 0 && bccomp($price,5) < 0) {
-            $fTmp = bcmul($price,0.03);
-        }
-        // 5=<price<10 上下浮动2%
-        else if(bccomp($price,5) >= 0 && bccomp($price,10) < 0) {
+//        if (bccomp($price,0.5) >= 0  && bccomp($price,1) < 0) {
+//            $fTmp = bcmul($price,0.04);
+//        }
+        // 低于2元 上下浮动2%
+        if (bccomp($price,1) >= 0 && bccomp($price,2) < 0) {
             $fTmp = bcmul($price,0.02);
         }
-        // 10=<price 上下浮动1%
-        else if (bccomp($price,10) >= 0) {
+        // 2=<price<5 上下浮动1。5%
+        else if(bccomp($price,2) >= 0 && bccomp($price,5) < 0) {
+            $fTmp = bcmul($price,0.015);
+        }
+        else if(bccomp($price,5) >= 0 && bccomp($price,10) < 0) {
             $fTmp = bcmul($price,0.01);
         }
+        // 10=<price 上下浮动0.5%
+        else if (bccomp($price,10) >= 0) {
+            $fTmp = bcmul($price,0.005);
+        }
         $aRes['max'] = bcadd($price,$fTmp,2);
-        $aRes['min'] = bcsub($price,$fTmp) < 1 ? "1.00" : bcsub($price,$fTmp);
+        $aRes['min'] = bcsub($price,$fTmp,2) < 1 ? "1.00" : bcsub($price,$fTmp,2);
         return $aRes;
     }
 

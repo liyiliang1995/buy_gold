@@ -145,11 +145,11 @@ class BuyGold extends Model
 
     /**
      * @return int
-     * @see 两部成交金币数量的能量值
+     * @see 一倍成交金币数量的能量值
      */
     public function getEnergyAttribute():int
     {
-        return bcmul($this->gold,2,0);
+        return bcmul($this->gold,1,0);
     }
 
     /**
