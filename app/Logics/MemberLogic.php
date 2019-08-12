@@ -26,8 +26,8 @@ class MemberLogic extends BaseLogic
     {
         $this->agentRegisterValidate($aParam);
         $bRes = DB::transaction(function () use($aParam){
-                $this->agentRegisterSave($aParam);
-                $this->member = $this->member->addChildMember(Arr::only($aParam,['password','phone']));
+                //$this->agentRegisterSave($aParam);
+                $this->member = $this->member->addChildMember(Arr::only($aParam,['password','phone','name']));
                 $this->agentRegisterFlow();
                 $this->agentRegisterIncreaseAndDecrease();
                 return true;
@@ -54,10 +54,14 @@ class MemberLogic extends BaseLogic
         $this->member = new \App\Member;
         if (redis_idempotent() === false)
             throw new CzfException('请勿恶意提交订单，过2秒钟在尝试！');
-        if ($this->model->checkPhoneOnly($aParam['phone']) || $this->member->isExistsPhone($aParam['phone']))
-            throw new CzfException("注册手机号码已经存在！");
+        if (empty($aParam['name']))
+            throw new CzfException("注册真实姓名不能为空！");
         if ($this->model->checkPwd($aParam['password']) === false)
             throw new CzfException("请输入不小于6个字符的密码！");
+        if (false == comparisonCode( $aParam['code'],$aParam['phone']))
+            throw new CzfException("手机验证码不正确！");
+        if ($this->model->checkPhoneOnly($aParam['phone']) || $this->member->isExistsPhone($aParam['phone']))
+            throw new CzfException("注册手机号码已经存在！");
         if (\Auth::user()->gold < 100)
             throw new CzfException("代理注册需要个人金币数量大于100！");
     }
