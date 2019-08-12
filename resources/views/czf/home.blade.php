@@ -63,7 +63,6 @@
     <div class="weui-flex">
         <div class="weui-row">
             @foreach($aGoods as $value)
-
                 <div class="weui-col-50">
                     <a href="{{route('goodsDetail',['id'=>$value['id']])}}" style="color: #666;border: none;">
                         <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>

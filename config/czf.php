@@ -9,7 +9,7 @@ return [
     // 短信配置
     'short_message' => [
         'key'    => 'facf957222f2638085762e47bd7303c1', // 短信app_key
-        'tpl_id' => '164158',                           // 短信模版id
+        'tpl_id' => '179073',                           // 短信模版id
     ],
 
     'redis_key'  => [
