@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\BuyGold;
 use App\Member;
+use App\Logics\TradeLogic;
 use Illuminate\Console\Command;
 
 class MemberCheck extends Command
@@ -101,13 +102,11 @@ class MemberCheck extends Command
      */
     public function CancelOrder()
     {
-//        $res = $this->buy_gold_model->withTrashed()->find(1)->restore();
-//        $this->info(dd($res));
         $order = $this->getNotSellBuyGold();
+        $logic = new TradeLogic(null);
         if ($order) {
             foreach ($order as $item) {
-                redis_srem(config("czf.redis_key.set1"),$item->id);
-                $item->member->update(['status'=>1]);
+                $logic->releaseLock([$item->id]);
                 $item->delete();
             }
         }
@@ -125,8 +124,8 @@ class MemberCheck extends Command
                 redis_sadd(config("czf.redis_key.set1"),$item->seller->parent_user_id);
                 redis_sadd(config("czf.redis_key.set1"),$item->member->parent_user_id);
                 // 自身状态改变
-                $this->member_model->where('id',$item->seller->parent_user_id)->where('status',1)->update(['status'=>4]);
-                $this->member_model->where('id',$item->member->parent_user_id)->where('status',1)->update(['status'=>4]);
+                $this->member_model->where('id',$item->seller->parent_user_id)->increment('time',1,['status'=>4]);
+                $this->member_model->where('id',$item->member->parent_user_id)->increment('time',1,['status'=>4]);
             }
         }
     }
