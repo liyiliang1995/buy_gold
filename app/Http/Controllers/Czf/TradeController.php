@@ -229,7 +229,7 @@ class TradeController extends Controller
      */
     public function ajaxGetTrend(DayBuyGoldSum $dayBuyGoldSum)
     {
-        $aParams['_sort']   = "id,asc";
+        $aParams['_sort']   = "id,desc";
         $aRes = $this->Logic($dayBuyGoldSum)->query($aParams)->toArray();
         foreach ($aRes['data'] as $key => $vg){
             $adata['adata'][$key] = $vg['day'];

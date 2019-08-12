@@ -78,7 +78,7 @@
         </div>
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><img src="/images/footer.png" alt="" style="width: 100%"></div>
+        <div class="weui-flex__item"><img src="/images/footer.png" alt="" style="width: 90%;display: block;margin: 0 auto;"></div>
     </div>
     <!-- footer -->
     <div class="weui-footer_fixed-bottom" style="bottom: 0;">

@@ -10,13 +10,7 @@
         'js/echarts-gl.min.js',
         'js/ecStat.min.js'
     ],
-'script'=> [
-    '$("#submit").on("click",function () {
-        buy_gold.unit_price_val = $("#pre").val().trim();
-        buy_gold.sum_val = $("#job").val();
-        buy_gold.submit_buy();
-    });',
-    ],
+
 ])
 @section('content')
     <style>
@@ -100,7 +94,9 @@
             opacity: 1;
         }
 
-        label input[type="radio"]+span{ border-radius:50%; }
+        label input[type="radio"] + span {
+            border-radius: 50%;
+        }
     </style>
     <body>
 
@@ -133,16 +129,7 @@
                 <label><input name="gold" type="radio" value="5000"/><span></span><span></span>5000 </label>
                 <label><input name="gold" type="radio" value="10000"/><span></span><span></span>10000 </label>
             </div>
-            {{--<div class="weui-cell">--}}
-            {{--<div class="weui-cell__hd"><label for="name" class="weui-label"--}}
-            {{--style="    width: 100%;">选择出售金币数</label></div>--}}
-            {{--<div class="weui-cell__bd">--}}
-            {{--<input class="weui-input" name="gold"--}}
-            {{--id="job" type="text"--}}
-            {{--value="100"--}}
-            {{--style="text-align: right;color: red;     width: 200px;   padding-right: 30px;"><i class="weui-icon-success" style="position: absolute;"></i>--}}
-            {{--</div>--}}
-            {{--</div>--}}
+
             <div class="weui-cell weui-cell_vcode" style="padding: 15px;">
                 <div class="weui-cell__hd" style="width: 10%"><label class="weui-label">价格</label></div>
                 <div class="weui-cell__bd">
@@ -220,6 +207,7 @@
             },
             submit_buy: function () {
                 if (this.unit_price() && this.sum_val) {
+
                     $("#submit_buy").submit();
                 }
             },
@@ -250,9 +238,7 @@
         });
 
         $("#pre").on("blur", function () {
-            // $('input[name="testradio"]:checked').val();
             var item = $('input[name="gold"]:checked').val();
-            alert(item);
             var price = $(this).val().trim();
             var min = {{$fGuidancePrice['min']}};
             var max = {{$fGuidancePrice['max']}};
@@ -264,6 +250,11 @@
                 return false;
             }
 
+        });
+        $("#submit").on("click",function () {
+        buy_gold.unit_price_val = $("#pre").val().trim();
+        buy_gold.sum_val = $('input[name="gold"]:checked').val();
+        buy_gold.submit_buy();
         });
     </script>
     <script src="{{asset("js/echarts.min.js")}}"></script>
