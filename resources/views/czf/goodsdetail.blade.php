@@ -36,6 +36,12 @@
         }
     </style>
     <body class="details-page">
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">商品详情</div>
+    </div>
+
     <!-- Swiper -->
     <div class="swiper-container">
         <div class="swiper-wrapper">

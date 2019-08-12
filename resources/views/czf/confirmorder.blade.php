@@ -49,6 +49,12 @@
         }
     </style>
     <body class="confirm-order">
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">订单提交</div>
+    </div>
+
     <div class="weui-panel order-address">
         <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">

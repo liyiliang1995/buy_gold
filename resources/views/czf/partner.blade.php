@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>'我的伙伴',
 'css' => [
          'css/weui.min.css',
         '/css/weui.css',
@@ -21,10 +21,19 @@
         .weui-cells{
          margin-top: 0 !important;
         }
+        .weui-input{
+            font-size: 14px;
+        }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">我的伙伴</div>
+    </div>
+
     <div class="weui-flex">
-        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">注册新用户</div>
+        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">注册新用户</div>
     </div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
@@ -56,7 +65,7 @@
             <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary" style="width: 90%;margin-top: 30px;">注册</a></div>
         </div>
     <div class="weui-flex">
-        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold">我的伙伴</div>
+        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">我的伙伴</div>
     </div>
 
     <div class="weui-flex" id="partner_list">

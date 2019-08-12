@@ -92,7 +92,7 @@ footer a {
 }
 #user_gold {
     font-size: 12px;
-    line-height: 25px;
+    line-height: 30px;
     color: #666;
     padding: 15px;
 }
@@ -129,6 +129,7 @@ footer a {
     text-align: center;
     background: #f0f3f7;
     color: #666;
+    font-size: 16px;
     position: relative;
 }
 

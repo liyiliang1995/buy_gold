@@ -38,6 +38,12 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">文章详情</div>
+    </div>
+
     <div class="weui-flex" id="article_title">
         <div class="weui-flex__item"><h3>{{$newscontent->title ?? ''}}</h3></div>
     </div>

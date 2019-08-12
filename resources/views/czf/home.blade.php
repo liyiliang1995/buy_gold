@@ -21,7 +21,14 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-        });"
+        });",
+        "
+         $(function(){
+            if({$member_status}== 2 || {$member_status} == 3){
+            $.toast('账户冻结中','text');
+            }
+         });
+        ",
     ]
 ])
 @section('content')
@@ -46,18 +53,20 @@
     <div class="weui-flex notice">
 
         <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
-            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px"><marquee  direction="left" style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee></label>
+            <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px">
+                <marquee direction="left"
+                         style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee>
+            </label>
 
         </div>
     </div>
     <div class="weui-flex">
         <div class="weui-row">
             @foreach($aGoods as $value)
-
                 <div class="weui-col-50">
                     <a href="{{route('goodsDetail',['id'=>$value['id']])}}" style="color: #666;border: none;">
                         <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>
-                        <div class="weui-col__bd">
+                        <div class="weui-col__bd" style="height: 45px;overflow: hidden;">
                             <p class="title">{{$value['name']}}</p>
                         </div>
                     </a>
@@ -78,7 +87,8 @@
         </div>
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><img src="/images/footer.png" alt="" style="width: 90%;display: block;margin: 0 auto;"></div>
+        <div class="weui-flex__item"><img src="{{route('home')}}/images/footer.png" alt=""
+                                          style="width: 90%;display: block;margin: 0 auto;"></div>
     </div>
     <!-- footer -->
     <div class="weui-footer_fixed-bottom" style="bottom: 0;">

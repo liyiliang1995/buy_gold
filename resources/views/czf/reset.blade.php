@@ -19,6 +19,12 @@
         }
     </style>
     <body class="password-page">
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">重置密码</div>
+    </div>
+
     <div class="weui-flex" style="margin-top: 2rem;">
         <div><div class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></div>
         <div class="weui-flex__item">

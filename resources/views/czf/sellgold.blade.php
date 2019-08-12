@@ -16,6 +16,12 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">出售详情</div>
+    </div>
+
     <div class="weui-flex" id="sell">
         <div class="weui-flex__item">金币数量</div>
         <div class="weui-flex__item" id="sell_num">{{$oBuyGoldDetail->gold}}</div>
@@ -38,8 +44,8 @@
     </div>
 
     <div class="weui-row" id="sell_but">
-        <div class="weui-col-50" style="width: 60%;text-align: center;    line-height: 50px;">合计：<b style="color: red;">{{$oBuyGoldDetail->sum_gold}}金币</b>（消耗{{$oBuyGoldDetail->consume_integral}}积分）</div>
-        <div class="weui-col-50" style="width: 40%"><a  href="{{route('sell_gold_order',['id'=>$oBuyGoldDetail->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">确认出售</a></div>
+        <div class="weui-col-50" style="width: 70%;text-align: center;    line-height: 50px;">合计：<b style="color: red;">{{$oBuyGoldDetail->sum_gold}}金币</b>（消耗{{$oBuyGoldDetail->consume_integral}}积分）</div>
+        <div class="weui-col-50" style="width: 30%"><a  href="{{route('sell_gold_order',['id'=>$oBuyGoldDetail->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">确认出售</a></div>
     </div>
     </body>
     <script>

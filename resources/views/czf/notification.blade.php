@@ -16,6 +16,12 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">通知公告</div>
+    </div>
+
     <div class="weui-flex" style="padding: 0 15px">
         <div class="weui-flex__item" style="line-height: 45px">通知公告</div>
     </div>

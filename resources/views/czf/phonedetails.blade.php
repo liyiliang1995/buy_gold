@@ -13,6 +13,12 @@
 ])
 @section('content')
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">充值详情</div>
+    </div>
+
     <div style="background: #fff;overflow: hidden;">
         <div class="weui-flex">
             <div class="weui-flex__item"><i id="but_money" class="iconfont icon-icon_mobilephone"></i></div>

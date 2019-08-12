@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>' 用户设置',
 'css' => [
        'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
@@ -36,13 +36,18 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">用户设置</div>
+    </div>
 
     <!--设置-->
     <div class="weui-cells weui-cells_form" id="set_value">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">头像</label></div>
             <div class="weui-cell__bd">
-                <img style="width: 40px;float: right;border-radius: 50%" src="./img/logo.png" alt="">
+                <img style="width: 40px;float: right;border-radius: 50%" src="{{route('home')}}/img/logo.png" alt="">
             </div>
         </div>
         <div class="weui-cell">
@@ -84,22 +89,13 @@
 
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" class="weui-btn weui-btn_primary">修改</a></div>
+        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" style="    font-size: 16px; height: 45px; line-height: 45px;" class="weui-btn weui-btn_primary">修改</a></div>
     </div>
 
     <form action="{{route('logout')}}" method="POST" >
         @csrf
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><input type="submit" value="注销登陆" style="width: 90%;
-    height: 46px;
-    line-height: 1.6;
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    border: none;
-    background: red;
-    color: #fff;
-    border-radius: 5px;"></div>
+        <div class="weui-flex__item"><input type="submit" value="注销登陆" style="    font-size: 16px;width: 90%;  height: 45px;  text-align: center;  margin: 0 auto; display: block; border: none;background: red; color: #fff; border-radius: 5px;"></div>
     </div>
     </form>
     <script>
