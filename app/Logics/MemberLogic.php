@@ -214,9 +214,11 @@ class MemberLogic extends BaseLogic
      * @see 金币池数量为10亿  每减少一亿 领取数量减少10%
      * @see 每日最高领取上限当日日均价价值500元
      */
-    public function receiveGold(int $id,float $fRnum)
+    public function receiveGold(array $aParam)
     {
         get_gold_pool();
+        $id = $aParam['id'];
+        $fRnum = $aParam['gold'];
         $this->model = $this->model->findOrFail($id);
         if ($this->model->energy >= 1) {
 
@@ -231,7 +233,7 @@ class MemberLogic extends BaseLogic
                     $this->IncreaseAndDecrease($fNum);
                 });
                 // 用户领取金币数量 redis
-                member_is_auto_gold(1,$id,$fNum);
+                set_receive_gold_member_info(['id'=>$id,'is_auto'=>1,'gold'=>$fNum]);
                 // 金币池变化
                 set_gold_pool($fNum,false);
             }

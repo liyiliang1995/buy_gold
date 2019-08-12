@@ -234,7 +234,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         else {
             $next_time = $aInfo['next_time'];
             // 领取过但是当前时间大于下一次时间 可以领取
-            if (time() > $next_time)
+            if (time() >= $next_time)
                 $iRes = 0;
             else {
                 $tmpTime = $next_time - time();
