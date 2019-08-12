@@ -121,7 +121,7 @@ class GoodsLogic extends BaseLogic
         if (\Auth::user()->getChildMemberNum() < 1)
             throw new CzfException("至少激活一个用户才可以购物!");
         if (\Auth::user()->checkMemberOneHalfGold($this->gold) === false)
-            throw new CzfException("出售金币数量不能超过持有数量的50%!");
+            throw new CzfException("购物金币数量不能超过持有数量的50%!");
     }
 
     /**
