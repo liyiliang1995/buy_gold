@@ -231,10 +231,16 @@ class TradeController extends Controller
     {
         $aParams['_sort']   = "id,desc";
         $aRes = $this->Logic($dayBuyGoldSum)->query($aParams)->toArray();
+
+        $order_array = array_column($aRes['data'], 'id');
+        array_multisort($order_array,SORT_ASC,$aRes['data'] );
+
         foreach ($aRes['data'] as $key => $vg){
+            $adata['id'][$key] = $vg['id'];
             $adata['adata'][$key] = $vg['day'];
             $adata['bdata'][$key] = $vg['avg_price'];
         }
+
         return $this->success('',$adata);
     }
 

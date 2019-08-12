@@ -269,7 +269,7 @@
                 return;
             },
             success: function (result) {
-                console.log(result.data.adata);
+                console.log(result);
                 var dom = document.getElementById("p1");
                 var myChart = echarts.init(dom);
                 var app = {};
