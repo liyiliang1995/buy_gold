@@ -227,17 +227,21 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function getNextAutoGoldTimeAttribute():int
     {
-        $iRes = 1800;
-        $aNextInfo = redis_get(config('czf.redis_key.s6'));
-        $next_auto_time = $aNextInfo['next_auto_time'] ?? 0;
-        if ($next_auto_time) {
-            $tmpTime = $next_auto_time - time();
-            if ($tmpTime > 0) {
+        $aInfo = redis_hget(config('czf.redis_key.h1'),$this->id);
+        // 没有领取过 可以立马领取
+        if (empty($aInfo))
+            $iRes = 0;
+        else {
+            $next_time = $aInfo['next_time'];
+            // 领取过但是当前时间大于下一次时间 可以领取
+            if (time() > $next_time)
+                $iRes = 0;
+            else {
+                $tmpTime = $next_time - time();
                 $iRes = $tmpTime;
             }
         }
         return $iRes;
-
     }
 
     /**

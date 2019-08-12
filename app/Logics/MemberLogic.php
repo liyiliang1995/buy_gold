@@ -194,10 +194,13 @@ class MemberLogic extends BaseLogic
      * @param int $id
      * @return bool
      * @see 增加自动领取金币的用户
+     * @redis hash "{\"gold\":0,\"day\":1,\"time\":1800,\"id\":1,\"date\":\"2019-08-12\",\"is_auto\":1,\"next_auto_time\":1565595006}"
      */
     public function addAutoGoldMembers(int $id,int $type)
     {
-        member_is_auto_gold($type,$id);
+        $aParam['id'] = $id;
+        $aParam['is_auto'] = $type;
+        set_receive_gold_member_info($aParam);
     }
 
     /**
@@ -302,7 +305,7 @@ class MemberLogic extends BaseLogic
         // 本次领取数量
         $fNum = $this->getReceiveGoldNum();
         // 验证
-        $this->manualGiveGoldValidate($fRes,$fNum);
+        $this->manualGiveGoldValidate($fRes,$fNum,$result);
         DB::transaction(function () use($fNum,$id) {
             // 明细
             $this->getBuyGoldGoldFlowDetail(1, 4, $id, $fNum, "领取获得金币");
@@ -310,7 +313,7 @@ class MemberLogic extends BaseLogic
             $this->model->increment('gold', $fNum);
         });
         // 用户领取金币数量 redis
-        member_is_auto_gold(0,$id,$fNum);
+        set_receive_gold_member_info(['id'=>$id,'is_auto'=>0,'gold'=>$fNum]);
         // 金币池变化
         set_gold_pool($fNum,false);
     }
@@ -320,14 +323,12 @@ class MemberLogic extends BaseLogic
      * @param $fNum
      * @throws CzfException
      */
-    public function manualGiveGoldValidate($fRes,$fNum)
+    public function manualGiveGoldValidate($fRes,$fNum,$aInfo)
     {
         if (redis_sismember(config('czf.redis_key.set1'),$this->model->id))
             throw new CzfException("用户当前处于冻结状态，请完成交易在来领取！");
-        $skey  = "str:member_id_".$this->model->id;
-        if (redis_get($skey))
+        if (!empty($aInfo['next_time']) &&  $aInfo['next_time'] > time())
             throw new CzfException("不能多次领取，请在下一个时间段在领取！");
-        redis_set($skey,true,$this->model->next_auto_gold_time);
         if (!$this->receiveGoldValidate($fRes,$fNum))
             throw new CzfException("今日领取金额已经达到上限！");
 
