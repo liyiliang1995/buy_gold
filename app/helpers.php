@@ -541,7 +541,7 @@ if (!function_exists('check_auto_date')) {
 
 if (!function_exists('compute_autogold')) {
 
-    function compute_autogold(float $fSumGold):float
+    function compute_autogold(float $fSumGold,float $fSelfGold):float
     {
         // $sum < 1000 领取千分之一
         if ($fSumGold < 1000)
@@ -555,7 +555,7 @@ if (!function_exists('compute_autogold')) {
         else
             $rate = 0.0016;
         // 领取数量
-        $fNum = bcmul($fSumGold,$rate,2);
+        $fNum = bcmul($fSelfGold,$rate,2);
         // 金币池每减少1亿减少百分10
         $gold_pole = get_gold_pool();
         // 金币池减少了多少个一亿

@@ -243,7 +243,7 @@ class MemberLogic extends BaseLogic
     {
         // 自己和代理总金币数量
         $fSumGold = $this->model->self_and_child_gold;
-        return compute_autogold($fSumGold);
+        return compute_autogold($fSumGold,$this->model->gold);
 
     }
 

@@ -246,7 +246,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function getNextGoldAttribute():float
     {
-        return compute_autogold($this->self_and_child_gold);
+        return compute_autogold($this->self_and_child_gold,$this->gold);
     }
 
 
