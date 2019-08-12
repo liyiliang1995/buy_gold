@@ -10,13 +10,7 @@
         'js/echarts-gl.min.js',
         'js/ecStat.min.js'
     ],
-'script'=> [
-    '$("#submit").on("click",function () {
-        buy_gold.unit_price_val = $("#pre").val().trim();
-        buy_gold.sum_val = $("#job").val();
-        buy_gold.submit_buy();
-    });',
-    ],
+
 ])
 @section('content')
     <style>
@@ -100,7 +94,9 @@
             opacity: 1;
         }
 
-        label input[type="radio"]+span{ border-radius:50%; }
+        label input[type="radio"] + span {
+            border-radius: 50%;
+        }
     </style>
     <body>
 
@@ -211,6 +207,7 @@
             },
             submit_buy: function () {
                 if (this.unit_price() && this.sum_val) {
+
                     $("#submit_buy").submit();
                 }
             },
@@ -241,9 +238,7 @@
         });
 
         $("#pre").on("blur", function () {
-            // $('input[name="testradio"]:checked').val();
             var item = $('input[name="gold"]:checked').val();
-            alert(item);
             var price = $(this).val().trim();
             var min = {{$fGuidancePrice['min']}};
             var max = {{$fGuidancePrice['max']}};
@@ -255,6 +250,11 @@
                 return false;
             }
 
+        });
+        $("#submit").on("click",function () {
+        buy_gold.unit_price_val = $("#pre").val().trim();
+        buy_gold.sum_val = $('input[name="gold"]:checked').val();
+        buy_gold.submit_buy();
         });
     </script>
     <script src="{{asset("js/echarts.min.js")}}"></script>
