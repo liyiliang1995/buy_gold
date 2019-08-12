@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>' 用户设置',
 'css' => [
        'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
@@ -36,6 +36,11 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">用户设置</div>
+    </div>
 
     <!--设置-->
     <div class="weui-cells weui-cells_form" id="set_value">

@@ -34,6 +34,11 @@
         }
     </style>
 <body>
+<!--头部-->
+<div class="weui-flex" id="header_top">
+    <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+    <div class="weui-flex__item">编辑地址</div>
+</div>
 
 <form action="{{ route("postEditAddress",['url'=>request()->input('url') ?? ''])}}" method="post" id="address">
 <div class="weui-cells weui-cells_form" style="margin-top: 0">

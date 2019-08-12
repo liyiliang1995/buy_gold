@@ -87,7 +87,7 @@
         </div>
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><img src="/images/footer.png" alt=""
+        <div class="weui-flex__item"><img src="{{route('home')}}/images/footer.png" alt=""
                                           style="width: 90%;display: block;margin: 0 auto;"></div>
     </div>
     <!-- footer -->

@@ -1,4 +1,4 @@
-@extends('czf.base',['header'=>'用户 - 完善信息',
+@extends('czf.base',['header'=>'我的伙伴',
 'css' => [
          'css/weui.min.css',
         '/css/weui.css',
@@ -26,6 +26,12 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">我的伙伴</div>
+    </div>
+
     <div class="weui-flex">
         <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">注册新用户</div>
     </div>

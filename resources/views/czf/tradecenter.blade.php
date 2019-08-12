@@ -99,6 +99,11 @@
         }
     </style>
     <body>
+    <!--头部-->
+    <div class="weui-flex" id="header_top">
+        <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
+        <div class="weui-flex__item">交易中心</div>
+    </div>
 
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
         <div class="weui-flex__item" id="trading_va">今日均价：<b>{{$avgPrice}}</b></div>
