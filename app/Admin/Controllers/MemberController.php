@@ -35,7 +35,7 @@ class MemberController extends AdminController
         $grid->column('phone2', __('联系手机号'));
         $grid->column('gold', __('金币'))->sortable();
         $grid->column('energy', __('能量'))->sortable();
-        $grid->column('integral', __('积分值'))->sortable();
+        $grid->column('integral', __('积分'))->sortable();
         $grid->column('parent_user_id', __('上级用户'));
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
@@ -78,7 +78,6 @@ class MemberController extends AdminController
         $grid->disableExport();
         $grid->disableRowSelector();
         // 去掉默认的id过滤器
-        $grid->disableIdFilter();
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->disableIdFilter();

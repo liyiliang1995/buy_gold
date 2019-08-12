@@ -52,8 +52,7 @@ class OrderController extends AdminController
         });
         $grid->disableExport();
         $grid->disableRowSelector();
-        // 去掉默认的id过滤器
-        $grid->disableIdFilter();
+
         $grid->filter(function($filter){
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
