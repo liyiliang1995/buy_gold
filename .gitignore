@@ -13,3 +13,4 @@ yarn-error.log
 dea
 *.iml
 .idea
+*/.DS_Store
