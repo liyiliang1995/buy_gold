@@ -44,74 +44,28 @@ class AutoGold extends Command
     public function monitor()
     {
         while (1) {
-            $auto_time = $this->getNextAutoTime();
-            // 领取金币
-            if ($auto_time['next_auto_time'] <= time())
-            {
                 $oMemberModel = new Member;
                 $oMemberLogic = new MemberLogic($oMemberModel);
                 $sKey = config('czf.redis_key.h1');
                 $members = redis_hgetall($sKey);
                 \Log::channel('script')->info('脚本正在运行', ['自动领取的member_id' => $members]);
-                $bRes = ($auto_time['date'] == date('Y-m-d',time()));
-                foreach ($members as $key => $val) {
-                    $val = json_decode($val,true);
+                foreach ($members as $val) {
+                    $aInfo = json_decode($val,true);
 
-                    // 换天数以后重置每天领取金额
-                    if (!$bRes) {
-                        $val['gold'] = 0;
-                        redis_hset($sKey,$key,$val);
+                    if (
+                        // 设置为自动领取
+                        $aInfo['is_auto'] == 1
+                        // 时间判断
+                        && time() >= $aInfo['next_time']
+                        //冻结的不领取
+                        && !redis_sismember(config('czf.redis_key.set1'),$aInfo['id'])
+                    ) {
+                        $oMemberLogic->receiveGold($aInfo);
                     }
-                    // 设置为自动领取 冻结的不领取
-                    if ($val['is_auto'] == 1 && !redis_sismember(config('czf.redis_key.set1'),$key))
-                        $oMemberLogic->receiveGold($key,$val['gold']);
                 }
-                // 时间换了一天
-                if (!$bRes) {
-                    $day = $auto_time['day'] + 1;
-                } else {
-                    $day = $auto_time['day'];
-                }
-                $this->setAutoInfo(get_auto_gold_time($day),$day);
-            }
             // 获取下一次领取的时间
             sleep(5);
         }
     }
 
-    /**
-     * @see 判断是不是自动领取的第一天
-     * @判断 领取的时间天数进行了变化
-     */
-    public function getNextAutoTime()
-    {
-        $auto_time = redis_get(config('czf.redis_key.s6'));
-        if (!$auto_time) {
-            $time = get_auto_gold_time();
-            $auto_time = $this->setAutoInfo($time);
-        }
-        return $auto_time;
-    }
-
-    /**
-     * @param $time
-     * @param int $day
-     * @return array
-     */
-    public function setAutoInfo($time,$day = 1)
-    {
-        $auto_time  = [
-            // 下一次领取时间
-            'next_auto_time' => strtotime("+".$time."second"),
-            // 领取的第多少天
-            'day' => $day,
-            // 领取间隔时间
-            'time' => $time,
-            // 领取的日期
-            'date' => date('Y-m-d'),
-        ];
-        \Log::channel('script')->info('脚本正在运行', ['下一次领取的信息' => $auto_time]);
-        redis_set(config('czf.redis_key.s6'),$auto_time,24*3600);
-        return $auto_time;
-    }
 }

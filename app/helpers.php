@@ -524,6 +524,34 @@ if (!function_exists('member_is_auto_gold')) {
         }
     }
 }
+
+if (!function_exists('set_receive_gold_member_info')) {
+    /**
+     * @see 设置领取金币会员信息
+     */
+    function set_receive_gold_member_info(array $aParam)
+    {
+        $sKey = config('czf.redis_key.h1');
+        $aInfo = redis_hget($sKey,$aParam['id']);
+        // 没有设置过领取信息判断为没有领取
+        if (!$aInfo) {
+            $aData['gold'] = $aParam['gold'] ?? 0;
+            $aData['day'] = 1;
+            $aData['time'] = get_auto_gold_time();
+        } else {
+            $bRes = ($aInfo['date'] == date('Y-m-d',time()));
+            // 换天数以后重置每天领取金额
+            $aData['gold'] = $bRes ? (float)bcadd($aInfo['gold'],$aParam['gold'] ?? 0,2) : 0;
+            $aData['day']  = $bRes ? $aInfo['day'] : $aInfo['day']+1;
+            $aData['time'] = get_auto_gold_time($aData['day']);
+        }
+        $aData['id'] = $aParam['id'];
+        $aData['date'] = date('Y-m-d');
+        $aData['is_auto'] = $aParam['is_auto'];
+        $aData['next_time'] = !empty($aParam['gold']) ? strtotime("+".$aData['time']."second") : ($aInfo['next_time'] ?? time());
+        redis_hset($sKey,$aParam['id'],$aData);
+    }
+}
 if (!function_exists('check_auto_date')) {
     /**
      * @see 检测领取的时间是不是变化了一天
@@ -541,7 +569,7 @@ if (!function_exists('check_auto_date')) {
 
 if (!function_exists('compute_autogold')) {
 
-    function compute_autogold(float $fSumGold):float
+    function compute_autogold(float $fSumGold,float $fSelfGold):float
     {
         // $sum < 1000 领取千分之一
         if ($fSumGold < 1000)
@@ -555,7 +583,7 @@ if (!function_exists('compute_autogold')) {
         else
             $rate = 0.0016;
         // 领取数量
-        $fNum = bcmul($fSumGold,$rate,2);
+        $fNum = bcmul($fSelfGold,$rate,2);
         // 金币池每减少1亿减少百分10
         $gold_pole = get_gold_pool();
         // 金币池减少了多少个一亿

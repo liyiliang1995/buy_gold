@@ -164,6 +164,7 @@ class TradeLogic extends BaseLogic
     {
         redis_sadd(config("czf.redis_key.set1"),userId());
         //出售金币的状态 为冻结
+        \Auth::user()->time += 1;
         \Auth::user()->status = 2;
         \Auth::user()->save();
     }
@@ -214,8 +215,8 @@ class TradeLogic extends BaseLogic
                 throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
             // 下架
             $oBuyGold->delete();
-            \Auth::user()->status = 1;
-            return  \Auth::user()->save();
+            $this->releaseLock([\Auth::user()->id]);
+            return true;
         });
         redis_srem(config("czf.redis_key.set1"),userId());
         return $bRes ?? false;
@@ -239,12 +240,14 @@ class TradeLogic extends BaseLogic
                 throw ValidationException::withMessages(['user_id' => ['没有卖家出售，无法确认']]);
             $oBuyGold->status = 1;
             $oBuyGold->is_show = 0;
-            $oBuyGold->member->status = 1;
-            $oBuyGold->seller->status = 1;
-            $oBuyGold->push();
-            $this->parentReleaseLock([$oBuyGold->seller->parent_user_id,$oBuyGold->member->parent_user_id]);
-            redis_srem(config("czf.redis_key.set1"),$oBuyGold->seller_id);
-            redis_srem(config("czf.redis_key.set1"),$oBuyGold->user_id);
+            $oBuyGold->save();
+            $aIds = [
+                $oBuyGold->seller->parent_user_id,  //卖家上级
+                $oBuyGold->member->parent_user_id,  //买家上级
+                $oBuyGold->seller_id,               //卖家
+                $oBuyGold->user_id,                 //买家
+            ];
+            $this->releaseLock($aIds);
             return true;
         });
         return $bRes ?? false;
@@ -253,16 +256,24 @@ class TradeLogic extends BaseLogic
 
     /**
      * @param array $aParams
-     * @解除上级代理的状态
+     * @解锁关联用户
      */
-    public function parentReleaseLock(array $aParams)
+    public function releaseLock(array $aParams)
     {
         $oMemberMolde = new Member;
-        $aData = $oMemberMolde->where('status',4)->whereIn('id',$aParams)->get();
+        $aData = $oMemberMolde->whereIn('id',$aParams)->get();
         if ($aData) {
             foreach ($aData as $item) {
-                $item->update(['status'=>1]);
-                redis_srem(config("czf.redis_key.set1"),$item->id);
+                // 解冻-1
+                if ($item->time > 0) {
+                    $item->time -= 1;
+                    // 解冻次数为0 才真正解冻
+                    if ($item->time == 0) {
+                        redis_srem(config("czf.redis_key.set1"),$item->id);
+                        $item->status = 1;
+                    }
+                    $item->save();
+                }
             }
         }
     }

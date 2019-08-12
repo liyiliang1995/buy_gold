@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index(Good $good)
     {
-        $member = \Auth::guard()->user();
+        $member = \Auth::user();
         $member_status = $member['status'];
         $aConfig = getConfigByType(1);
         $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
