@@ -58,7 +58,7 @@ return [
     */
     'route' => [
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'twwl_admin'),
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'czf_admin'),
 
         'namespace' => 'App\\Admin\\Controllers',
 
