@@ -16,6 +16,10 @@ class MemberLogic extends BaseLogic
      * @var
      */
     protected $member;
+    /**
+     * @var
+     */
+    protected $agentRegisterGold;
 
     /**
      * @param array $aParam
@@ -25,6 +29,7 @@ class MemberLogic extends BaseLogic
     public function agentRegisterLogic(array $aParam):bool
     {
         $this->agentRegisterValidate($aParam);
+        $this->agentRegisterGold = $this->getRegisterGold();
         $bRes = DB::transaction(function () use($aParam){
                 //$this->agentRegisterSave($aParam);
                 $this->member = $this->member->addChildMember(Arr::only($aParam,['password','phone','name']));
@@ -62,17 +67,26 @@ class MemberLogic extends BaseLogic
             throw new CzfException("手机验证码不正确！");
         if ($this->model->checkPhoneOnly($aParam['phone']) || $this->member->isExistsPhone($aParam['phone']))
             throw new CzfException("注册手机号码已经存在！");
-        if (\Auth::user()->gold < 100)
-            throw new CzfException("代理注册需要个人金币数量大于100！");
+        if (\Auth::user()->gold < $this->agentRegisterGold)
+            throw new CzfException("代理注册需要个人金币数量大于".$this->agentRegisterGold."！");
     }
     /*
      * @see带注册以后给新用户转入100金币
      */
     public function agentRegisterFlow()
     {
+        $this->getBuyGoldGoldFlowDetail(0,6,userId(),$this->agentRegisterGold,"代理注册扣除金币".$this->agentRegisterGold);
+        $this->getBuyGoldGoldFlowDetail(1,7,$this->member->id,$this->agentRegisterGold,"代理注册增加金币".$this->agentRegisterGold);
+    }
 
-        $this->getBuyGoldGoldFlowDetail(0,6,userId(),100,"代理注册扣除金币100");
-        $this->getBuyGoldGoldFlowDetail(1,7,$this->member->id,100,"代理注册增加金币100");
+    /**
+     * @see 注册时，老会员扣除价值200元的金币，同时新会员获赠价值200元的金币；
+     */
+    public function getRegisterGold():float
+    {
+        $HourAvgPriceModel = new HourAvgPrice;
+        $fBestNewAvgGold = $HourAvgPriceModel->getBestNewAvgPrice();
+        return bcdiv(200,$fBestNewAvgGold,2);
     }
 
     /**
@@ -81,8 +95,8 @@ class MemberLogic extends BaseLogic
      */
     public function agentRegisterIncreaseAndDecrease()
     {
-        \Auth::user()->decrement('gold',100);
-        $this->member->increment('gold',100);
+        \Auth::user()->decrement('gold',$this->agentRegisterGold);
+        $this->member->increment('gold',$this->agentRegisterGold);
     }
 
     /**
