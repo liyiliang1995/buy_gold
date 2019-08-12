@@ -29,7 +29,7 @@
     <!--头部-->
     <div class="weui-flex" id="header_top">
         <a href="{{route('member_index')}}"><img src="{{route('home')}}/img/fh.png" alt=""></a>
-        <div class="weui-flex__item">我的伙伴</div>
+        <div class="weui-flex__item" style="font-size: 16px;">我的伙伴</div>
     </div>
 
     <div class="weui-flex">
