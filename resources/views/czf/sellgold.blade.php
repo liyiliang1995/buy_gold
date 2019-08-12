@@ -38,8 +38,8 @@
     </div>
 
     <div class="weui-row" id="sell_but">
-        <div class="weui-col-50" style="width: 60%;text-align: center;    line-height: 50px;">合计：<b style="color: red;">{{$oBuyGoldDetail->sum_gold}}金币</b>（消耗{{$oBuyGoldDetail->consume_integral}}积分）</div>
-        <div class="weui-col-50" style="width: 40%"><a  href="{{route('sell_gold_order',['id'=>$oBuyGoldDetail->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">确认出售</a></div>
+        <div class="weui-col-50" style="width: 70%;text-align: center;    line-height: 50px;">合计：<b style="color: red;">{{$oBuyGoldDetail->sum_gold}}金币</b>（消耗{{$oBuyGoldDetail->consume_integral}}积分）</div>
+        <div class="weui-col-50" style="width: 30%"><a  href="{{route('sell_gold_order',['id'=>$oBuyGoldDetail->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">确认出售</a></div>
     </div>
     </body>
     <script>
