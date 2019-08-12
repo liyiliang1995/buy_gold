@@ -25,7 +25,7 @@
         "
          $(function(){
             if({$member_status}== 2 || {$member_status} == 3){
-            $.toast('您的账号已冻结','text');
+            $.toast('账户冻结中','text');
             }
          });
         ",
@@ -67,7 +67,7 @@
                 <div class="weui-col-50">
                     <a href="{{route('goodsDetail',['id'=>$value['id']])}}" style="color: #666;border: none;">
                         <div class="weui-col__hd"><img src="{{czf_asset($value['list_img'])}}" width="100%"></div>
-                        <div class="weui-col__bd">
+                        <div class="weui-col__bd" style="height: 45px;overflow: hidden;">
                             <p class="title">{{$value['name']}}</p>
                         </div>
                     </a>
