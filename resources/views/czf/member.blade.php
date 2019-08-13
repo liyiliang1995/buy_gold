@@ -95,57 +95,6 @@
             <p>距下次领取：<b id="next_time">{{$gold_time}}</b><input type="text" style="display: none" value="{{$gold_time}}" id="next_time_f"></p>
 
         </div>
-        <script>
-            $(function(){
-               function set_time() {
-                var res = document.getElementById('next_time_f').value;
-                var resa = res-1;
-                if (resa == 0){
-                    window.location.reload();
-                }
-                   var ssss = formatSeconds(resa);
-                   document.getElementById("next_time").innerHTML = ssss;
-                   document.getElementById("next_time_f").value = resa;
-               }
-              setInterval (function ()
-                {
-                    set_time();
-                }, 1000);
-            });
-            function formatSeconds(value) {
-                var theTime = parseInt(value);// 需要转换的时间秒
-                var theTime1 = 0;// 分
-                var theTime2 = 0;// 小时
-                var theTime3 = 0;// 天
-                if(theTime > 60) {
-                    theTime1 = parseInt(theTime/60);
-                    theTime = parseInt(theTime%60);
-                    if(theTime1 > 60) {
-                        theTime2 = parseInt(theTime1/60);
-                        theTime1 = parseInt(theTime1%60);
-                        if(theTime2 > 24){
-                            //大于24小时
-                            theTime3 = parseInt(theTime2/24);
-                            theTime2 = parseInt(theTime2%24);
-                        }
-                    }
-                }
-                var result = '';
-                if(theTime > 0){
-                    result = ""+parseInt(theTime)+"秒";
-                }
-                if(theTime1 > 0) {
-                    result = ""+parseInt(theTime1)+"分"+result;
-                }
-                if(theTime2 > 0) {
-                    result = ""+parseInt(theTime2)+"小时"+result;
-                }
-                if(theTime3 > 0) {
-                    result = ""+parseInt(theTime3)+"天"+result;
-                }
-                return result;
-            }
-        </script>
         <div class="weui-col-50" id="user_but">
 
                 @if($is_auto == 1)
@@ -166,58 +115,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function checkboxOnclick(checkbox) {
-        if ( checkbox.checked == true){
-            var url = "{{route('add_auto_gold',['type'=>1])}}";
-            document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
-            }else{
-            var url = "{{route('add_auto_gold',['type'=>0])}}";
-            document.getElementById('check_a').innerHTML = "<a href='javascript:;' id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
-            }
-            $.ajax({
-                url: url,
-                type: 'get',
-                dataType: "json",
-                error: function (data) {
-                    $.toast("服务器繁忙, 请联系管理员！",'text');
-                    return;
-                },
-                success: function (result) {
-                    if (result.code != 200) {
-                        $.toast(result.message, "forbidden");
-                        setInterval (function ()
-                        {
-                            window.location.reload();
-                        }, 1000);
-
-                    }
-                }
-            });
-        }
-
-        $("#submit").bind("click",function () {
-        var url = "{{route('manual_give_gold')}}";
-        $.ajax({
-            url: url,
-            type: "get",
-            dataType: "json",
-            error: function (data) {
-                $.toast("服务器繁忙, 请联系管理员！","text");
-                return;
-            },
-            success: function (result) {
-                if (result.code == 200){
-                    $.toast("领取成功");
-                }else{
-                    $.toast(result.message, "forbidden");
-                }
-                console.log(result);
-            }
-        });
- });
-    </script>
-
     </div>
 
     <div class="weui-cells">
@@ -346,6 +243,110 @@
 
     </body>
     <script>
+        $(function(){
+            function set_time() {
+                var res = document.getElementById('next_time_f').value;
+                var resa = res-1;
+                if (resa == 0){
+                    window.location.reload();
+                }
+                var ssss = formatSeconds(resa);
+                document.getElementById("next_time").innerHTML = ssss;
+                document.getElementById("next_time_f").value = resa;
+            }
+            setInterval (function ()
+            {
+                set_time();
+            }, 1000);
+        });
+        function formatSeconds(value) {
+            var theTime = parseInt(value);// 需要转换的时间秒
+            var theTime1 = 0;// 分
+            var theTime2 = 0;// 小时
+            var theTime3 = 0;// 天
+            if(theTime > 60) {
+                theTime1 = parseInt(theTime/60);
+                theTime = parseInt(theTime%60);
+                if(theTime1 > 60) {
+                    theTime2 = parseInt(theTime1/60);
+                    theTime1 = parseInt(theTime1%60);
+                    if(theTime2 > 24){
+                        //大于24小时
+                        theTime3 = parseInt(theTime2/24);
+                        theTime2 = parseInt(theTime2%24);
+                    }
+                }
+            }
+            var result = '';
+            if(theTime > 0){
+                result = ""+parseInt(theTime)+"秒";
+            }
+            if(theTime1 > 0) {
+                result = ""+parseInt(theTime1)+"分"+result;
+            }
+            if(theTime2 > 0) {
+                result = ""+parseInt(theTime2)+"小时"+result;
+            }
+            if(theTime3 > 0) {
+                result = ""+parseInt(theTime3)+"天"+result;
+            }
+            return result;
+        }
+
+        function checkboxOnclick(checkbox) {
+            if ( checkbox.checked == true){
+                var url = "{{route('add_auto_gold',['type'=>1])}}";
+                document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
+            }else{
+                var url = "{{route('add_auto_gold',['type'=>0])}}";
+                document.getElementById('check_a').innerHTML = "<a href='javascript:;' id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
+            }
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: "json",
+                error: function (data) {
+                    $.toast("服务器繁忙, 请联系管理员！",'text');
+                    return;
+                },
+                success: function (result) {
+                    if (result.code != 200) {
+                        $.toast(result.message, "forbidden");
+                        setInterval (function ()
+                        {
+                            window.location.reload();
+                        }, 1000);
+
+                    }
+                }
+            });
+        }
+
+        $("#submit").bind("click",function () {
+            var url = "{{route('manual_give_gold')}}";
+            $.ajax({
+                url: url,
+                type: "get",
+                dataType: "json",
+                error: function (data) {
+                    $.toast("服务器繁忙, 请联系管理员！","text");
+                    return;
+                },
+                success: function (result) {
+                    if (result.code == 200){
+                        $.toast("领取成功");
+                        setInterval (function ()
+                        {
+                            set_time();
+                        }, 1000);
+                    }else{
+                        $.toast(result.message, "forbidden");
+                    }
+                    console.log(result);
+                }
+            });
+        });
+
         $(function(){
             $("#integral_to_gold").on('click',function () {
                 var url = "{{route('integral_to_gold')}}";
