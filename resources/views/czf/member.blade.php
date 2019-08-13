@@ -102,7 +102,6 @@
                 var resa = res-1;
                 if (resa == 0){
                     window.location.reload();
-                    // return;
                 }
                    var ssss = formatSeconds(resa);
                    document.getElementById("next_time").innerHTML = ssss;
@@ -187,6 +186,11 @@
                 success: function (result) {
                     if (result.code != 200) {
                         $.toast(result.message, "forbidden");
+                        setInterval (function ()
+                        {
+                            window.location.reload();
+                        }, 1000);
+
                     }
                 }
             });
