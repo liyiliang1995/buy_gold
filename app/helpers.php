@@ -589,7 +589,8 @@ if (!function_exists('compute_autogold')) {
         // 金币池减少了多少个一亿
         $iReduceBillion = 20 - ceil($gold_pole/100000000);
         $iReduceGold = bcmul($fNum,0.05*$iReduceBillion,2);
-        return bcsub($fNum,$iReduceGold,2) ?? 0.01;
+        $fRes = bcsub($fNum,$iReduceGold,2);
+        return $fRes > 0 ? $fRes : 0.01;
 
     }
 }
