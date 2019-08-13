@@ -109,4 +109,14 @@
         </div>
     </div>
     </body>
+    {{--<script>--}}
+        {{--$(function () {--}}
+
+            {{--if(!navigator.onLine){--}}
+                {{--e.stopPropagation();--}}
+                {{--$.toast('网络未链接，请重试', "text");--}}
+                {{--return;--}}
+            {{--}--}}
+        {{--});--}}
+    {{--</script>--}}
 @endsection

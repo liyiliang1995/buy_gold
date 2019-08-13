@@ -3,7 +3,8 @@
         'http://at.alicdn.com/t/font_1300674_bwcd8riknaj.css',
         'css/weui.min.css',
         'css/jquery-weui.min.css',
-        'css/style.css'
+        'css/style.css',
+        'css/demos.css'
     ],
 'js' => [
         'js/jquery-weui.min.js',
@@ -16,6 +17,12 @@
         .weui-input{
             font-size: 14px;
             padding-left: 10px;
+        }
+        html{
+            background: #fff;
+        }
+        body{
+            background: #fff;
         }
     </style>
     <body class="password-page">
