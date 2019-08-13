@@ -178,9 +178,14 @@ class MemberController extends Controller
     /**
      * @see 手机挂单
      */
-    public function PhoneBuyGold()
+    public function phoneBuyGold(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
-        dd(request()->input());
+        $aParams['sum_price'] = request()->post('money');
+        $aParams['price'] = $hourAvgPrice->getBestNewAvgPrice();
+        if ($this->Logic($phoneBuyGold)->phoneBuyGold($aParams))
+            return redirect(route('phone_center'));
+        else
+            abort(500);
     }
 
 

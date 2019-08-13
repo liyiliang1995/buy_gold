@@ -275,6 +275,7 @@ class BaseLogic {
      * 15 积分兑换扣除金币
      * 16 积分兑换金币流向金币池
      * 17 积分兑换金币流向股东
+     * 18 挂单扣除金币
      * @param int $iUserId
      * @param float $fGold
      * @return object

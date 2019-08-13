@@ -326,6 +326,7 @@ if (!function_exists('gold_compute')) {
         $oMemberModel = new \App\Member;
         $oOrderModel = new \App\Order;
         $oButGoldModel = new \App\BuyGold;
+        $oPhoneBuyGold = new \App\PhoneBuyGold;
         $oLastGoldPool = $oGoldChangeDayModel->getLastData();
         // 统计时间里面金币池支出数量(1 后台充值金币）
         $fGoldOutNum = $oGoldFlowModel->getGoldPullOut();
@@ -335,6 +336,7 @@ if (!function_exists('gold_compute')) {
         $fMemberGoldNum = $oMemberModel->getAllMemberGold();
         // 用户实际燃烧金币
         $fBurnGoldNum = $oGoldFlowModel->getBurnGoldSum();
+
         $fTmp = bcsub($oLastGoldPool['gold'], $fGoldOutNum, 2);
         // 用户所有能量值
         $iEnergy = $oMemberModel->getAllMemberEnergy();

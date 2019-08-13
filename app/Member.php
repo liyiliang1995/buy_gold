@@ -175,7 +175,11 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function getAllMemberGold():float
     {
-        return $this->sum('gold') ?? 0.00;
+        // 在用户手上的
+        $all_gold = $this->sum('gold') ?? 0.00;
+        // 用户挂单未成交的
+        $phone_gold  =  (new PhoneBuyGold)->getNotclinchGold();
+        return bcadd($all_gold,$phone_gold,2);
     }
 
     /**

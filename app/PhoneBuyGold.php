@@ -47,5 +47,23 @@ class PhoneBuyGold extends Model
         return $this->belongsTo('App\Member','seller_id');
     }
 
+    /**
+     * @return bool
+     */
+    public function isExistsPhoneBuyGold():bool
+    {
+        $iRes = $this->where(['user_id' => userId(),'status' => 0,'is_show' => 1])->count();
+        return $iRes ? true : false;
+    }
+
+    /**
+     * @return float
+     * @see 用户挂单出去的金币
+     */
+    public function getNotclinchGold():float
+    {
+        return $this->where('status',0)->where('is_show',1)->sum('gold') ?? 0.00;
+    }
+
 
 }

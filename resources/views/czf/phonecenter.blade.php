@@ -105,10 +105,10 @@
         <form action="{{ route('phone_buy_gold')}}" method="post" id="submit_buy">
             @csrf
             <div class="radio_style">
-                <label><input name="money" type="radio" value="100" checked/><span></span><span></span>100元 </label>
-                <label><input name="money" type="radio" value="200"/><span></span><span></span> 200元 </label>
-                <label><input name="money" type="radio" value="300"/><span></span><span></span>300元 </label>
-                <label><input name="money" type="radio" value="500"/><span></span><span></span>500元 </label>
+                <label><input name="money" @if(old('money') == 100)checked="checked"@endif type="radio" value="100" checked/><span></span><span></span>100元 </label>
+                <label><input name="money" @if(old('money') == 200)checked="checked"@endif type="radio" value="200"/><span></span><span></span> 200元 </label>
+                <label><input name="money" @if(old('money') == 300)checked="checked"@endif type="radio" value="300"/><span></span><span></span>300元 </label>
+                <label><input name="money" @if(old('money') == 500)checked="checked"@endif type="radio" value="500"/><span></span><span></span>500元 </label>
             </div>
         </form>
     </div>
@@ -126,15 +126,16 @@
         <div class="weui-flex__item">金币数</div>
         <div class="weui-flex__item">操作</div>
     </div>
-
+    @foreach($aPhoneBuyGold as $value)
     <div class="weui-flex" id="trading_list">
-        <div class="weui-flex__item">100</div>
-        <div class="weui-flex__item">240</div>
+        <div class="weui-flex__item">{{$value->sum_price}}</div>
+        <div class="weui-flex__item">{{$value->gold}}</div>
         <div class="weui-flex__item">
             <a href="{{route('phone_sell',['id'=>1])}}" class="weui-btn weui-btn_primary"
                style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
         </div>
     </div>
+    @endforeach
 
 
     </body>
@@ -159,12 +160,17 @@
                 return val;
             },
             show_gold:function () {
-                var show_gold = this.intToFloat(parseFloat(this.price)/parseFloat(this.avg_price));
+                var gold = this.intToFloat(parseFloat(this.price)/parseFloat(this.avg_price));
+                var show_gold = this.intToFloat(parseFloat(gold*1.2));
                 $("#sum_pre").empty().html(show_gold);
             }
         };
         $(document).ready(function(){
             phone_buy_gold.show_gold();
+            @if($errors->has('price'))
+                $.toast("{{$errors->get('price')[0]}}", 'text');
+            @endif
+
             // 点击选择
             $('input:radio').click(function () {
                 phone_buy_gold.price = $('input[name="money"]:checked').val().trim();
