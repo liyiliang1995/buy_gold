@@ -108,7 +108,7 @@
             <p>当前金币总数：2000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
-                                                                id="next_time_f"></p>
+                                                   id="next_time_f"></p>
 
         </div>
         <div class="weui-col-50" id="user_but">
@@ -263,18 +263,15 @@
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res - 1;
-
                 if (resa == 0) {
                     setInterval(function () {
                         window.location.reload();
                     }, 1000);
-
                 }
                 var ssss = formatSeconds(resa);
                 document.getElementById("next_time").innerHTML = ssss;
                 document.getElementById("next_time_f").value = resa;
             }
-
             setInterval(function () {
                 set_time();
             }, 1000);
@@ -341,29 +338,30 @@
                 }
             });
         }
-       function draw() {
-           var url = "{{route('manual_give_gold')}}";
-           $.ajax({
-               url: url,
-               type: "get",
-               dataType: "json",
-               error: function (data) {
-                   $.toast("服务器繁忙, 请联系管理员！", "text");
-                   return;
-               },
-               success: function (result) {
-                   if (result.code == 200) {
-                       $.toast("领取成功");
-                       setInterval(function () {
-                           window.location.reload();
-                       }, 1000);
-                   } else {
-                       $.toast(result.message, "forbidden");
-                   }
-                   console.log(result);
-               }
-           });
-       }
+
+        function draw() {
+            var url = "{{route('manual_give_gold')}}";
+            $.ajax({
+                url: url,
+                type: "get",
+                dataType: "json",
+                error: function (data) {
+                    $.toast("服务器繁忙, 请联系管理员！", "text");
+                    return;
+                },
+                success: function (result) {
+                    if (result.code == 200) {
+                        $.toast("领取成功");
+                        setInterval(function () {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        $.toast(result.message, "forbidden");
+                    }
+                    console.log(result);
+                }
+            });
+        }
 
 
         $(function () {
