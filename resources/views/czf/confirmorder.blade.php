@@ -173,10 +173,18 @@
                         return;
                     },
                     success:function(result){
+                        console.log(result);
                         if(result.code == 200){
                             window.location.href = result.data.url;
                         } else {
-                            $.toast(result.message,'text')
+                            $.toast(result.message,'text');
+
+                            if (result.message == '至少激活一个用户才可以购物!'){
+                                setInterval(function () {
+                                    window.location.href ='{{route('myPartner')}}';
+                                },2000);
+
+                            }
                         }
                     },
                 })
