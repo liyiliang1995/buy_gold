@@ -65,6 +65,7 @@ return [
         'middleware' => ['web', 'admin'],
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin install directory
