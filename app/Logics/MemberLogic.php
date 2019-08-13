@@ -382,6 +382,49 @@ class MemberLogic extends BaseLogic
         $this->getBuyGoldGoldFlowDetail(1,14,0,$reduceGold,"15天未登录金币流向金币池");
     }
 
+    /**
+     * @param $aParams
+     * @积分转金币
+     */
+    public function IntegralToGold(array $aParams)
+    {
+        $this->IntegralToGoldValidate();
+        DB::transaction(function () use ($aParams){
+            $this->IntegralToGoldFlow($aParams);
+        });
+    }
+
+    /**
+     * @积分转金币验证
+     * @see 持比量200不得兑换积分
+     */
+    public function IntegralToGoldValidate():void
+    {
+        if (redis_idempotent('',['IntegralToGold']) === false)
+            throw new CzfException("操作过于频繁！");
+        if (\Auth::user()->gold < 200)
+            throw new CzfException("持有金币数量低于200不能兑换积分！");
+    }
+
+    /**
+     * @param array $aParams
+     * @see 积分兑换金币流水
+     * @see 积分兑换流水 20% 流向平台发 80% 流向币池
+     */
+    public function IntegralToGoldFlow(array $aParams)
+    {
+        $this->getBuyGoldGoldFlowDetail(0,15,userId(),$aParams['gold'],"金币兑换积分");
+
+    }
+
+    /**
+     * @param array $aParams
+     */
+    public function IntegralBaseflow(array $aParams)
+    {
+
+    }
+
 
 
 

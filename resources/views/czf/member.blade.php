@@ -84,7 +84,7 @@
                 <p>能量</p></a></div>
         </div>
         <div class="weui-flex" id="user_dh">
-            <div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">100金币兑换900积分</a></div>
+            <div class="weui-flex__item"><a href="javascript:;" id="integral_to_gold" class="weui-btn weui-btn_primary">100金币兑换900积分</a></div>
         </div>
     </div>
 
@@ -341,5 +341,26 @@
     </div>
 
     </body>
-
+    <script>
+        $(function(){
+            $("#integral_to_gold").on('click',function () {
+                var url = "{{route('integral_to_gold')}}";
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    dataType: "json",
+                    error: function (data) {
+                        $.toast("服务器繁忙, 请联系管理员！","text");
+                        return;
+                    },
+                    success: function (result) {
+                        if (result.code != 200){
+                            $.toast(result.message, "forbidden");
+                        }
+                        console.log(result);
+                    }
+                });
+            })
+        })
+    </script>
 @endsection

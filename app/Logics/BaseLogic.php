@@ -272,6 +272,10 @@ class BaseLogic {
      * 12 购物金币流向金币池
      * 13 购物消耗金币流向股东
      * 14 15天未登录流向金币池
+     * 15 积分兑换扣除金币
+     * 16 积分兑换增加积分
+     * 17 积分兑换流向金币池
+     * 16 积分兑换流向股东
      * @param int $iUserId
      * @param float $fGold
      * @return object

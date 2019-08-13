@@ -215,6 +215,18 @@ class MemberController extends Controller
     }
 
     /**
+     * @see 金币兑换积分
+     */
+    public function ajaxIntegralToGold(Member $member)
+    {
+        // 100金币
+        $aParams['gold'] = 100;
+        // 900积分
+        $aParams['integral'] = 900;
+        $this->Logic($member)->IntegralToGold($aParams);
+    }
+
+    /**
      * @param MemberLogic $memberLogic
      * @param $oMdel
      * @see 获取逻辑
