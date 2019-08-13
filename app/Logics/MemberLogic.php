@@ -10,6 +10,7 @@ use App\HourAvgPrice;
 use Illuminate\Support\Arr;
 use App\Exceptions\CzfException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 class MemberLogic extends BaseLogic
 {
     /**
@@ -477,6 +478,74 @@ class MemberLogic extends BaseLogic
         \Auth::user()->decrement('gold',$aParams['gold']);
         \Auth::user()->increment('integral',$aParams['integral']);
         set_gold_pool($this->in_tmp_pool);
+    }
+
+    /**
+     * @param array $aParams
+     */
+    public function phoneBuyGold(array $aParams):bool
+    {
+        $aParams['sum_price'] = $aParams['sum_price'];//bcmul($aParams['gold'],$aParams['price'],2);
+        $aParams['gold'] = bcmul(bcdiv($aParams['sum_price'],$aParams['price'],2),1.2,2);
+        $this->phoneBuyGoldValidate($aParams);
+        $bRes = DB::transaction(function () use ($aParams){
+                $this->phoneBuyGoldSave($aParams);
+                $this->phoneBuyGoldFlow($aParams);
+                $this->phoneBuyGoldIncreaseAndDecrease($aParams);
+                return true;
+        });
+        return $bRes ?? false;
+    }
+
+    /**
+     * @param array $aParams
+     * @see 保存订单
+     */
+    public function phoneBuyGoldSave(array $aParams)
+    {
+        $this->model->user_id = userId();
+        $this->model->gold = $aParams['gold'];
+        $this->model->price = $aParams['price'];
+        $this->model->sum_price = $aParams['sum_price'];
+        $this->model->save();
+    }
+
+    /**
+     * @param array $aParams
+     * @挂单流水
+     */
+    public function phoneBuyGoldFlow(array $aParams)
+    {
+        $this->model->phone_buy_gold_details()->saveMany(
+            [
+                $this->getBuyGoldGoldFlowDetail(0,18,userId(),$aParams['gold'],"挂单扣除金币")('App\PhoneBuyGoldDetail'),
+            ]
+        );
+    }
+
+    /**
+     * @param array $aParams
+     */
+    public function phoneBuyGoldValidate(array $aParams)
+    {
+        if (!in_array($aParams['sum_price'],[100,200,300,500]))
+            throw ValidationException::withMessages(['price'=>["请选择有效的价格！"]]);
+        if (\Auth::user()->isNormalMember() == false)
+            throw ValidationException::withMessages(['price'=>["请检查当前用户是否处于未激活或者冻结状态！"]]);
+        if (\Auth::user()->getChildMemberNum() < 1)
+            throw ValidationException::withMessages(['price'=>["至少激活一个用户才可以挂单！"]]);
+        if ($this->model->isExistsPhoneBuyGold())
+            throw ValidationException::withMessages(['price'=>["当前用户还有一笔挂单交易未完成！"]]);
+        if (\Auth::user()->checkMemberOneHalfGold($aParams['gold']) === false)
+            throw ValidationException::withMessages(['price'=>["手机充值挂单支付金币不得超过持币量的50%！"]]);
+    }
+
+    /**
+     * @param array $aParams
+     */
+    public function phoneBuyGoldIncreaseAndDecrease(array $aParams)
+    {
+        \Auth::user()->decrement('gold',$aParams['gold']);
     }
 
 

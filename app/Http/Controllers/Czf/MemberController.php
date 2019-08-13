@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Czf;
 
 use App\News;
 use App\Member;
+use App\HourAvgPrice;
+use App\PhoneBuyGold;
 use App\AgentRegister;
 use App\Logics\MemberLogic;
 use Illuminate\Http\Request;
@@ -166,10 +168,24 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值中心
      */
-    public function phoneCenter()
+    public function phoneCenter(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
+        $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query(['_sort' => 'price,desc']);
+        $avgPrice = $hourAvgPrice->getBestNewAvgPrice();
+        return view('czf.phonecenter',compact('aPhoneBuyGold','avgPrice'));
+    }
 
-        return view('czf.phonecenter');
+    /**
+     * @see 手机挂单
+     */
+    public function phoneBuyGold(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
+    {
+        $aParams['sum_price'] = request()->post('money');
+        $aParams['price'] = $hourAvgPrice->getBestNewAvgPrice();
+        if ($this->Logic($phoneBuyGold)->phoneBuyGold($aParams))
+            return redirect(route('phone_center'));
+        else
+            abort(500);
     }
 
 

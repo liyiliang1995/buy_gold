@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 use App\GoldFlow;
 use App\Member;
+use App\PhoneBuyGold;
 use App\GoldChangeDay;
 use App\Logics\MemberLogic;
 use Illuminate\Console\Command;
@@ -37,6 +38,10 @@ class EveryDayGoldPool extends Command
      */
     protected $member_model;
     /**
+     * @var
+     */
+    protected $phone_model;
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -56,6 +61,7 @@ class EveryDayGoldPool extends Command
         $this->model = new GoldFlow;
         $this->model_change_day = new GoldChangeDay;
         $this->member_model = new Member;
+        $this->phone_model = new PhoneBuyGold;
         // 处理15天未登录的
         $this->notLoginLoic();
         DB::transaction(function () {
@@ -93,7 +99,11 @@ class EveryDayGoldPool extends Command
      */
     public function getAllMemberGold()
     {
-        return $this->member_model->lockForUpdate()->sum('gold') ?? 0.00;
+        // 用户手中的
+        $member_gold = $this->member_model->lockForUpdate()->sum('gold') ?? 0.00;
+        // 用户挂单暂时扣除的
+        $phone_gold = $this->phone_model->where(['status'=>0,'is_show'=>1])->lockForUpdate()->sum('gold') ?? 0.00;
+        return bcadd($member_gold,$phone_gold,2);
     }
 
     /**
