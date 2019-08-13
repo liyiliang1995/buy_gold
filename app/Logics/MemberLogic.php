@@ -198,6 +198,8 @@ class MemberLogic extends BaseLogic
      */
     public function addAutoGoldMembers(int $id,int $type)
     {
+        if (\Auth::user()->energy == 0 && $type == 1)
+            throw new CzfException("能量值不够无法开启自动领取！");
         $aParam['id'] = $id;
         $aParam['is_auto'] = $type;
         set_receive_gold_member_info($aParam);
