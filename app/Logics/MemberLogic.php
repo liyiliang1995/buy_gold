@@ -189,7 +189,7 @@ class MemberLogic extends BaseLogic
         if (\Auth::user()->status == 0)
             $aParam['status'] = 1;
         $bRes = $this->update(userId(),$aParam);
-        $this->model->addChildUserNum();
+        // $this->model->addChildUserNum();
         return $bRes;
 
     }
