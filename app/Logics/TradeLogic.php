@@ -162,11 +162,13 @@ class TradeLogic extends BaseLogic
      */
     public function freezeSeller()
     {
-        redis_sadd(config("czf.redis_key.set1"),userId());
-        //出售金币的状态 为冻结
-        \Auth::user()->time += 1;
-        \Auth::user()->status = 2;
-        \Auth::user()->save();
+        if (\Auth::user()->is_admin == 0) {
+            redis_sadd(config("czf.redis_key.set1"), userId());
+            //出售金币的状态 为冻结
+            \Auth::user()->time += 1;
+            \Auth::user()->status = 2;
+            \Auth::user()->save();
+        }
     }
 
 
@@ -261,7 +263,7 @@ class TradeLogic extends BaseLogic
     public function releaseLock(array $aParams)
     {
         $oMemberMolde = new Member;
-        $aData = $oMemberMolde->whereIn('id',$aParams)->get();
+        $aData = $oMemberMolde->where('is_admin',0)->whereIn('id',$aParams)->get();
         if ($aData) {
             foreach ($aData as $item) {
                 // 解冻-1
