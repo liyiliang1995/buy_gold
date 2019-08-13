@@ -225,6 +225,7 @@ class MemberController extends Controller
         // 900积分
         $aParams['integral'] = 900;
         $this->Logic($member)->IntegralToGold($aParams);
+        return $this->success("积分兑换成功");
     }
 
     /**

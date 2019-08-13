@@ -273,9 +273,8 @@ class BaseLogic {
      * 13 购物消耗金币流向股东
      * 14 15天未登录流向金币池
      * 15 积分兑换扣除金币
-     * 16 积分兑换增加积分
-     * 17 积分兑换流向金币池
-     * 16 积分兑换流向股东
+     * 16 积分兑换金币流向金币池
+     * 17 积分兑换金币流向股东
      * @param int $iUserId
      * @param float $fGold
      * @return object
@@ -295,7 +294,7 @@ class BaseLogic {
         return $this->getCreateDetailFlow($flow_id,1);
     }
     /**
-     * @param int $iType 业务类型 1消费获得 2 出售金币消耗
+     * @param int $iType 业务类型 1消费获得 2 出售金币消耗 3 金币兑换获得积分
      * @param int $iUserId
      * @param int $iIntegral 积分值
      * @param string $sOther

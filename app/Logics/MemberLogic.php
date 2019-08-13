@@ -20,6 +20,10 @@ class MemberLogic extends BaseLogic
      * @var
      */
     protected $agentRegisterGold;
+    /**
+     * @var
+     */
+    protected $in_tmp_pool;
 
     /**
      * @param array $aParam
@@ -391,6 +395,7 @@ class MemberLogic extends BaseLogic
         $this->IntegralToGoldValidate();
         DB::transaction(function () use ($aParams){
             $this->IntegralToGoldFlow($aParams);
+            $this->IntegralToGoldIncreaseAndDecrease($aParams);
         });
     }
 
@@ -413,17 +418,65 @@ class MemberLogic extends BaseLogic
      */
     public function IntegralToGoldFlow(array $aParams)
     {
-        $this->getBuyGoldGoldFlowDetail(0,15,userId(),$aParams['gold'],"金币兑换积分");
+        $this->getBuyGoldGoldFlowDetail(0,15,userId(),$aParams['gold'],"积分兑换扣除金币");
+        $this->getBuyGoldIntegralFlowDetail(3,userId(),$aParams['integral'],"金币兑换获得积分");
+        $this->stockholderShareGold($aParams);
 
     }
 
     /**
      * @param array $aParams
+     * @see 股东分成
      */
-    public function IntegralBaseflow(array $aParams)
+    public function stockholderShareGold(array $aParams)
     {
+        $aStockholder = $this->model->where('is_admin' ,1)->where('rate','>',0)->get();
 
+        $this->in_tmp_pool = $in_tmp_pool = $aParams['gold'];
+        // 是否分配了股东分成
+        if(count($aStockholder) > 0) {
+            foreach ($aStockholder as $item) {
+                $fStockholderGold  = $this->getGoldByRate($item->rate,$in_tmp_pool);
+                $in_tmp_pool -= $fStockholderGold;
+                // 股东增加金币
+                $item->increment('gold',$fStockholderGold);
+                // 股东奖励
+                $this->getBuyGoldGoldFlowDetail(1,17,$item['id'],$fStockholderGold,"积分兑换金币流向股东");
+            }
+            // 购物金币流向金币池 0代表系统 这个操作归属用户为系统
+            $this->getBuyGoldGoldFlowDetail(1,16,0,$in_tmp_pool,"金币兑换积分金币流向金币池");
+        }
+        // 没有股东金币全部流入币池
+        else {
+            // 购物金币流向金币池 0代表系统 这个操作归属用户为系统
+            $this->getBuyGoldGoldFlowDetail(1,16,0,$in_tmp_pool,"金币兑换积分金币流向金币池");
+        }
     }
+
+    /**
+     * @param float $fRate
+     * @param float $fGold
+     * @return float
+     * @see 股东分成比列计算
+     */
+    public function getGoldByRate(float $fRate,float $fGold):float
+    {
+        $fTrueRate = bcmul(config('czf.stockholders_rate2'),$fRate,2);
+        $fTmp = bcmul($fGold,$fTrueRate,2);
+        $fStockholderGold = bcdiv($fTmp,100,2);
+        return $fStockholderGold ?? 0.00;
+    }
+
+    /**
+     * @param array $aParams
+     */
+    public function IntegralToGoldIncreaseAndDecrease(array $aParams)
+    {
+        \Auth::user()->decrement('gold',$aParams['gold']);
+        \Auth::user()->increment('integral',$aParams['integral']);
+        set_gold_pool($this->in_tmp_pool);
+    }
+
 
 
 

@@ -354,9 +354,7 @@
                         return;
                     },
                     success: function (result) {
-                        if (result.code != 200){
-                            $.toast(result.message, "forbidden");
-                        }
+                        $.toast(result.message,'text');
                         console.log(result);
                     }
                 });

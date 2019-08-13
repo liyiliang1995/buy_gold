@@ -144,9 +144,11 @@ class EveryDayGoldPool extends Command
         $sNum = $this->getReturnShopGoldNum();
         // 充值扣除返回金币池
         $rNum = $this->getRechargeNum(10);
+        // 积分兑换返回金币池
+        $iNum = $this->getReturnIntegralToGold();
         // 15天没有登陆返回
         $nNum = $this->getReturnNotLoginGoldNum();
-        return bcadd(bcadd($bNum,$sNum,5),bcadd($rNum,$nNum,5),2);
+        return bcadd(bcadd($bNum,$sNum,5),bcadd(bcadd($rNum,$nNum,5),$iNum,5),2);
     }
 
     public function goldPullInUpdate()
@@ -155,6 +157,7 @@ class EveryDayGoldPool extends Command
         $this->model->where(['is_statistical' => 0,'type'=>12])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>10])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>14])->update(['is_statistical'=>1]);
+        $this->model->where(['is_statistical' => 0,'type'=>16])->update(['is_statistical'=>1]);
     }
 
     /**
@@ -174,6 +177,15 @@ class EveryDayGoldPool extends Command
     public function getReturnShopGoldNum():float
     {
         return $this->model->where(['is_statistical' => 0,'type'=>12])->lockForUpdate()->sum('gold') ?? 0.00;
+    }
+
+    /**
+     * @return float
+     * @see 积分兑换返回
+     */
+    public function getReturnIntegralToGold():float
+    {
+        return $this->model->where(['is_statistical' => 0,'type'=>16])->lockForUpdate()->sum('gold') ?? 0.00;
     }
 
     /**
