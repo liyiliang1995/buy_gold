@@ -169,7 +169,11 @@ class TradeController extends Controller
         $aParams['_sort']   = "id,desc";
         $aParams['user_id'] = userId();
         $aParams['type']    = $iType;
-        $aData              = $this->Logic($integralFlow)->query($aParams)->toArray();
+        if ($iType == 1) {
+            $aData = $integralFlow->where('user_id',userId())->whereIn("type",[1,3])->orderBy('id','desc')->paginate(10)->toArray();
+        } else {
+            $aData = $integralFlow->where('user_id',userId())->where('type',$iType)->orderBy('id','desc')->paginate(10)->toArray();
+        }
         if ($aData) {
             return $this->success("请求成功", $aData);
         } else {
