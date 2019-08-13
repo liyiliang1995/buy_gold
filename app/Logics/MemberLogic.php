@@ -130,8 +130,8 @@ class MemberLogic extends BaseLogic
             throw new \Exception('请勿恶意提交订单，过2秒钟在尝试！');
         if (!is_numeric($aParam['gold']))
             throw new \Exception('充值金额必须是一个数字！');
-        if ($aParam['gold'] > 10000 || $aParam['gold'] <-10000)
-            throw new \Exception('一次充值金额数量不能超过10000！');
+//        if ($aParam['gold'] > 10000 || $aParam['gold'] <-10000)
+//            throw new \Exception('一次充值金额数量不能超过10000！');
     }
 
     /**

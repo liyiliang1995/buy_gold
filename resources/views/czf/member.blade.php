@@ -108,7 +108,7 @@
             <p>当前金币总数：2000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
-                                                                id="next_time_f"></p>
+                                                   id="next_time_f"></p>
 
         </div>
         <div class="weui-col-50" id="user_but">
@@ -122,7 +122,7 @@
                     <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" checked>
                     @else
                         <div id="check_a">
-                            <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
+                            <a href="javascript:;" onclick="draw()" class="weui-btn weui-btn_plain-primary">手动领取</a>
                         </div>
                         <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                             <p>自动领取</p>
@@ -263,18 +263,15 @@
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res - 1;
-
                 if (resa == 0) {
                     setInterval(function () {
                         window.location.reload();
                     }, 1000);
-
                 }
                 var ssss = formatSeconds(resa);
                 document.getElementById("next_time").innerHTML = ssss;
                 document.getElementById("next_time_f").value = resa;
             }
-
             setInterval(function () {
                 set_time();
             }, 1000);
@@ -320,7 +317,7 @@
                 document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
             } else {
                 var url = "{{route('add_auto_gold',['type'=>0])}}";
-                document.getElementById('check_a').innerHTML = "<a  id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
+                document.getElementById('check_a').innerHTML = "<a href='javascript:;' onclick='draw()' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
             }
             $.ajax({
                 url: url,
@@ -342,7 +339,7 @@
             });
         }
 
-        $("#submit").bind("click", function () {
+        function draw() {
             var url = "{{route('manual_give_gold')}}";
             $.ajax({
                 url: url,
@@ -356,7 +353,7 @@
                     if (result.code == 200) {
                         $.toast("领取成功");
                         setInterval(function () {
-                            set_time();
+                            window.location.reload();
                         }, 1000);
                     } else {
                         $.toast(result.message, "forbidden");
@@ -364,7 +361,8 @@
                     console.log(result);
                 }
             });
-        });
+        }
+
 
         $(function () {
             $("#integral_to_gold").on('click', function () {
