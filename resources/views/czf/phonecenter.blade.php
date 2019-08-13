@@ -11,10 +11,7 @@
 
     ],
 'script'=> [
-    '$("#job").select({
-        title: "选择充值金额",
-        items: ["100", "200", "300", "500"]
-    });',
+
     ],
 ])
 @section('content')
@@ -107,23 +104,15 @@
     <div class="weui-cells weui-cells_form" style="margin-top: 0;padding-top: 15px;">
         <form action="{{ route('buy_gold')}}" method="post" id="submit_buy">
             <div class="radio_style">
-                <label><input name="gold" type="radio" value="100" checked/><span></span><span></span>100元 </label>
-                <label><input name="gold" type="radio" value="200"/><span></span><span></span> 200元 </label>
-                <label><input name="gold" type="radio" value="300"/><span></span><span></span>300元 </label>
-                <label><input name="gold" type="radio" value="500"/><span></span><span></span>500元 </label>
+                <label><input name="money" type="radio" value="100" checked/><span></span><span></span>100元 </label>
+                <label><input name="money" type="radio" value="200"/><span></span><span></span> 200元 </label>
+                <label><input name="money" type="radio" value="300"/><span></span><span></span>300元 </label>
+                <label><input name="money" type="radio" value="500"/><span></span><span></span>500元 </label>
             </div>
-
-            {{--<div class="weui-cell">--}}
-                {{--<div class="weui-cell__hd"><label for="name" class="weui-label"--}}
-                                                  {{--style="    width: 100%;">选择充值金额</label></div>--}}
-                {{--<div class="weui-cell__bd">--}}
-                    {{--<i class="weui-icon-success" style="position: absolute;"></i> <input class="weui-input" name="gold" id="job" type="text" value="100" style="text-align: right;color: red;">--}}
-                {{--</div>--}}
-            {{--</div>--}}
         </form>
     </div>
     <div class="weui-flex" style="padding: 15px;background: #fff;padding-bottom: 0;">
-        <div class="weui-flex__item">需支付金币：<B>240</B>(价值￥120)</div>
+        <div class="weui-flex__item">需支付金币：<B id="sum_pre">0</B></div>
     </div>
     <div class="weui-flex" style="padding: 30px;background: #fff;">
         <div class="weui-flex__item"><a href="javascript:;" id="submit" class="weui-btn weui-btn_primary"
@@ -141,27 +130,20 @@
         <div class="weui-flex__item">100</div>
         <div class="weui-flex__item">240</div>
         <div class="weui-flex__item">
-            <a href="javascript:void(0)" class="weui-btn weui-btn_primary"
+            <a href="{{route('phone_details')}}" class="weui-btn weui-btn_primary"
                style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
         </div>
     </div>
-    <div class="weui-flex" id="trading_list">
-        <div class="weui-flex__item">100</div>
-        <div class="weui-flex__item">240</div>
-        <div class="weui-flex__item">
-            <a href="javascript:void(0)" class="weui-btn weui-btn_primary"
-               style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
-        </div>
-    </div>
-    <div class="weui-flex" id="trading_list">
-        <div class="weui-flex__item">100</div>
-        <div class="weui-flex__item">240</div>
-        <div class="weui-flex__item">
-            <a href="javascript:void(0)" class="weui-btn weui-btn_primary"
-               style="margin-top:5px; width: 60px; height: 30px;padding: 0 10px;font-size: 12px;">抢单</a>
-        </div>
-    </div>
-    </body>
 
+
+    </body>
+    <script>
+        $(document).ready(function(){
+            $('input:radio').click(function () {
+                var pre = $('input[name="money"]:checked').val();
+                document.getElementById('sum_pre').innerHTML = pre;
+            });
+        });
+    </script>
 
 @endsection

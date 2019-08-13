@@ -4,7 +4,8 @@
         'css/weui.min.css',
         'css/jquery-weui.min.css',
         'css/swiper.min.css',
-        'css/style.css'
+        'css/style.css',
+        'css/demos.css'
     ],
 'js' => [
         'js/jquery-weui.min.js',
@@ -83,7 +84,7 @@
 
         <div class="weui-tabbar" id="goods_detail_but">
             <a href="{{route('confirmOrder',['goodsId'=>$oGoods->id])}}" class="weui-btn">
-                提交订单
+                立即购买
             </a>
         </div>
     </div>

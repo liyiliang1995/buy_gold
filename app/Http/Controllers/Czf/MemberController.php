@@ -31,11 +31,12 @@ class MemberController extends Controller
     public function memberIndex()
     {
         $gold_pool = \Auth::user()->gold_pool;
+        $aConfig = getConfigByType(1);
         $member = \Auth::guard()->user();
         $is_auto = \Auth::user()->is_auto;
         $gold_num = $this->Logic($member)->getNextGoldAttribute();
         $gold_time = $this->Logic($member)->getNextAutoGoldTimeAttribute();
-        return view('czf.member', compact('member','gold_pool','is_auto','gold_num','gold_time'));
+        return view('czf.member', compact('member','gold_pool','is_auto','gold_num','gold_time','aConfig'));
     }
 
     public function getAutoGold(Member $member){

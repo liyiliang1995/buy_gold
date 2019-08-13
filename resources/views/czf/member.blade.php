@@ -311,7 +311,7 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="tel:">
+        <a class="weui-cell weui-cell_access" href="tel:{{$aConfig['kefu'] ?? ''}}">
             <div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>
             <div class="weui-cell__bd">
                 <p>联系客服</p>
