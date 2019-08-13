@@ -13,7 +13,7 @@
 ])
 @section('content')
     <style>
-        .weui-btn_plain-primary{
+        .weui-btn_plain-primary {
             color: #07C160;
             border: 1px solid #07C160;
             height: 40px;
@@ -21,40 +21,51 @@
             font-size: 14px;
 
         }
-        .weui-cell__bd p{
+
+        .weui-cell__bd p {
             font-size: 14px;
             color: #666;
         }
-        .weui-cell__hd i{
+
+        .weui-cell__hd i {
             padding: 10px;
             color: #666;
         }
-        #member_but p{
+
+        #member_but p {
             color: red;
         }
-        #member_but i{
+
+        #member_but i {
             color: red;
         }
-        #user_gold{
+
+        #user_gold {
             width: 60%;
         }
-        #user_but{
+
+        #user_but {
             width: 40%;
         }
-        .weui-cell{
+
+        .weui-cell {
             padding: 10px !important;
         }
-        .user_num{
+
+        .user_num {
             font-size: 16px;
             font-weight: bold;
         }
-        .weui-cells{
+
+        .weui-cells {
             margin-top: 10px !important;
         }
-        .weui-row{
+
+        .weui-row {
             padding: 10px 15px;
         }
-        .weui-cell_access .weui-cell__ft:after{
+
+        .weui-cell_access .weui-cell__ft:after {
             border-color: #666 !important;
         }
     </style>
@@ -76,15 +87,19 @@
         </div>
 
         <div class="weui-flex" id="user_value">
-            <div class="weui-flex__item"><a href="{{route('gold_record')}}"><p class="user_num">{{$member->gold}}</p>
-                <p>金币</p></a></div>
-            <div class="weui-flex__item"><a href="{{route('integral_record')}}"><p class="user_num">{{$member->integral}}</p>
-                <p>积分</p></a></div>
-            <div class="weui-flex__item"><a href="{{route('energy_record')}}"><p class="user_num">{{$member->energy}}</p>
-                <p>能量</p></a></div>
+            <div class="weui-flex__item"><a href="{{route('gold_record')}}"><p class="user_num"
+                                                                               id="gold_num">{{$member->gold}}</p>
+                    <p>金币</p></a></div>
+            <div class="weui-flex__item"><a href="{{route('integral_record')}}"><p
+                        class="user_num">{{$member->integral}}</p>
+                    <p>积分</p></a></div>
+            <div class="weui-flex__item"><a href="{{route('energy_record')}}"><p
+                        class="user_num">{{$member->energy}}</p>
+                    <p>能量</p></a></div>
         </div>
         <div class="weui-flex" id="user_dh">
-            <div class="weui-flex__item"><a href="javascript:;" id="integral_to_gold" class="weui-btn weui-btn_primary">100金币兑换900积分</a></div>
+            <div class="weui-flex__item"><a href="javascript:;" id="integral_to_gold" class="weui-btn weui-btn_primary">100金币兑换900积分</a>
+            </div>
         </div>
     </div>
 
@@ -92,29 +107,30 @@
         <div class="weui-col-50" id="user_gold">
             <p>当前金币总数：2000000000</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
-            <p>距下次领取：<b id="next_time">{{$gold_time}}</b><input type="text" style="display: none" value="{{$gold_time}}" id="next_time_f"></p>
+            <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
+                                                                id="next_time_f"></p>
 
         </div>
         <div class="weui-col-50" id="user_but">
 
-                @if($is_auto == 1)
+            @if($is_auto == 1)
                 <div id="check_a">
                     <a class="weui-btn weui-btn_plain-primary" style="color: #666;border: 1px solid #666;">自动领取中</a>
                 </div>
                 <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                     <p>自动领取</p>
-                    <input class="weui-switch" type="checkbox"  onclick="checkboxOnclick(this)" checked>
+                    <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" checked>
                     @else
                         <div id="check_a">
-                        <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
+                            <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
                         </div>
                         <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                             <p>自动领取</p>
-                    <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" >
-                @endif
-            </div>
+                            <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)">
+                            @endif
+                        </div>
+                </div>
         </div>
-    </div>
     </div>
 
     <div class="weui-cells">
@@ -243,77 +259,81 @@
 
     </body>
     <script>
-        $(function(){
+        $(function () {
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
-                var resa = res-1;
-                if (resa == 0){
-                    window.location.reload();
+                var resa = res - 1;
+
+                if (resa == 0) {
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 1000);
+
                 }
                 var ssss = formatSeconds(resa);
                 document.getElementById("next_time").innerHTML = ssss;
                 document.getElementById("next_time_f").value = resa;
             }
-            setInterval (function ()
-            {
+
+            setInterval(function () {
                 set_time();
             }, 1000);
         });
+
         function formatSeconds(value) {
             var theTime = parseInt(value);// 需要转换的时间秒
             var theTime1 = 0;// 分
             var theTime2 = 0;// 小时
             var theTime3 = 0;// 天
-            if(theTime > 60) {
-                theTime1 = parseInt(theTime/60);
-                theTime = parseInt(theTime%60);
-                if(theTime1 > 60) {
-                    theTime2 = parseInt(theTime1/60);
-                    theTime1 = parseInt(theTime1%60);
-                    if(theTime2 > 24){
+            if (theTime > 60) {
+                theTime1 = parseInt(theTime / 60);
+                theTime = parseInt(theTime % 60);
+                if (theTime1 > 60) {
+                    theTime2 = parseInt(theTime1 / 60);
+                    theTime1 = parseInt(theTime1 % 60);
+                    if (theTime2 > 24) {
                         //大于24小时
-                        theTime3 = parseInt(theTime2/24);
-                        theTime2 = parseInt(theTime2%24);
+                        theTime3 = parseInt(theTime2 / 24);
+                        theTime2 = parseInt(theTime2 % 24);
                     }
                 }
             }
             var result = '';
-            if(theTime > 0){
-                result = ""+parseInt(theTime)+"秒";
+            if (theTime > 0) {
+                result = "" + parseInt(theTime) + "秒";
             }
-            if(theTime1 > 0) {
-                result = ""+parseInt(theTime1)+"分"+result;
+            if (theTime1 > 0) {
+                result = "" + parseInt(theTime1) + "分" + result;
             }
-            if(theTime2 > 0) {
-                result = ""+parseInt(theTime2)+"小时"+result;
+            if (theTime2 > 0) {
+                result = "" + parseInt(theTime2) + "小时" + result;
             }
-            if(theTime3 > 0) {
-                result = ""+parseInt(theTime3)+"天"+result;
+            if (theTime3 > 0) {
+                result = "" + parseInt(theTime3) + "天" + result;
             }
             return result;
         }
 
         function checkboxOnclick(checkbox) {
-            if ( checkbox.checked == true){
+            if (checkbox.checked == true) {
                 var url = "{{route('add_auto_gold',['type'=>1])}}";
                 document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
-            }else{
+            } else {
                 var url = "{{route('add_auto_gold',['type'=>0])}}";
-                document.getElementById('check_a').innerHTML = "<a href='javascript:;' id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
+                document.getElementById('check_a').innerHTML = "<a  id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
             }
             $.ajax({
                 url: url,
                 type: 'get',
                 dataType: "json",
                 error: function (data) {
-                    $.toast("服务器繁忙, 请联系管理员！",'text');
+                    $.toast("服务器繁忙, 请联系管理员！", 'text');
                     return;
                 },
                 success: function (result) {
                     if (result.code != 200) {
                         $.toast(result.message, "forbidden");
-                        setInterval (function ()
-                        {
+                        setInterval(function () {
                             window.location.reload();
                         }, 1000);
 
@@ -322,24 +342,23 @@
             });
         }
 
-        $("#submit").bind("click",function () {
+        $("#submit").bind("click", function () {
             var url = "{{route('manual_give_gold')}}";
             $.ajax({
                 url: url,
                 type: "get",
                 dataType: "json",
                 error: function (data) {
-                    $.toast("服务器繁忙, 请联系管理员！","text");
+                    $.toast("服务器繁忙, 请联系管理员！", "text");
                     return;
                 },
                 success: function (result) {
-                    if (result.code == 200){
+                    if (result.code == 200) {
                         $.toast("领取成功");
-                        setInterval (function ()
-                        {
+                        setInterval(function () {
                             set_time();
                         }, 1000);
-                    }else{
+                    } else {
                         $.toast(result.message, "forbidden");
                     }
                     console.log(result);
@@ -347,20 +366,20 @@
             });
         });
 
-        $(function(){
-            $("#integral_to_gold").on('click',function () {
+        $(function () {
+            $("#integral_to_gold").on('click', function () {
                 var url = "{{route('integral_to_gold')}}";
                 $.ajax({
                     url: url,
                     type: "get",
                     dataType: "json",
                     error: function (data) {
-                        $.toast("服务器繁忙, 请联系管理员！","text");
+                        $.toast("服务器繁忙, 请联系管理员！", "text");
                         return;
                     },
                     success: function (result) {
-                        $.toast(result.message,'text');
-                        console.log(result);
+                        $.toast(result.message, 'text');
+                        window.location.reload();
                     }
                 });
             })
