@@ -158,7 +158,7 @@
             show_price:function () {
                 var price = this.intToFloat(parseFloat(this.goods_unit_price) * parseFloat(this.goods_num));
                 var gold = this.intToFloat(parseFloat(price)/parseFloat(this.gold_price));
-                var burn_gold = this.intToFloat(parseFloat(gold)*0.04) + this.intToFloat(parseFloat(gold)*0.01);
+                var burn_gold = this.intToFloat(parseFloat(this.intToFloat(parseFloat(gold)*0.04)) + parseFloat(this.intToFloat(parseFloat(gold)*0.01)));
                 var sum_gold = this.intToFloat(parseFloat(gold)+parseFloat(burn_gold));
                 $("#show_price").empty().html("合计:<span>"+price+"元</span>("+sum_gold+")金币");
             },
