@@ -4,7 +4,8 @@
         'css/weui.min.css',
         'css/jquery-weui.min.css',
         'css/swiper.min.css',
-        'css/style.css'
+        'css/style.css',
+        'css/demos.css'
     ],
 'js' => [
         'js/jquery-weui.min.js',
@@ -55,7 +56,7 @@
         <div class="weui-flex__item">订单提交</div>
     </div>
 
-    <div class="weui-panel order-address">
+    <div class="weui-panel order-address" style="margin-top: 0;">
         <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">
                 <div class="weui-cells">

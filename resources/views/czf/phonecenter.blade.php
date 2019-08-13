@@ -134,22 +134,8 @@
                style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
         </div>
     </div>
-    <div class="weui-flex" id="trading_list">
-        <div class="weui-flex__item">100</div>
-        <div class="weui-flex__item">240</div>
-        <div class="weui-flex__item">
-            <a href="javascript:void(0)" class="weui-btn weui-btn_primary"
-               style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
-        </div>
-    </div>
-    <div class="weui-flex" id="trading_list">
-        <div class="weui-flex__item">100</div>
-        <div class="weui-flex__item">240</div>
-        <div class="weui-flex__item">
-            <a href="javascript:void(0)" class="weui-btn weui-btn_primary"
-               style="margin-top:5px; width: 60px; height: 30px;padding: 0 10px;font-size: 12px;">抢单</a>
-        </div>
-    </div>
+
+
     </body>
     <script>
         $(document).ready(function(){
