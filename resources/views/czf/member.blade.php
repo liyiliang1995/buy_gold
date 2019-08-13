@@ -122,7 +122,7 @@
                     <input class="weui-switch" type="checkbox" onclick="checkboxOnclick(this)" checked>
                     @else
                         <div id="check_a">
-                            <a href="javascript:;" id="submit" class="weui-btn weui-btn_plain-primary">手动领取</a>
+                            <a href="javascript:;" onclick="draw()" class="weui-btn weui-btn_plain-primary">手动领取</a>
                         </div>
                         <div class="weui-cell__ft" style="margin-top: 20px;  font-size: 14px;  font-weight: bold;">
                             <p>自动领取</p>
@@ -320,7 +320,7 @@
                 document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
             } else {
                 var url = "{{route('add_auto_gold',['type'=>0])}}";
-                document.getElementById('check_a').innerHTML = "<a  id='submit' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
+                document.getElementById('check_a').innerHTML = "<a href='javascript:;' onclick='draw()' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
             }
             $.ajax({
                 url: url,
@@ -341,30 +341,30 @@
                 }
             });
         }
+       function draw() {
+           var url = "{{route('manual_give_gold')}}";
+           $.ajax({
+               url: url,
+               type: "get",
+               dataType: "json",
+               error: function (data) {
+                   $.toast("服务器繁忙, 请联系管理员！", "text");
+                   return;
+               },
+               success: function (result) {
+                   if (result.code == 200) {
+                       $.toast("领取成功");
+                       setInterval(function () {
+                           window.location.reload();
+                       }, 1000);
+                   } else {
+                       $.toast(result.message, "forbidden");
+                   }
+                   console.log(result);
+               }
+           });
+       }
 
-        $("#submit").bind("click", function () {
-            var url = "{{route('manual_give_gold')}}";
-            $.ajax({
-                url: url,
-                type: "get",
-                dataType: "json",
-                error: function (data) {
-                    $.toast("服务器繁忙, 请联系管理员！", "text");
-                    return;
-                },
-                success: function (result) {
-                    if (result.code == 200) {
-                        $.toast("领取成功");
-                        setInterval(function () {
-                            set_time();
-                        }, 1000);
-                    } else {
-                        $.toast(result.message, "forbidden");
-                    }
-                    console.log(result);
-                }
-            });
-        });
 
         $(function () {
             $("#integral_to_gold").on('click', function () {
