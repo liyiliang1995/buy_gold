@@ -408,7 +408,7 @@ class MemberLogic extends BaseLogic
         if (redis_idempotent('',['IntegralToGold']) === false)
             throw new CzfException("操作过于频繁！");
         if (redis_sismember(config('czf.redis_key.set1'),userId()))
-            throw new CzfException("用户当前处于冻结状态，请完成交易在来兑换！");
+            throw new CzfException("用户当前处于冻结状态，无法兑换积分！");
         if (\Auth::user()->gold < 200)
             throw new CzfException("持有金币数量低于200不能兑换积分！");
     }
