@@ -31,18 +31,19 @@ class MemberController extends Controller
     public function memberIndex()
     {
         $gold_pool = \Auth::user()->gold_pool;
-        $aConfig = getConfigByType(1);
-        $member = \Auth::guard()->user();
-        $is_auto = \Auth::user()->is_auto;
-        $gold_num = $this->Logic($member)->getNextGoldAttribute();
+        $aConfig   = getConfigByType(1);
+        $member    = \Auth::guard()->user();
+        $is_auto   = \Auth::user()->is_auto;
+        $gold_num  = $this->Logic($member)->getNextGoldAttribute();
         $gold_time = $this->Logic($member)->getNextAutoGoldTimeAttribute();
-        return view('czf.member', compact('member','gold_pool','is_auto','gold_num','gold_time','aConfig'));
+        return view('czf.member', compact('member', 'gold_pool', 'is_auto', 'gold_num', 'gold_time', 'aConfig'));
     }
 
-    public function getAutoGold(Member $member){
+    public function getAutoGold(Member $member)
+    {
 
         $gold_time = $this->Logic($member)->getNextAutoGoldTimeAttribute();
-        if ($gold_time){
+        if ($gold_time) {
             return $gold_time;
         }
     }
@@ -104,7 +105,7 @@ class MemberController extends Controller
     {
         $oPartner = $member->where('parent_user_id', userId())->orderBy('id', 'desc')->get();
         $dSum     = array_sum(array_column($oPartner->toArray(), 'gold'));
-        $dSum     = bcadd($dSum,0,2);
+        $dSum     = bcadd($dSum, 0, 2);
         return view('czf.partner', compact('oPartner', 'dSum'));
     }
 
@@ -117,8 +118,8 @@ class MemberController extends Controller
         $aParam['user_id']  = userId();
         $aParam['phone']    = $request->post('phone');
         $aParam['password'] = $request->post('password');
-        $aParam['name'] = $request->post('name');
-        $aParam['code'] = $request->post('code');
+        $aParam['name']     = $request->post('name');
+        $aParam['code']     = $request->post('code');
         if ($this->Logic($agentRegister)->agentRegisterLogic($aParam)) {
             return $this->success('注册成功');
         } else {
@@ -145,7 +146,7 @@ class MemberController extends Controller
     {
         $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
 
-        return view('czf.notification',compact('newslist'));
+        return view('czf.notification', compact('newslist'));
     }
 
     /**
@@ -182,6 +183,16 @@ class MemberController extends Controller
     }
 
     /**
+     * @param int $id
+     * @see 手机充值订单
+     */
+    public function phoneSell(int $id)
+    {
+        return view('czf.phonesell');
+    }
+
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值详情
      */
@@ -194,10 +205,10 @@ class MemberController extends Controller
      * @param $type 1 开启 0关闭
      * @see 加入自动领取金币
      */
-    public function addAutoGoldMembers(int $type,Member $member)
+    public function addAutoGoldMembers(int $type, Member $member)
     {
         $id = userId();
-        if (in_array($type,[0,1])) {
+        if (in_array($type, [0, 1])) {
             $this->Logic($member)->addAutoGoldMembers($id, $type);
             return $this->success();
         } else {

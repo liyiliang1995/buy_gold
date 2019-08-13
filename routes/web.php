@@ -52,6 +52,7 @@ Route::group([],function($router){
         $router->get('manual/give_gold','MemberController@manualGiveGold')->name('manual_give_gold');
         $router->get('phone_center','MemberController@phoneCenter')->name('phone_center');
         $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
+        $router->get('phone_sell/{id}','MemberController@phoneSell')->name('phone_sell');
         $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
         $router->get('ajax/integral_to_gold','MemberController@ajaxIntegralToGold')->name('integral_to_gold');
         $router->get('add/auto_gold/{type}','MemberController@addAutoGoldMembers')->name('add_auto_gold');

@@ -130,7 +130,7 @@
         <div class="weui-flex__item">100</div>
         <div class="weui-flex__item">240</div>
         <div class="weui-flex__item">
-            <a href="{{route('phone_details')}}" class="weui-btn weui-btn_primary"
+            <a href="{{route('phone_sell',['id'=>1])}}" class="weui-btn weui-btn_primary"
                style="margin-top:5px; width: 60px; height: 30px;  padding: 0 10px;font-size: 12px;">抢单</a>
         </div>
     </div>

@@ -115,7 +115,7 @@
                                 html +='<div class="weui-flex__item">充值金额</div>';
                                 html +='<div class="weui-flex__item" style="text-align: right">'+val.gold+'</div></div>';
                                 html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
-                                html +='<div class="weui-flex__item">支付金币</div>';
+                                html +='<div class="weui-flex__item">金币总数</div>';
                                 html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
                                 html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
                                 html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
