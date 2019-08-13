@@ -571,6 +571,7 @@ if (!function_exists('compute_autogold')) {
 
     function compute_autogold(float $fSumGold,float $fSelfGold):float
     {
+        $fSumGold = bcsub($fSumGold,$fSelfGold,2);
         // $sum < 1000 领取千分之一
         if ($fSumGold < 1000)
             $rate = 0.0010;
