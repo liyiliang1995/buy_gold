@@ -67,8 +67,8 @@ class MemberLogic extends BaseLogic
             throw new CzfException("注册真实姓名不能为空！");
         if ($this->model->checkPwd($aParam['password']) === false)
             throw new CzfException("请输入不小于6个字符的密码！");
-//        if (false == comparisonCode( $aParam['code'],$aParam['phone']))
-//            throw new CzfException("手机验证码不正确！");
+        if (false == comparisonCode( $aParam['code'],$aParam['phone']))
+            throw new CzfException("手机验证码不正确！");
         if ($this->model->checkPhoneOnly($aParam['phone']) || $this->member->isExistsPhone($aParam['phone']))
             throw new CzfException("注册手机号码已经存在！");
         if (\Auth::user()->gold < $this->agentRegisterGold)
@@ -189,7 +189,7 @@ class MemberLogic extends BaseLogic
         if (\Auth::user()->status == 0)
             $aParam['status'] = 1;
         $bRes = $this->update(userId(),$aParam);
-        $this->model->addChildUserNum();
+        // $this->model->addChildUserNum();
         return $bRes;
 
     }
