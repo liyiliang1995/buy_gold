@@ -120,12 +120,14 @@ class MemberCheck extends Command
         $order = $this->getNotReceiptBuyGold();
         if ($order) {
             foreach ($order as $item) {
-                // 增加到领取金币锁定用户
-                redis_sadd(config("czf.redis_key.set1"),$item->seller->parent_user_id);
-                redis_sadd(config("czf.redis_key.set1"),$item->member->parent_user_id);
-                // 自身状态改变
-                $this->member_model->where('id',$item->seller->parent_user_id)->increment('time',1,['status'=>4]);
-                $this->member_model->where('id',$item->member->parent_user_id)->increment('time',1,['status'=>4]);
+                if ($item->is_admin == 0) {
+                    // 增加到领取金币锁定用户
+                    redis_sadd(config("czf.redis_key.set1"), $item->seller->parent_user_id);
+                    redis_sadd(config("czf.redis_key.set1"), $item->member->parent_user_id);
+                    // 自身状态改变
+                    $this->member_model->where('id', $item->seller->parent_user_id)->increment('time', 1, ['status' => 4]);
+                    $this->member_model->where('id', $item->member->parent_user_id)->increment('time', 1, ['status' => 4]);
+                }
             }
         }
     }
