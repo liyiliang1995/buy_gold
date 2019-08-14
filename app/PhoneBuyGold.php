@@ -18,11 +18,15 @@ class PhoneBuyGold extends Model
     /**
      * @var array
      */
-    protected $and_fields = ['user_id','seller_id'];
+    protected $and_fields = ['user_id','seller_id','status','is_show'];
     /**
      * @var array
      */
     protected $parent_flag = ['status' => 0, 'is_show' => 1];
+    /**
+     * @var array
+     */
+    protected $appends = ["phone_buy_gold_status",'give_status'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -63,6 +67,42 @@ class PhoneBuyGold extends Model
     public function getNotclinchGold():float
     {
         return $this->where('status',0)->where('is_show',1)->sum('gold') ?? 0.00;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAndFieds():array
+    {
+        return $this->and_fields??[];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneBuyGoldStatusAttribute():string
+    {
+        $sRes = '';
+        if ($this->status == 0 && !$this->seller_id)
+            $sRes = "求购中";
+        else if ($this->status == 0 && $this->seller_id)
+            $sRes = "交易中";
+        else if  ($this->status == 1)
+            $sRes = "交易完成";
+        return $sRes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGiveStatusAttribute():string
+    {
+        $sRes = '';
+        if ($this->status == 0)
+            $sRes = "未收款";
+        else if ($this->status == 1)
+            $sRes = '已收款';
+        return $sRes;
     }
 
 
