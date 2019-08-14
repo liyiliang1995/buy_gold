@@ -154,21 +154,7 @@ class TradeLogic extends BaseLogic
             $this->getBuyGoldIntegralFlowDetail(2,userId(),$this->oBuyGoldDetail->consume_integral,"出售金币消耗积分")('App\BuyGoldDetail'),
 
         ]);
-        $this->freezeSeller();
-    }
-
-    /**
-     * @see 冻结卖方
-     */
-    public function freezeSeller()
-    {
-        if (\Auth::user()->is_admin == 0) {
-            redis_sadd(config("czf.redis_key.set1"), userId());
-            //出售金币的状态 为冻结
-            \Auth::user()->time += 1;
-            \Auth::user()->status = 2;
-            \Auth::user()->save();
-        }
+        freeze_member(userId(),2);
     }
 
 
@@ -262,21 +248,9 @@ class TradeLogic extends BaseLogic
      */
     public function releaseLock(array $aParams)
     {
-        $oMemberMolde = new Member;
-        $aData = $oMemberMolde->where('is_admin',0)->whereIn('id',$aParams)->get();
-        if ($aData) {
-            foreach ($aData as $item) {
-                // 解冻-1
-                if ($item->time > 0) {
-                    $item->time -= 1;
-                    // 解冻次数为0 才真正解冻
-                    if ($item->time == 0) {
-                        redis_srem(config("czf.redis_key.set1"),$item->id);
-                        $item->status = 1;
-                    }
-                    $item->save();
-                }
-            }
+        foreach ($aParams as $id) {
+            if ($id)
+                release_lock($id);
         }
     }
 
