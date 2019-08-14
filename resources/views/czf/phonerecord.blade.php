@@ -142,7 +142,7 @@
                                 html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
                                 html += '<div class="weui-flex__item" style="color: red"><a href="' + val.detail_url + '" style="color: #333">查看详情>></a></div>';
                                 html += '<div class="weui-flex__item" style="text-align: right">';
-                                if (val.phone_buy_gold_status == '未收款') {
+                                if (val.phone_buy_gold_status == '交易中') {
                                     html += '<a id="trading_b" href="' + val.confirm_url + '" class="weui-btn weui-btn_primary">充值确认</a>';
                                 }
                                 html += '</div></div></div>';
