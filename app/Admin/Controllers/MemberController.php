@@ -58,7 +58,7 @@ class MemberController extends AdminController
                 return '否';
             }
         });
-        $grid->column('ship_address.ship_address', __('收货地址'));
+//        $grid->column('ship_address.ship_address', __('收货地址'));
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
             $actions->disableDelete();

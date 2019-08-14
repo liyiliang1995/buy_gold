@@ -20,6 +20,7 @@ class Order extends Model
         return $this->belongsTo('App\Member','user_id');
     }
 
+
     /**
      * @return string
      * @see 获取单号

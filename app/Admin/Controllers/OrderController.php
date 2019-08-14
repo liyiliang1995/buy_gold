@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Member;
 use App\Order;
 use App\OrderItem;
 use Encore\Admin\Controllers\AdminController;
@@ -33,7 +34,9 @@ class OrderController extends AdminController
         $grid->column('pay_gold', __('支付金币'));
         $grid->column('amount', __('价值金额'));
         $grid->column('express', __('快递单号'));
-        //$grid->column('deleted_at', __('Deleted at'));
+        $grid->column('ss', __('收货地址'))->display(function (){
+            return $this->member->ship_address->ship_address;
+        });
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         $grid->column('other', __('买家留言'));
@@ -96,7 +99,6 @@ class OrderController extends AdminController
     protected function form()
     {
         $form = new Form(new Order);
-
         $form->text('order_no', __('订单号'))->disable();
        // $form->number('user_id', __('用户id'));
         $form->decimal('pay_gold', __('支付金币'))->default(0.00)->disable();
