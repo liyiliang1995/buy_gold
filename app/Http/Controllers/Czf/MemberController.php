@@ -180,13 +180,14 @@ class MemberController extends Controller
 
     /**
      * @see 手机挂单
+     * @see show 2 抢单 3挂单
      */
     public function phoneBuyGold(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
         $aParams['sum_price'] = request()->post('money');
         $aParams['price'] = $hourAvgPrice->getBestNewAvgPrice();
         if ($this->Logic($phoneBuyGold)->phoneBuyGold($aParams))
-            return redirect(route('phone_center'));
+            return redirect(route('phone_record',['show'=>3]));
         else
             abort(500);
     }
@@ -239,12 +240,13 @@ class MemberController extends Controller
 
     /**
      * @see 抢单
+     * @see show 2 抢单 3挂单
      */
     public function phoneGrabOrder(int $id,PhoneBuyGold $phoneBuyGold)
     {
         if ($this->Logic($phoneBuyGold)->phoneGrabOrder($id))
         {
-            return redirect(route('phone_center'));
+            return redirect(route('phone_record',['show'=>2]));
         } else {
             abort(500);
         }
@@ -302,21 +304,23 @@ class MemberController extends Controller
 
     /**
      * @see 申请撤单
+     * @see show 2 抢单 3挂单
      */
     public function applyCancelOrder(int $id,PhoneBuyGold $phoneBuyGold)
     {
         $this->Logic($phoneBuyGold)->applyCancelOrder($id);
-        return redirect(route('trade_record',['show'=>3]));
+        return redirect(route('phone_record',['show'=>3]));
     }
 
     /**
      * @param int $id
      * @see 确认收款
+     * @see show 2 抢单 3挂单
      */
     public function confirmOrder(int $id,PhoneBuyGold $phoneBuyGold)
     {
         $this->Logic($phoneBuyGold)->confirmOrder($id);
-        return redirect(route('trade_record',['show'=>2]));
+        return redirect(route('phone_record',['show'=>3]));
     }
 
     /**
