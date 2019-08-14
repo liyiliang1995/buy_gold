@@ -25,6 +25,10 @@ class MemberLogic extends BaseLogic
      * @var
      */
     protected $in_tmp_pool;
+    /**
+     * @var
+     */
+    protected $oPhoneBuyGoldDetail;
 
     /**
      * @param array $aParam
@@ -548,7 +552,35 @@ class MemberLogic extends BaseLogic
         \Auth::user()->decrement('gold',$aParams['gold']);
     }
 
+    /**
+     * @param int $id
+     * @throws \Throwable
+     * @see 抢单逻辑
+     */
+    public function phoneGrabOrder(int $id):bool
+    {
+        $bRes = DB::transaction(function () use($id){
+            $this->oPhoneBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
+            $this->phoneGrabOrderflow();
+            \Auth::user()->increment("gold",$this->oPhoneBuyGoldDetail->gold);
+            $this->oPhoneBuyGoldDetail->is_show = 0;
+            $this->oPhoneBuyGoldDetail->seller_id = userId();
+            return $this->oPhoneBuyGoldDetail->save();
+        });
+        return $bRes;
+    }
 
+    /**
+     * @see 抢单流水
+     */
+    public function phoneGrabOrderflow()
+    {
+        $this->oPhoneBuyGoldDetail->phone_buy_gold_details()->saveMany(
+            [
+                $this->getBuyGoldGoldFlowDetail(0,19,userId(),$this->oPhoneBuyGoldDetail->gold,"抢单获得金币")('App\PhoneBuyGoldDetail'),
+            ]
+        );
+    }
 
 
 
