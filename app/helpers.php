@@ -598,6 +598,40 @@ if (!function_exists('compute_autogold')) {
     }
 }
 
+if (!function_exists('freeze_member')) {
+
+    /**
+     * @param $id
+     * @param $status
+     * @see 冻结用户
+     */
+    function freeze_member($id,$status)
+    {
+        redis_sadd(config("czf.redis_key.set1"), $id);
+        $oMemberModel = new \App\Member;
+        $oMemberModel->where('id',$id)->where('is_admin',0)->increment('time',1,['status'=>$status]);
+    }
+}
+
+if (!function_exists('release_lock')) {
+    /**
+     * @param $id
+     * @see 解锁用户
+     */
+    function release_lock($id)
+    {
+        $oMemberModel = new \App\Member;
+        $oMemberModel->where('id',$id)->where('is_admin',0)->where('time','>',0)->decrement('time',1);
+        $oMemberModelDetail = $oMemberModel->find($id);
+        if ($oMemberModelDetail->time == 0) {
+            redis_srem(config("czf.redis_key.set1"),$id);
+            $oMemberModelDetail->status = 1;
+            $oMemberModelDetail->save();
+        }
+
+    }
+}
+
 
 
 
