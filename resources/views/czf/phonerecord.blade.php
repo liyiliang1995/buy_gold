@@ -32,7 +32,7 @@
 ])
 @section('content')
     <style>
-        .weui-flex__item{
+        .weui-flex__item {
             color: #666;
             font-size: 14px;
 
@@ -48,10 +48,10 @@
     <div class="weui-tab">
         <div class="weui-navbar">
             <div class="weui-navbar__item weui-navbar__item--on no_is_send" href="#tab1">
-                抢单记录
+                挂单记录
             </div>
             <div class="weui-navbar__item is_send" href="#tab2">
-                挂单记录
+                抢单记录
             </div>
         </div>
 
@@ -69,7 +69,6 @@
                 <div class="content-padded" id="tab2_item">
 
 
-
                 </div>
                 <div class="weui-loadmore">
                     <i class="weui-loading"></i>
@@ -81,77 +80,78 @@
     </div>
 
     <script>
-        var trade_record = {
-            obj:"",
-            url:"",
+        var phone_record = {
+            obj: "",
+            url: "",
             // 获取订单
-            ajaxGetBuyGoldType:function () {
-                if (!trade_record.url) {
-                    $.toast("没有更多数据加载！",'text');
+            ajax_getphone_record: function () {
+                if (!phone_record.url) {
+                    $.toast("没有更多数据加载！", 'text');
                     $('.weui-loadmore').hide();
                     return;
                 }
                 $.ajax({
-                    url: trade_record.url,
+                    url: phone_record.url,
                     type: 'get',
                     dataType: "json",
                     error: function (data) {
-                        $.toast("服务器繁忙, 请联系管理员！",'text');
+                        $.toast("服务器繁忙, 请联系管理员！", 'text');
                         return;
                     },
                     success: function (result) {
-                        if (result.data.data != null){
+                        console.log(result);
+                        if (result.data.data != null) {
                             $('.weui-loadmore').hide();
                         }
-                        // 3:求购 2:出售
+                        // 1:挂单 2:抢单
                         var html = '';
-                        if(result.data.type == 1){
-                            $.each(result.data.data,function (index,val) {
+                        if (result.data.type == 1) {
+                            $.each(result.data.data, function (index, val) {
                                 html += ' <div class="cont_list" style="background: #fff">';
-                                html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
-                                html +='<div class="weui-flex__item">'+val.created_at+'</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.buy_gold_status+'</div></div>';
-                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
-                                html +='<div class="weui-flex__item">充值金额</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right">'+val.gold+'</div></div>';
-                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
-                                html +='<div class="weui-flex__item">金币总数</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
-                                html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                                html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
-                                html +='<div class="weui-flex__item" style="text-align: right">';
-                              if(val.buy_gold_status == '交易中'){
-                                    html +='<a id="trading_a" style="color: #666;border: #eee;"  class="weui-btn weui-btn_primary" disabled>等待确认</a>';
+                                html += '<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
+                                html += '<div class="weui-flex__item">' + val.created_at + '</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right;color: red">' + val.give_status + '</div></div>';
+                                html += '<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html += '<div class="weui-flex__item">充值金额</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right">' + val.sum_price + '</div></div>';
+                                html += '<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html += '<div class="weui-flex__item">金币总数</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right;color: red">' + val.gold + '</div></div>';
+                                html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                                html += '<div class="weui-flex__item" style="color: red"><a href="' + val.detail_url + '" style="color: #333">查看详情>></a></div>';
+                                html += '<div class="weui-flex__item" style="text-align: right">';
+                                if (val.phone_buy_gold_status == '求购中'){
+                                    html +='<a id="trading_a" href="'+val.apply_url+'" class="weui-btn weui-btn_primary">申请撤单</a>';
+                                }else if(val.phone_buy_gold_status == '交易中'){
+                                    html +='<a id="trading_a" style="color: #666;border: #eee;"  class="weui-btn weui-btn_primary" disabled>正在交易</a>';
                                 }
-                                html +='</div></div></div>';
+                                html += '</div></div></div>';
                             });
-                        }else{
-                            $.each(result.data.data,function (index,val) {
+                        } else {
+                            $.each(result.data.data, function (index, val) {
                                 html += ' <div class="cont_list" style="background: #fff">';
-                                html +='<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
-                                html +='<div class="weui-flex__item">'+val.created_at+'</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.give_status+'</div></div>';
-                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
-                                html +='<div class="weui-flex__item">充值金额</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right">'+val.gold+'</div></div>';
-                                html +='<div class="weui-flex" style=" padding: 5px 15px; ">';
-                                html +='<div class="weui-flex__item">支付金币</div>';
-                                html +='<div class="weui-flex__item" style="text-align: right;color: red">'+val.sum_price+'</div></div>';
-                                html +='<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
-                                html +='<div class="weui-flex__item" style="color: red"><a href="'+val.detail_url+'" style="color: #333">查看详情>></a></div>';
-                                html +='<div class="weui-flex__item" style="text-align: right">';
-                                if (val.give_status == '未收款'){
-                                    html +='<a id="trading_b" href="'+val.confirm_url+'" class="weui-btn weui-btn_primary">确认收款</a>';
+                                html += '<div class="weui-flex"style="  font-size: 12px;  padding: 5px 15px;border-top: 5px solid #eee;border-bottom: 2px solid #eee;">';
+                                html += '<div class="weui-flex__item">' + val.created_at + '</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right;color: red">' + val.give_status + '</div></div>';
+                                html += '<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html += '<div class="weui-flex__item">充值金额</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right">' + val.sum_price + '</div></div>';
+                                html += '<div class="weui-flex" style=" padding: 5px 15px; ">';
+                                html += '<div class="weui-flex__item">支付金币</div>';
+                                html += '<div class="weui-flex__item" style="text-align: right;color: red">' + val.gold + '</div></div>';
+                                html += '<div class="weui-flex" style="  font-size: 12px;  padding: 10px 15px;">';
+                                html += '<div class="weui-flex__item" style="color: red"><a href="' + val.detail_url + '" style="color: #333">查看详情>></a></div>';
+                                html += '<div class="weui-flex__item" style="text-align: right">';
+                                if (val.phone_buy_gold_status == '未收款') {
+                                    html += '<a id="trading_b" href="' + val.confirm_url + '" class="weui-btn weui-btn_primary">充值确认</a>';
                                 }
-                                html +='</div></div></div>';
+                                html += '</div></div></div>';
                             });
-
-
 
                         }
 
-                        trade_record.url = result.data.next_page_url;
-                        trade_record.obj.append(html);
+                        phone_record.url = result.data.next_page_url;
+                        phone_record.obj.append(html);
                     }
                 })
             }
@@ -164,28 +164,28 @@
             $.toast("{{$errors}}", 'text');
                 @endif
             var show = "{{request()->input("show") ?? ''}}";
-            var url1 = "{{route('ajaxGetBuyGoldType',['type'=>1])}}";
-            var url2 = "{{route('ajaxGetBuyGoldType',['type'=>2])}}";
+            var url1 = "{{route('ajax_getphone_record',['type'=>1])}}";
+            var url2 = "{{route('ajax_getphone_record',['type'=>2])}}";
 
 
-            $(".no_is_send").on('click',function () {
-                trade_record.url = url1;
-                trade_record.obj = $("#tab1_item");
-                trade_record.ajaxGetBuyGoldType();
+            $(".no_is_send").on('click', function () {
+                phone_record.url = url1;
+                phone_record.obj = $("#tab1_item");
+                phone_record.ajax_getphone_record();
                 $("#tab1_item").empty();
             })
-            $(".is_send").on('click',function () {
-                trade_record.url = url2;
-                trade_record.obj = $("#tab2_item");
-                trade_record.ajaxGetBuyGoldType();
+            $(".is_send").on('click', function () {
+                phone_record.url = url2;
+                phone_record.obj = $("#tab2_item");
+                phone_record.ajax_getphone_record();
                 $("#tab2_item").empty();
             })
-            $(".infinite").infinite().on("infinite", function() {
+            $(".infinite").infinite().on("infinite", function () {
                 var self = this;
-                if(self.loading) return;
+                if (self.loading) return;
                 self.loading = true;
-                setTimeout(function() {
-                    trade_record.ajaxGetBuyGoldType();
+                setTimeout(function () {
+                    phone_record.ajax_getphone_record();
                 }, 500);   //模拟延迟
             })
             if (show.trim() == '2') {

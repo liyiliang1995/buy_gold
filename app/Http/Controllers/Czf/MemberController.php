@@ -218,6 +218,7 @@ class MemberController extends Controller
             }
         }
         $aData         = $this->Logic($phoneBuyGold)->query($aParams)->toArray();
+        $aData['type'] = $iType;
         if ($aData) {
             return $this->success("请求成功", $aData);
         } else {
