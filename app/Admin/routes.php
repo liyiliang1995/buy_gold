@@ -22,7 +22,7 @@ Route::group([
     $router->resource('buy-golds', BuyGoldController::class);
     $router->resource('buy-gold-details', BuyGoldDetailController::class);
     $router->resource('order-details', OrderDetailController::class);
-
+    $router->resource('buy_phone', PhonebuyController::class);
 
     $router->get('getKvbyTypeId/{id}',"ConfigController@getKvbyTypeId")->name('admin.getKvbyTypeId');
     $router->post('postKvbyTypeId/{id}',"ConfigController@postKvbyTypeId")->name("admin.postKvbyTypeId");
