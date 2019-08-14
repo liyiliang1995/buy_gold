@@ -52,6 +52,12 @@ class GoldflowController extends AdminController
         $grid->disableCreateButton();
         $grid->disableRowSelector();
         $grid->disableActions();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('user', '用户');
+        });
         return $grid;
     }
 

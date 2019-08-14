@@ -29,7 +29,7 @@ class IntegralFlowController extends AdminController
         $grid->column('id', __('Id'))->sortable();
         $grid->column('show_type', __('业务类型'));
         $grid->column('integral', __('积分值'));
-        $grid->column('user_id', __('用户'));
+        $grid->column('member.phone', __('用户'));
         $grid->column('other', __('备注'));
         $grid->column('created_at', __('创建时间'));
         $grid->actions(function ($actions) {
@@ -44,6 +44,12 @@ class IntegralFlowController extends AdminController
         $grid->disableCreateButton();
         $grid->disableRowSelector();
         $grid->disableActions();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->like('member.phone', '用户');
+        });
         return $grid;
     }
 
