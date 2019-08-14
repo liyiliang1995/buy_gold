@@ -265,25 +265,24 @@
             @endphp
             @if($errors)
             $.toast("{{$errors}}", 'text');
-
             @endif
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
-                var resa = res - 1;
-                if (resa == 0) {
-                    setInterval(function () {
-                        window.location.reload();
-                    }, 1000);
-                }
-                var ssss = formatSeconds(resa);
-                if (res == 0) {
+                if (res == 0 || res == '') {
                     document.getElementById("next_time").innerHTML = 0;
-                }else{
+                    document.getElementById("next_time_f").value = 0;
+                } else {
+                    var resa = res - 1;
+                    if (resa == 0) {
+                        setInterval(function () {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                    var ssss = formatSeconds(resa);
                     document.getElementById("next_time").innerHTML = ssss;
+                    document.getElementById("next_time_f").value = resa;
                 }
-                document.getElementById("next_time_f").value = resa;
             }
-
             setInterval(function () {
                 set_time();
             }, 1000);
