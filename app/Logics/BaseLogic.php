@@ -278,6 +278,7 @@ class BaseLogic {
      * 17 积分兑换金币流向股东
      * 18 挂单扣除金币
      * 19 抢单获得金币
+     * 20 撤销订单返回金币
      * @param int $iUserId
      * @param float $fGold
      * @return object

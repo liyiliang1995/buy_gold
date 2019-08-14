@@ -579,7 +579,7 @@ class MemberLogic extends BaseLogic
     {
         $this->oPhoneBuyGoldDetail->phone_buy_gold_details()->saveMany(
             [
-                $this->getBuyGoldGoldFlowDetail(0,19,userId(),$this->oPhoneBuyGoldDetail->gold,"抢单获得金币")('App\PhoneBuyGoldDetail'),
+                $this->getBuyGoldGoldFlowDetail(1,19,userId(),$this->oPhoneBuyGoldDetail->gold,"抢单获得金币")('App\PhoneBuyGoldDetail'),
             ]
         );
     }
@@ -595,6 +595,45 @@ class MemberLogic extends BaseLogic
             throw ValidationException::withMessages(['user_id' => ['不能操作非本人挂单！']]);
         if (!$oOrder->seller_id)
             throw ValidationException::withMessages(['user_id' => ['没有人抢单，无法确认']]);
+    }
+    /**
+     * @param int $id
+     * @return bool
+     * @判断订单是否是当前用户的
+     * @判断订单是否是没有在交易中
+     * @撤单后解除冻结
+     */
+    public function applyCancelOrder(int $id):bool
+    {
+        $bRes =  DB::transaction(function () use($id) {
+            $oOrder = $this->model->lockForUpdate()->findOrFail($id);
+            if ($oOrder->user_id != userId())
+                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
+            if ($oOrder->seller_id)
+                throw ValidationException::withMessages(['user_id' => ['当前订单已处于交易中，无法撤销！']]);
+            if ($oOrder->status != 0)
+                throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
+            $this->applyCancelOrderFlow($oOrder);
+            \Auth::user()->increment('gold',$oOrder->gold);
+            // 下架
+            $oOrder->delete();
+            $this->releaseLock([\Auth::user()->id]);
+            return true;
+        });
+        redis_srem(config("czf.redis_key.set1"),userId());
+        return $bRes ?? false;
+    }
+
+    /**
+     * @see 手机充值取消订单流水
+     */
+    public function applyCancelOrderFlow(object $oOrder)
+    {
+        $oOrder->phone_buy_gold_details()->saveMany(
+            [
+                $this->getBuyGoldGoldFlowDetail(1,20,userId(),$oOrder->gold,"撤销订单返回金币")('App\PhoneBuyGoldDetail'),
+            ]
+        );
     }
 
 
