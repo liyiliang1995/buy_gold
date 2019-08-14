@@ -44,7 +44,7 @@ class MemberController extends AdminController
             if ($status == 1) {
                 return '已激活';
             } else {
-                if ($status == 2 || $status == 3) {
+                if ($status == 2 || $status == 3 || $status == 4) {
                     return '已锁定';
                 } else {
                     return '未激活';

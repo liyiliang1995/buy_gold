@@ -164,7 +164,7 @@
             @endphp
             @if($errors)
             $.toast("{{$errors}}", 'text');
-                @endif
+            @endif
             var show = "{{request()->input("show") ?? ''}}";
             var url1 = "{{route('ajax_getphone_record',['type'=>1])}}";
             var url2 = "{{route('ajax_getphone_record',['type'=>2])}}";

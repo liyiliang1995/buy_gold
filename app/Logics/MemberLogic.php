@@ -416,6 +416,8 @@ class MemberLogic extends BaseLogic
             throw new CzfException("用户当前处于冻结状态，无法兑换积分！");
         if (\Auth::user()->gold < 200)
             throw new CzfException("持有金币数量低于200不能兑换积分！");
+        if (\Auth::user()->getChildMemberNum() < 1)
+            throw new CzfException("至少激活一个用户才可以抢单！");
     }
 
     /**
@@ -580,7 +582,7 @@ class MemberLogic extends BaseLogic
     public function phoneGrabOrderValidate()
     {
         if (\Auth::user()->getChildMemberNum() < 1)
-            throw ValidationException::withMessages(['price'=>["至少激活一个用户才可以抢单！"]]);
+            throw ValidationException::withMessages(['user'=>["至少激活一个用户才可以抢单！"]]);
     }
 
     /**

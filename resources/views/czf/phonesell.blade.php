@@ -40,5 +40,14 @@
         <div class="weui-col-50" style="width: 30%"><a  href="{{route('phone_grab_order',['id'=>$oPhoneBuyGold->id])}}" class="weui-btn weui-btn_primary" style="height: 50px;border-radius: 0;">确认抢单</a></div>
     </div>
     </body>
+    <script>
+        $(function () {
+            @if($errors->has('user'))
+            @foreach($errors->get('user') as $message)
+            $.toast("{{$message}}", 'text');
+            @endforeach
+            @endif
+        })
+    </script>
 
 @endsection
