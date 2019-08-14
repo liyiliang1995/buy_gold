@@ -50,6 +50,11 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->hasOne('App\AgentRegister', 'user_id');
     }
 
+    public function parentuser()
+    {
+        return $this->hasOne('App\Member', 'id','parent_user_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

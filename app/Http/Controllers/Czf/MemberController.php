@@ -170,7 +170,7 @@ class MemberController extends Controller
      */
     public function phoneCenter(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
-        $aParams['_sort'] = 'price,desc';
+        $aParams['_sort'] = 'gold,desc';
         $aParams['status'] = 0;
         $aParams['is_show'] = 1;
         $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query($aParams);
