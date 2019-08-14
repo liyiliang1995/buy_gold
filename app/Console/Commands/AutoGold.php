@@ -60,6 +60,9 @@ class AutoGold extends Command
                         //冻结的不领取
                         && !redis_sismember(config('czf.redis_key.set1'),$aInfo['id'])
                     ) {
+                        if ($aInfo['date'] != date('Y-m-d',time())) {
+                            set_receive_gold_member_info(['id'=>$aInfo['id'],'is_auto'=>$aInfo['is_auto'],'gold'=>0]);
+                        }
                         $oMemberLogic->receiveGold($aInfo);
                     }
                 }
