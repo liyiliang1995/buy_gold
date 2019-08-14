@@ -26,7 +26,7 @@ class PhoneBuyGold extends Model
     /**
      * @var array
      */
-    protected $appends = ["phone_buy_gold_status",'give_status'];
+    protected $appends = ["phone_buy_gold_status",'give_status','apply_url','confirm_url','detail_url'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -103,6 +103,29 @@ class PhoneBuyGold extends Model
         else if ($this->status == 1)
             $sRes = '已收款';
         return $sRes;
+    }
+
+    public function getDetailUrlAttribute():string
+    {
+        return route('phone_details',['id'=>$this->id]);
+    }
+
+    /**
+     * @return string
+     * @see 撤销订单url
+     */
+    public function getApplyUrlAttribute():string
+    {
+        return route("apply_cancel_phone_order",['id'=>$this->id]);
+    }
+
+    /**
+     * @return string
+     * @see 确认订单url
+     */
+    public function getConfirmUrlAttribute():string
+    {
+        return route("confirm_phone_order",['id'=>$this->id]);
     }
 
 

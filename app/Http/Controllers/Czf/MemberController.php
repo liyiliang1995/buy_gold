@@ -255,9 +255,10 @@ class MemberController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @see 手机充值详情
      */
-    public function phoneDetails()
+    public function phoneDetails(int $id,PhoneBuyGold $phoneBuyGold)
     {
-        return view('czf.phonedetails');
+        $oOrderGold = $this->Logic($phoneBuyGold)->find($id);
+        return view('czf.phonedetails',compact('oOrderGold'));
     }
 
 
@@ -297,6 +298,25 @@ class MemberController extends Controller
         $aParams['integral'] = 900;
         $this->Logic($member)->IntegralToGold($aParams);
         return $this->success("积分兑换成功");
+    }
+
+    /**
+     * @see 申请撤单
+     */
+    public function applyCancelOrder(int $id,PhoneBuyGold $phoneBuyGold)
+    {
+        $this->Logic($phoneBuyGold)->applyCancelOrder($id);
+        return redirect(route('trade_record',['show'=>3]));
+    }
+
+    /**
+     * @param int $id
+     * @see 确认收款
+     */
+    public function confirmOrder(int $id,PhoneBuyGold $phoneBuyGold)
+    {
+        $this->Logic($phoneBuyGold)->confirmOrder($id);
+        return redirect(route('trade_record',['show'=>2]));
     }
 
     /**

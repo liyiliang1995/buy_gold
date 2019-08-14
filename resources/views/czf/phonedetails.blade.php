@@ -27,7 +27,7 @@
             <div class="weui-flex__item"><p>手机充值金额</p></div>
         </div>
         <div class="weui-flex" style="text-align: center">
-            <div class="weui-flex__item"><h1>100</h1></div>
+            <div class="weui-flex__item"><h1>{{$oOrderGold->sum_price}}</h1></div>
         </div>
         <div class="weui-loadmore weui-loadmore_line weui-loadmore_dot" style="margin-bottom: 0;">
             <span class="weui-loadmore__tips"></span>
@@ -35,20 +35,20 @@
         <div class="buy_conter">
             <div class="weui-row">
                 <div class="weui-col-50" style="width: 30%;color: #666">当前状态</div>
-                <div class="weui-col-50" style="width: 70%">交易中</div>
+                <div class="weui-col-50" style="width: 70%">{{$oOrderGold->phone_buy_gold_status}}</div>
             </div>
             <div class="weui-row">
                 <div class="weui-col-50" style="width: 30%;color: #666">需支付金币</div>
-                <div class="weui-col-50" style="width: 70%">240</div>
+                <div class="weui-col-50" style="width: 70%">{{$oOrderGold->gold}}</div>
             </div>
             <div class="weui-row">
                 <div class="weui-col-50" style="width: 30%;color: #666">挂单时间</div>
-                <div class="weui-col-50" style="width: 70%">2019-08-05 15：33：12</div>
+                <div class="weui-col-50" style="width: 70%">{{$oOrderGold->created_at}}</div>
             </div>
 
                 <div class="weui-row">
                     <div class="weui-col-50" style="width: 30%;color: #666">成交时间</div>
-                    <div class="weui-col-50" style="width: 70%"></div>
+                    <div class="weui-col-50" style="width: 70%">{{$oOrderGold->updated_at}}</div>
                 </div>
 
         </div>
@@ -60,15 +60,15 @@
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">对方姓名</div>
-            <div class="weui-col-50" style="width: 70%">淡淡</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->name}}</div>
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">联系电话</div>
-            <div class="weui-col-50" style="width: 70%">13873653398</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->phone2}}</div>
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">微信号</div>
-            <div class="weui-col-50" style="width: 70%">wechat</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->wechat}}</div>
         </div>
     </div>
     </body>

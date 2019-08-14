@@ -55,11 +55,14 @@ Route::group([],function($router){
         $router->get('ajax/phone/record/{id}','MemberController@ajaxGetPhoneRecord')->name('ajax_getphone_record');
         $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
         $router->get('phone_sell/{id}','MemberController@phoneSell')->name('phone_sell');
-        $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
+        $router->get('phone_details/{id}','MemberController@phoneDetails')->name('phone_details');
         $router->post('phone_buy_gold','MemberController@phoneBuyGold')->name('phone_buy_gold');
         $router->get('ajax/integral_to_gold','MemberController@ajaxIntegralToGold')->name('integral_to_gold');
         $router->get('add/auto_gold/{type}','MemberController@addAutoGoldMembers')->name('add_auto_gold');
         $router->get('ajax/get_trend','TradeController@ajaxGetTrend')->name('get_trend');
+
+        $router->get('apply/cancel_phone_order/{id}','MemberController@applyCancelOrder')->name('apply_cancel_phone_order');
+        $router->get('confirm_phonr_order/{id}','MemberController@confirmOrder')->name('confirm_phone_order');
     });
 });
 Auth::routes();
