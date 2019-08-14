@@ -260,6 +260,12 @@
     </body>
     <script>
         $(function () {
+            @php
+                $errors = session()->get('lock');
+            @endphp
+            @if($errors)
+            $.toast("{{$errors}}", 'text');
+            @endif
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
                 var resa = res - 1;

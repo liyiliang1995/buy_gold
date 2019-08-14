@@ -25,15 +25,10 @@ class AuthMember
      */
     public function isMemberLock($guards)
     {
-        if (\Auth::user()->status == 2 || \Auth::user()->status == 3) {
-            session()->flash("lock", "还有订单交易未完成！无法继续交易");
+        if (in_array(\Auth::user()->status,[2,3,4])) {
+            session()->flash("lock", "请检查是否自己有未完成的交易订单,或者您的代理用户有未确认收款订单导致您冻结");
             throw new CheckMbrException(
-                '还有订单交易未完成！无法继续交易', $guards, route('trade_record', ['show' => \Auth::user()->status])
-            );
-        } else if (\Auth::user()->status == 4) {
-            session()->flash("lock", "检测是否有未完成订单或者下级用户超过24小时未确认收款");
-            throw new CheckMbrException(
-                '检测是否有未完成订单或者下级用户超过24小时未确认收款！', $guards, route('myPartner')
+                '请检查是否自己有未完成的交易订单,或者您的代理用户有未确认收款订单导致您冻结！', $guards, route('member_index')
             );
         }
     }

@@ -77,7 +77,7 @@ class MemberCheck extends Command
     public function getNotReceiptBuyGold()
     {
        $aData = $this->buy_gold_model
-           ->whereBetween('created_at',[$this->start_time_oneday,$this->end_time])
+           ->where('created_at',"<",$this->start_time_oneday)
            ->where('status',0)
            ->whereNotNull('seller_id')
            ->get();
