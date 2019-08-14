@@ -357,7 +357,6 @@ class BaseLogic {
             $this->releaseLock([\Auth::user()->id]);
             return true;
         });
-        redis_srem(config("czf.redis_key.set1"),userId());
         return $bRes ?? false;
     }
 

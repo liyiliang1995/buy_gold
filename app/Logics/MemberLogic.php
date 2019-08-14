@@ -631,7 +631,6 @@ class MemberLogic extends BaseLogic
             $this->releaseLock([\Auth::user()->id]);
             return true;
         });
-        redis_srem(config("czf.redis_key.set1"),userId());
         return $bRes ?? false;
     }
 
@@ -642,7 +641,7 @@ class MemberLogic extends BaseLogic
     {
         $oOrder->phone_buy_gold_details()->saveMany(
             [
-                $this->getBuyGoldGoldFlowDetail(1,20,userId(),$oOrder->gold,"撤销订单返回金币")('App\PhoneBuyGoldDetail'),
+                $this->getBuyGoldGoldFlowDetail(1,20,$oOrder->user_id,$oOrder->gold,"撤销订单返回金币")('App\PhoneBuyGoldDetail'),
             ]
         );
     }

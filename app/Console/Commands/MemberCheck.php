@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\BuyGold;
 use App\Member;
+use App\PhoneBuyGold;
 use App\Logics\TradeLogic;
+use App\Logics\MemberLogic;
 use Illuminate\Console\Command;
 
 class MemberCheck extends Command
@@ -43,6 +45,10 @@ class MemberCheck extends Command
      */
     protected $end_time;
     /**
+     * @var
+     */
+    protected $phone_buy_gold_model;
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -61,6 +67,7 @@ class MemberCheck extends Command
     {
         $this->buy_gold_model = new BuyGold;
         $this->member_model = new Member;
+        $this->phone_buy_gold_model = new PhoneBuyGold;
         $this->start_time_oneday = date("Y-m-d H:i:s",strtotime("-1 day"));
         $this->start_time_twoday = date("Y-m-d H:i:s",strtotime("-2 day"));
         $this->end_time = date("Y-m-d H:i:s");
@@ -79,9 +86,25 @@ class MemberCheck extends Command
        $aData = $this->buy_gold_model
            ->where('created_at',"<",$this->start_time_oneday)
            ->where('status',0)
+           ->where('is_statistical',0)
            ->whereNotNull('seller_id')
            ->get();
        return $aData;
+    }
+
+    /**
+     * @return mixed
+     * @see 手机充值没有统计的
+     */
+    public function getNotReceiptPhoneBuyGold()
+    {
+        $aData = $this->phone_buy_gold_model
+            ->where('created_at',"<",$this->start_time_oneday)
+            ->where('status',0)
+            ->where('is_statistical',0)
+            ->whereNotNull('seller_id')
+            ->get();
+        return $aData;
     }
 
     /**
@@ -98,15 +121,41 @@ class MemberCheck extends Command
     }
 
     /**
+     * @return mixed
+     * @see 72小时没有抢单的下单
+     */
+    public function getNotSellPhoneBuyGold()
+    {
+        $aData = $this->phone_buy_gold_model
+            ->where('created_at','<',$this->start_time_twoday)
+            ->where('status',0)
+            ->whereNull('seller_id')
+            ->get();
+        return $aData;
+    }
+
+    /**
      * @see 撤销订单
      */
     public function CancelOrder()
     {
         $order = $this->getNotSellBuyGold();
-        $logic = new TradeLogic(null);
+        $phone_order = $this->getNotSellPhoneBuyGold();
+        $member_logic = new MemberLogic($this->phone_buy_gold_model);
+        if ($phone_order) {
+            foreach ($phone_order as $item) {
+                // 撤销流水
+                $member_logic->applyCancelOrderFlow($item);
+                // 撤销返回金币
+                $item->member->increment('gold',$item->gold);
+                release_lock($item->user_id);
+                $item->delete();
+            }
+        }
+
         if ($order) {
             foreach ($order as $item) {
-                $logic->releaseLock([$item->id]);
+                release_lock($item->user_id);
                 $item->delete();
             }
         }
@@ -118,16 +167,23 @@ class MemberCheck extends Command
     public function lockParent()
     {
         $order = $this->getNotReceiptBuyGold();
+        $phone_order = $this->getNotReceiptPhoneBuyGold();
         if ($order) {
             foreach ($order as $item) {
-                if ($item->is_admin == 0) {
-                    // 增加到领取金币锁定用户
-                    redis_sadd(config("czf.redis_key.set1"), $item->seller->parent_user_id);
-                    redis_sadd(config("czf.redis_key.set1"), $item->member->parent_user_id);
-                    // 自身状态改变
-                    $this->member_model->where('id', $item->seller->parent_user_id)->increment('time', 1, ['status' => 4]);
-                    $this->member_model->where('id', $item->member->parent_user_id)->increment('time', 1, ['status' => 4]);
-                }
+                freeze_member($item->seller->parent_user_id,4);
+                freeze_member($item->member->parent_user_id,4);
+                // 统计过的不再统计
+                $item->is_statistical = 1;
+                $item->save();
+            }
+        }
+        if ($phone_order) {
+            foreach ($phone_order as $item) {
+                freeze_member($item->seller->parent_user_id,4);
+                freeze_member($item->member->parent_user_id,4);
+                // 统计过的不再统计
+                $item->is_statistical = 1;
+                $item->save();
             }
         }
     }
