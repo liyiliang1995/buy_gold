@@ -498,6 +498,7 @@ class MemberLogic extends BaseLogic
                 $this->phoneBuyGoldIncreaseAndDecrease($aParams);
                 return true;
         });
+        freeze_member(userId(),2);
         return $bRes ?? false;
     }
 
@@ -567,6 +568,7 @@ class MemberLogic extends BaseLogic
             $this->oPhoneBuyGoldDetail->seller_id = userId();
             return $this->oPhoneBuyGoldDetail->save();
         });
+        freeze_member(userId(),3);
         return $bRes;
     }
 
