@@ -157,6 +157,19 @@ class TradeLogic extends BaseLogic
         freeze_member(userId(),2);
     }
 
+    /**
+     * @param object $oOrder
+     */
+    public function confirmOrderValidate(object $oOrder)
+    {
+        if (!$oOrder->seller)
+            throw ValidationException::withMessages(['user_id' => ['卖家已经不存在,无法完成交易，请联系管理员']]);
+        if ($oOrder->seller_id != userId())
+            throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
+        if (!$oOrder->seller_id)
+            throw ValidationException::withMessages(['user_id' => ['没有卖家出售，无法确认']]);
+    }
+
 
     /**
      * @return array

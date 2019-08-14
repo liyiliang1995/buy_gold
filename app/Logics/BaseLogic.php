@@ -8,6 +8,7 @@
 namespace App\Logics;
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 class BaseLogic {
     /**
      * @var
@@ -368,21 +369,16 @@ class BaseLogic {
     public function confirmOrder(int $id):bool
     {
         $bRes =  DB::transaction(function () use($id) {
-            $oBuyGold = $this->model->lockForUpdate()->findOrFail($id);
-            if (!$oBuyGold->seller)
-                throw ValidationException::withMessages(['user_id' => ['卖家已经不存在,无法完成交易，请联系管理员']]);
-            if ($oBuyGold->seller_id != userId())
-                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
-            if (!$oBuyGold->seller_id)
-                throw ValidationException::withMessages(['user_id' => ['没有卖家出售，无法确认']]);
-            $oBuyGold->status = 1;
-            $oBuyGold->is_show = 0;
-            $oBuyGold->save();
+            $oOrder = $this->model->lockForUpdate()->findOrFail($id);
+            $this->confirmOrderValidate($oOrder);
+            $oOrder->status = 1;
+            $oOrder->is_show = 0;
+            $oOrder->save();
             $aIds = [
-                $oBuyGold->seller->parent_user_id,  //卖家上级
-                $oBuyGold->member->parent_user_id,  //买家上级
-                $oBuyGold->seller_id,               //卖家
-                $oBuyGold->user_id,                 //买家
+                $oOrder->seller->parent_user_id,  //卖家上级
+                $oOrder->member->parent_user_id,  //买家上级
+                $oOrder->seller_id,               //卖家
+                $oOrder->user_id,                 //买家
             ];
             $this->releaseLock($aIds);
             return true;

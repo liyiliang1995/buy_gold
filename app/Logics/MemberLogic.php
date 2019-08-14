@@ -584,6 +584,19 @@ class MemberLogic extends BaseLogic
         );
     }
 
+    /**
+     * @param object $oOrder
+     */
+    public function confirmOrderValidate(object $oOrder)
+    {
+        if (!$oOrder->seller)
+            throw ValidationException::withMessages(['user_id' => ['没人抢单,无法完成交易，请联系管理员']]);
+        if ($oOrder->user_id != userId())
+            throw ValidationException::withMessages(['user_id' => ['不能操作非本人挂单！']]);
+        if (!$oOrder->seller_id)
+            throw ValidationException::withMessages(['user_id' => ['没有人抢单，无法确认']]);
+    }
+
 
 
 
