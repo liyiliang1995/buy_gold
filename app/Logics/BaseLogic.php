@@ -381,9 +381,9 @@ class BaseLogic {
             ];
 
             // 上级id为4 说明是24小时没有确认付款 这时候付款解冻上级
-            if ($oOrder->seller->parentuser->status == 4)
+            if (!empty($oOrder->seller->parentuser->status) && $oOrder->seller->parentuser->status == 4)
                 $aIds[] = $oOrder->seller->parent_user_id;
-            if ($oOrder->member->parentuser->status == 4)
+            if (!empty($oOrder->member->parentuser->status) && $oOrder->member->parentuser->status == 4)
                 $aIds[] = $oOrder->member->parent_user_id;
             $this->releaseLock($aIds);
             return true;
