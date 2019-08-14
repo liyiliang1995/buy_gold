@@ -170,7 +170,10 @@ class MemberController extends Controller
      */
     public function phoneCenter(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
-        $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query(['_sort' => 'price,desc']);
+        $aParams['_sort'] = 'price,desc';
+        $aParams['status'] = 0;
+        $aParams['is_show'] = 1;
+        $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query($aParams);
         $avgPrice = $hourAvgPrice->getBestNewAvgPrice();
         return view('czf.phonecenter',compact('aPhoneBuyGold','avgPrice'));
     }
@@ -199,12 +202,51 @@ class MemberController extends Controller
     }
 
     /**
+     * @param int $iType 1获取挂单记录  2获取抢单记录
+     * @param PhoneBuyGold $phoneBuyGold
+     * @return \Illuminate\Http\JsonResponse
+     * @see 获取手机充值订单
+     */
+    public function ajaxGetPhoneRecord(int $iType,PhoneBuyGold $phoneBuyGold)
+    {
+        $aParams['_sort'] = "id,desc";
+        if ($iType == 1) {
+            $aParams['user_id'] = userId();
+        } else {
+            if ($iType == 2) {
+                $aParams['seller_id'] = userId();
+            }
+        }
+        $aData         = $this->Logic($phoneBuyGold)->query($aParams)->toArray();
+        if ($aData) {
+            return $this->success("请求成功", $aData);
+        } else {
+            return $this->server_error();
+        }
+
+    }
+
+    /**
      * @param int $id
      * @see 手机充值订单
      */
-    public function phoneSell(int $id)
+    public function phoneSell(int $id,PhoneBuyGold $phoneBuyGold)
     {
-        return view('czf.phonesell');
+        $oPhoneBuyGold = $this->Logic($phoneBuyGold)->find($id);
+        return view('czf.phonesell',compact('oPhoneBuyGold'));
+    }
+
+    /**
+     * @see 抢单
+     */
+    public function phoneGrabOrder(int $id,PhoneBuyGold $phoneBuyGold)
+    {
+        if ($this->Logic($phoneBuyGold)->phoneGrabOrder($id))
+        {
+            return redirect(route('phone_center'));
+        } else {
+            abort(500);
+        }
     }
 
 
@@ -216,6 +258,7 @@ class MemberController extends Controller
     {
         return view('czf.phonedetails');
     }
+
 
     /**
      * @param $type 1 开启 0关闭

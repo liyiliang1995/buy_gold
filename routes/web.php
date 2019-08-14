@@ -51,6 +51,8 @@ Route::group([],function($router){
         $router->get('article_content/{id}','MemberController@articleContent')->name('article_content');
         $router->get('manual/give_gold','MemberController@manualGiveGold')->name('manual_give_gold');
         $router->get('phone_center','MemberController@phoneCenter')->name('phone_center');
+        $router->get('phone/grab_order/{id}','MemberController@phoneGrabOrder')->name('phone_grab_order');
+        $router->get('ajax/phone/record/{id}','MemberController@ajaxGetPhoneRecord')->name('ajax_getphone_record');
         $router->get('phone_record','MemberController@phoneRecord')->name('phone_record');
         $router->get('phone_sell/{id}','MemberController@phoneSell')->name('phone_sell');
         $router->get('phone_details','MemberController@phoneDetails')->name('phone_details');
