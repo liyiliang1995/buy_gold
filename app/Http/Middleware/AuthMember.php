@@ -26,9 +26,9 @@ class AuthMember
     public function isMemberLock($guards)
     {
         if (in_array(\Auth::user()->status,[2,3,4])) {
-            session()->flash("lock", "请检查是否自己有未完成的交易订单,或者您的代理用户有未确认收款订单导致您冻结");
+            session()->flash("lock", "当前账户处于冻结状态！");
             throw new CheckMbrException(
-                '请检查是否自己有未完成的交易订单,或者您的代理用户有未确认收款订单导致您冻结！', $guards, route('member_index')
+                '当前账户处于冻结状态！', $guards, route('member_index')
             );
         }
     }

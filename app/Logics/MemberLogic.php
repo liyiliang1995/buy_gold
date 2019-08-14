@@ -560,6 +560,7 @@ class MemberLogic extends BaseLogic
      */
     public function phoneGrabOrder(int $id):bool
     {
+        $this->phoneBuyGoldValidate();
         $bRes = DB::transaction(function () use($id){
             $this->oPhoneBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
 
@@ -571,6 +572,15 @@ class MemberLogic extends BaseLogic
         });
         freeze_member(userId(),3);
         return $bRes;
+    }
+
+    /**
+     * @see 验证
+     */
+    public function phoneGrabOrderValidate()
+    {
+        if (\Auth::user()->getChildMemberNum() < 1)
+            throw ValidationException::withMessages(['price'=>["至少激活一个用户才可以抢单！"]]);
     }
 
     /**
