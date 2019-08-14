@@ -560,7 +560,7 @@ class MemberLogic extends BaseLogic
      */
     public function phoneGrabOrder(int $id):bool
     {
-        $this->phoneBuyGoldValidate();
+        $this->phoneGrabOrderValidate();
         $bRes = DB::transaction(function () use($id){
             $this->oPhoneBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
 
