@@ -375,12 +375,16 @@ class BaseLogic {
             $oOrder->status = 1;
             $oOrder->is_show = 0;
             $oOrder->save();
+            // 买方卖方解冻一次
             $aIds = [
-                $oOrder->seller->parent_user_id,  //卖家上级
-                $oOrder->member->parent_user_id,  //买家上级
                 $oOrder->seller_id,               //卖家
                 $oOrder->user_id,                 //买家
             ];
+            // 上级id为4 说明是24小时没有确认付款 这时候付款解冻上级
+            if ($oOrder->seller->status == 4)
+                $aIds[] = $oOrder->seller->id;
+            if ($oOrder->member->status == 4)
+                $aIds[] = $oOrder->member->id;
             $this->releaseLock($aIds);
             return true;
         });

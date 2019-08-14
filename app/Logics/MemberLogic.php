@@ -562,6 +562,7 @@ class MemberLogic extends BaseLogic
     {
         $bRes = DB::transaction(function () use($id){
             $this->oPhoneBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
+
             $this->phoneGrabOrderflow();
             \Auth::user()->increment("gold",$this->oPhoneBuyGoldDetail->gold);
             $this->oPhoneBuyGoldDetail->is_show = 0;
