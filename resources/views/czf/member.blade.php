@@ -177,30 +177,30 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="{{route('gold_record')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-qianbi101"></i></div>
-            <div class="weui-cell__bd">
-                <p>金币明细</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-        </a>
-        <a class="weui-cell weui-cell_access" href="{{route('integral_record')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-accountbook"></i></div>
-            <div class="weui-cell__bd">
-                <p>积分明细</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-        </a>
-        <a class="weui-cell weui-cell_access" href="{{route('energy_record')}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-rocket"></i></div>
-            <div class="weui-cell__bd">
-                <p>能量明细</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-        </a>
+        {{--<a class="weui-cell weui-cell_access" href="{{route('gold_record')}}">--}}
+            {{--<div class="weui-cell__hd"><i class="iconfont icon-qianbi101"></i></div>--}}
+            {{--<div class="weui-cell__bd">--}}
+                {{--<p>金币明细</p>--}}
+            {{--</div>--}}
+            {{--<div class="weui-cell__ft">--}}
+            {{--</div>--}}
+        {{--</a>--}}
+        {{--<a class="weui-cell weui-cell_access" href="{{route('integral_record')}}">--}}
+            {{--<div class="weui-cell__hd"><i class="iconfont icon-accountbook"></i></div>--}}
+            {{--<div class="weui-cell__bd">--}}
+                {{--<p>积分明细</p>--}}
+            {{--</div>--}}
+            {{--<div class="weui-cell__ft">--}}
+            {{--</div>--}}
+        {{--</a>--}}
+        {{--<a class="weui-cell weui-cell_access" href="{{route('energy_record')}}">--}}
+            {{--<div class="weui-cell__hd"><i class="iconfont icon-rocket"></i></div>--}}
+            {{--<div class="weui-cell__bd">--}}
+                {{--<p>能量明细</p>--}}
+            {{--</div>--}}
+            {{--<div class="weui-cell__ft">--}}
+            {{--</div>--}}
+        {{--</a>--}}
     </div>
 
     <div class="weui-cells" style="margin-bottom: 80px;">
@@ -228,14 +228,14 @@
             <div class="weui-cell__ft">
             </div>
         </a>
-        <a class="weui-cell weui-cell_access" href="tel:{{$aConfig['kefu'] ?? ''}}">
-            <div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>
-            <div class="weui-cell__bd">
-                <p>联系客服</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-        </a>
+        {{--<a class="weui-cell weui-cell_access" href="tel:{{$aConfig['kefu'] ?? ''}}">--}}
+            {{--<div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>--}}
+            {{--<div class="weui-cell__bd">--}}
+                {{--<p>联系客服</p>--}}
+            {{--</div>--}}
+            {{--<div class="weui-cell__ft">--}}
+            {{--</div>--}}
+        {{--</a>--}}
     </div>
 
     <!--footer-->
