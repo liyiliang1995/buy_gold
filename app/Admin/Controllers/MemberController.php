@@ -36,7 +36,9 @@ class MemberController extends AdminController
         $grid->column('gold', __('金币'))->sortable();
         $grid->column('energy', __('能量'))->sortable();
         $grid->column('integral', __('积分'))->sortable();
-        $grid->column('parent_user_id', __('上级用户'));
+        $grid->column('parent', __('上级用户'))->display(function (){
+            return $this->parentuser->phone ?? "无";
+        });
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
         $grid->column('rate', __('股东分成比列'));
