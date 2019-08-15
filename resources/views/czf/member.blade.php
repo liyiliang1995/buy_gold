@@ -105,7 +105,7 @@
 
     <div class="weui-row" id="user_bg" style="padding: 0 !important;">
         <div class="weui-col-50" id="user_gold">
-            <p>当前金币总数：2000000000</p>
+            <p>当前金币总数：</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
                                                    id="next_time_f"></p>
