@@ -67,7 +67,7 @@ class AutoGold extends Command
                     }
                 }
             // 获取下一次领取的时间
-            sleep(5);
+            sleep(1);
         }
     }
 
