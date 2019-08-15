@@ -280,7 +280,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     {
         $oGoldFlowModel = new GoldFlow;
         $burnGold = $oGoldFlowModel->getBurnGoldSum() ?? 0.00;
-        return bcadd(get_gold_pool(),$burnGold,2);
+        return bcsub(2000000000,$burnGold,2);
     }
 
 
