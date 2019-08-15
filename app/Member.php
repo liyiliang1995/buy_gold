@@ -124,7 +124,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function getStatAttribute(): string
     {
-        if ($this->status == 0) {
+        if ($this->child_user_num  == 0) {
             $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #9E9E9E">待激活</a>';
         } else {
             if ($this->status == 1) {
@@ -261,6 +261,28 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     {
         return compute_autogold($this->self_and_child_gold,$this->gold);
     }
+
+    /**
+     * @return int
+     * @see 挂单数量
+     */
+    public function getPhoneOrderNumAttribute():int
+    {
+        $phoneModel = new PhoneBuyGold;
+        $iNum = $phoneModel->where(['status'=>0,'is_show'=>1])->count();
+        return $iNum ?? 0;
+    }
+
+    /**
+     * @return float
+     */
+    public function getGoldSumAttribute():string
+    {
+        $oGoldFlowModel = new GoldFlow;
+        $burnGold = $oGoldFlowModel->getBurnGoldSum() ?? 0.00;
+        return bcsub(2000000000,$burnGold,2);
+    }
+
 
 
 }

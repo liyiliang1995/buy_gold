@@ -29,7 +29,8 @@ class HomeController extends Controller
         $aGoods = $this->getGoodsLoic($good)->query(['_sort'=>'updated_at,desc']);
         $news=new news();
         $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
-        return view('czf.home',compact('aConfig','aGoods','newslist','member_status'));
+        $member_count = $member->count() ?? 0;
+        return view('czf.home',compact('aConfig','aGoods','newslist','member_status','member_count'));
     }
 
     /**

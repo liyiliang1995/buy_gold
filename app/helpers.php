@@ -288,7 +288,7 @@ if (!function_exists('get_gold_pool')) {
      * @return foot
      * @获取金币池金币数量
      */
-    function get_gold_pool():float
+    function get_gold_pool():string
     {
         $sKey = config('czf.redis_key.s5');
         $val = redis_get($sKey);
@@ -326,7 +326,6 @@ if (!function_exists('gold_compute')) {
         $oMemberModel = new \App\Member;
         $oOrderModel = new \App\Order;
         $oButGoldModel = new \App\BuyGold;
-        $oPhoneBuyGold = new \App\PhoneBuyGold;
         $oLastGoldPool = $oGoldChangeDayModel->getLastData();
         // 统计时间里面金币池支出数量(1 后台充值金币）
         $fGoldOutNum = $oGoldFlowModel->getGoldPullOut();
