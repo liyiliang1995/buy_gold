@@ -48,7 +48,6 @@ class AutoGold extends Command
                 $oMemberLogic = new MemberLogic($oMemberModel);
                 $sKey = config('czf.redis_key.h1');
                 $members = redis_hgetall($sKey);
-                \Log::channel('script')->info('脚本正在运行', ['自动领取的member_id' => $members]);
                 foreach ($members as $val) {
                     $aInfo = json_decode($val,true);
 
@@ -60,6 +59,7 @@ class AutoGold extends Command
                         //冻结的不领取
                         && !redis_sismember(config('czf.redis_key.set1'),$aInfo['id'])
                     ) {
+                        \Log::channel('script')->info('脚本正在运行', ['自动领取的member_id' => $aInfo]);
                         if ($aInfo['date'] != date('Y-m-d',time())) {
                             set_receive_gold_member_info(['id'=>$aInfo['id'],'is_auto'=>$aInfo['is_auto'],'gold'=>0]);
                         }
