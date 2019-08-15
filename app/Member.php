@@ -262,5 +262,27 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
         return compute_autogold($this->self_and_child_gold,$this->gold);
     }
 
+    /**
+     * @return int
+     * @see 挂单数量
+     */
+    public function getPhoneOrderNumAttribute():int
+    {
+        $phoneModel = new PhoneBuyGold;
+        $iNum = $phoneModel->where(['user_id'=>$this->id,'status'=>0,'is_show'=>1])->count();
+        return $iNum ?? 0;
+    }
+
+    /**
+     * @return float
+     */
+    public function getGoldSumAttribute():string
+    {
+        $oGoldFlowModel = new GoldFlow;
+        $burnGold = $oGoldFlowModel->getBurnGoldSum() ?? 0.00;
+        return bcadd(get_gold_pool(),$burnGold,2);
+    }
+
+
 
 }

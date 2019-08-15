@@ -105,7 +105,7 @@
 
     <div class="weui-row" id="user_bg" style="padding: 0 !important;">
         <div class="weui-col-50" id="user_gold">
-            <p>当前金币总数：2000000000</p>
+            <p>当前金币总数：{{$member->gold_sum}}</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
             <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
                                                    id="next_time_f"></p>
@@ -164,7 +164,7 @@
         <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-icon_mobilephone"></i></div>
             <div class="weui-cell__bd">
-                <p>手机充值 (当前挂单 <span style="color: red">12</span>)</p>
+                <p>手机充值 (当前挂单 <span style="color: red">{{$member->phone_order_num}}</span>)</p>
             </div>
             <div class="weui-cell__ft">
             </div>
