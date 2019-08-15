@@ -269,7 +269,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     public function getPhoneOrderNumAttribute():int
     {
         $phoneModel = new PhoneBuyGold;
-        $iNum = $phoneModel->where(['user_id'=>$this->id,'status'=>0,'is_show'=>1])->count();
+        $iNum = $phoneModel->where(['status'=>0,'is_show'=>1])->count();
         return $iNum ?? 0;
     }
 
