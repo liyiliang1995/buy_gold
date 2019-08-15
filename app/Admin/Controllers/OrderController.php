@@ -30,6 +30,7 @@ class OrderController extends AdminController
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('order_no', __('订单号'));
+
         $grid->column('member.phone', __('用户'));
         $grid->column('pay_gold', __('支付金币'));
         $grid->column('amount', __('价值金额'));
