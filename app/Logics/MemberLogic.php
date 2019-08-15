@@ -581,8 +581,12 @@ class MemberLogic extends BaseLogic
      */
     public function phoneGrabOrderValidate()
     {
+
         if (\Auth::user()->getChildMemberNum() < 1)
             throw ValidationException::withMessages(['user'=>["至少激活一个用户才可以抢单！"]]);
+        if (\Auth::user()->isNormalMember() == false)
+            throw ValidationException::withMessages(['user'=>["请检查当前用户是否处于冻结状态！"]]);
+
     }
 
     /**
