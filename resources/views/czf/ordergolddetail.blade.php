@@ -60,7 +60,7 @@
 
     <div style="background: #fff;overflow: hidden;margin-top: 10px;padding: 15px;">
         <div class="weui-flex">
-            <div class="weui-flex__item" style="line-height: 30px;font-weight: bold">出售人信息</div>
+            <div class="weui-flex__item" style="line-height: 30px;font-weight: bold">求购人信息</div>
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">对方姓名</div>
