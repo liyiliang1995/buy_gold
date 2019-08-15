@@ -164,7 +164,7 @@
         <a class="weui-cell weui-cell_access" href="{{route('phone_center')}}">
             <div class="weui-cell__hd"><i class="iconfont icon-icon_mobilephone"></i></div>
             <div class="weui-cell__bd">
-                <p>手机充值</p>
+                <p>手机充值 (当前挂单 <span style="color: red">12</span>)</p>
             </div>
             <div class="weui-cell__ft">
             </div>

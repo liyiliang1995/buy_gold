@@ -54,8 +54,8 @@
 
         <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
             <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px">
-                <marquee direction="left"
-                         style="height: 30px;line-height: 30px">{{$newslist['0']['title'] ?? ''}}</marquee>
+                <marquee direction="left" style="height: 30px;line-height: 30px;width: 60%;">{{$newslist['0']['title'] ?? ''}}</marquee>
+                <p style="float: right;width: 40%"> 会员总数 <span style="color: red;">99999999</span></p>
             </label>
 
         </div>
@@ -88,7 +88,7 @@
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
         <div class="weui-flex__item"><img src="{{route('home')}}/images/indexbg.png" alt=""
-                                          style="width: 90%;display: block;margin: 0 auto;"></div>
+                                          style="width: 100%;display: block;margin: 0 auto;"></div>
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
         <div class="weui-flex__item"><img src="{{route('home')}}/images/footer.png" alt=""

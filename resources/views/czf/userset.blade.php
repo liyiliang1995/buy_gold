@@ -89,7 +89,7 @@
 
     </div>
     <div class="weui-flex" style="margin-top: 20px;">
-        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" style="    font-size: 16px; height: 45px; line-height: 45px;" class="weui-btn weui-btn_primary">修改</a></div>
+        <div class="weui-flex__item"><a href="javascript:;" id="sub_but" style="    font-size: 16px; height: 45px; line-height: 45px;" class="weui-btn weui-btn_primary">提交</a></div>
     </div>
 
     <form action="{{route('logout')}}" method="POST" >
