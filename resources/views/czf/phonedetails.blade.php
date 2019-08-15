@@ -60,15 +60,15 @@
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">对方姓名</div>
-            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->name ?? ''}}</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->member->name ?? ''}}</div>
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">联系电话</div>
-            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->phone2 ?? ''}}</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->member->phone2 ?? ''}}</div>
         </div>
         <div class="weui-row">
             <div class="weui-col-50" style="width: 30%;color: #666">微信号</div>
-            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->seller->wechat ?? ''}}</div>
+            <div class="weui-col-50" style="width: 70%">{{$oOrderGold->member->wechat ?? ''}}</div>
         </div>
     </div>
     </body>
