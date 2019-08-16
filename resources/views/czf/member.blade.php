@@ -73,17 +73,29 @@
     <!--个人中心-->
     <div class="user_bg">
         <div class="weui-flex">
-            <div class="weui-flex__item" id="user_tx">
-                <div class="weui-row">
-                    <div class="weui-col-50"><img src="./img/logo.png" alt=""></div>
-                    <div class="weui-col-50"><p>{{$member->name}}</p></div>
+
+            {{--<div class="weui-row">--}}
+
+                <div class="weui-col-50" id="user_tx" style="width: 80%">
+                    <div class="weui-row">
+                        <div class="weui-col-50" style="width: 60px"><img src="./img/logo.png" alt=""></div>
+                        <div class="weui-col-50" style="text-align: left;    width: 70%;"><p>{{$member->name}}<span style="font-size: 14px;">(@if($member->status == 0) 未激活 @elseif($member->status == 1) 已激活 @else 冻结中 @endif )</span></p></div>
+                    </div>
                 </div>
-            </div>
-            <div class="weui-flex__item">
-                <a href="{{route('userset')}}">
-                    <i style="float: right;margin: 5%;color: #fff;font-size: 24px;" class="iconfont icon-setting"></i>
-                </a>
-            </div>
+                <div class="weui-col-50" style="width: 20%">
+                    <a href="{{route('userset')}}">
+                        <i style="float: right;margin: 15%;color: #fff;font-size: 24px;" class="iconfont icon-setting"></i>
+                    </a>
+                </div>
+            {{--</div>--}}
+
+            {{--<div class="weui-flex__item" id="user_tx">--}}
+
+            {{--</div>--}}
+            {{--<div class="weui-flex__item">--}}
+
+            {{--</div>--}}
+
         </div>
 
         <div class="weui-flex" id="user_value">

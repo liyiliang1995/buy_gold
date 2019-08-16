@@ -54,7 +54,7 @@
 
         <div class="weui-cell__bd" style="height: 30px;line-height: 30px">
             <label class="weui-label" style="width: 100%" style="height: 30px;line-height: 30px">
-                <marquee direction="left" style="height: 30px;line-height: 30px;width: 60%;">{{$newslist['0']['title'] ?? ''}}</marquee>
+                <marquee direction="left" style="height: 30px;line-height: 30px;width: 60%;">{{$aConfig['config_message'] ?? ''}}</marquee>
                 <p style="float: right;width: 40%;text-align: center"> 会员总数 <span style="color: red;">{{$member_count}}</span></p>
             </label>
 

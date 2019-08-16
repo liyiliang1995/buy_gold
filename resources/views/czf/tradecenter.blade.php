@@ -106,7 +106,7 @@
     </div>
 
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
-        <div class="weui-flex__item" id="trading_va">今日均价：<b>{{$avgPrice}}</b></div>
+        <div class="weui-flex__item" id="trading_va">今日均价：￥<b>{{$avgPrice}}</b></div>
     </div>
     <div class='wrapper' style="position: relative">
         <div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">
