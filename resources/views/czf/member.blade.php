@@ -76,17 +76,18 @@
 
             {{--<div class="weui-row">--}}
 
-                <div class="weui-col-50" id="user_tx" style="width: 80%">
-                    <div class="weui-row">
-                        <div class="weui-col-50" style="width: 60px"><img src="./img/logo.png" alt=""></div>
-                        <div class="weui-col-50" style="text-align: left;    width: 70%;"><p>{{$member->name}}<span style="font-size: 14px;">({{$member->show_stat}})</span></p></div>
-                    </div>
+            <div class="weui-col-50" id="user_tx" style="width: 80%">
+                <div class="weui-row">
+                    <div class="weui-col-50" style="width: 60px"><img src="./img/logo.png" alt=""></div>
+                    <div class="weui-col-50" style="text-align: left;    width: 70%;"><p>{{$member->name}}<span
+                                style="font-size: 14px;">({{$member->show_stat}})</span></p></div>
                 </div>
-                <div class="weui-col-50" style="width: 20%">
-                    <a href="{{route('userset')}}">
-                        <i style="float: right;margin: 15%;color: #fff;font-size: 24px;" class="iconfont icon-setting"></i>
-                    </a>
-                </div>
+            </div>
+            <div class="weui-col-50" style="width: 20%">
+                <a href="{{route('userset')}}">
+                    <i style="float: right;margin: 15%;color: #fff;font-size: 24px;" class="iconfont icon-setting"></i>
+                </a>
+            </div>
             {{--</div>--}}
 
             {{--<div class="weui-flex__item" id="user_tx">--}}
@@ -190,28 +191,28 @@
             </div>
         </a>
         {{--<a class="weui-cell weui-cell_access" href="{{route('gold_record')}}">--}}
-            {{--<div class="weui-cell__hd"><i class="iconfont icon-qianbi101"></i></div>--}}
-            {{--<div class="weui-cell__bd">--}}
-                {{--<p>金币明细</p>--}}
-            {{--</div>--}}
-            {{--<div class="weui-cell__ft">--}}
-            {{--</div>--}}
+        {{--<div class="weui-cell__hd"><i class="iconfont icon-qianbi101"></i></div>--}}
+        {{--<div class="weui-cell__bd">--}}
+        {{--<p>金币明细</p>--}}
+        {{--</div>--}}
+        {{--<div class="weui-cell__ft">--}}
+        {{--</div>--}}
         {{--</a>--}}
         {{--<a class="weui-cell weui-cell_access" href="{{route('integral_record')}}">--}}
-            {{--<div class="weui-cell__hd"><i class="iconfont icon-accountbook"></i></div>--}}
-            {{--<div class="weui-cell__bd">--}}
-                {{--<p>积分明细</p>--}}
-            {{--</div>--}}
-            {{--<div class="weui-cell__ft">--}}
-            {{--</div>--}}
+        {{--<div class="weui-cell__hd"><i class="iconfont icon-accountbook"></i></div>--}}
+        {{--<div class="weui-cell__bd">--}}
+        {{--<p>积分明细</p>--}}
+        {{--</div>--}}
+        {{--<div class="weui-cell__ft">--}}
+        {{--</div>--}}
         {{--</a>--}}
         {{--<a class="weui-cell weui-cell_access" href="{{route('energy_record')}}">--}}
-            {{--<div class="weui-cell__hd"><i class="iconfont icon-rocket"></i></div>--}}
-            {{--<div class="weui-cell__bd">--}}
-                {{--<p>能量明细</p>--}}
-            {{--</div>--}}
-            {{--<div class="weui-cell__ft">--}}
-            {{--</div>--}}
+        {{--<div class="weui-cell__hd"><i class="iconfont icon-rocket"></i></div>--}}
+        {{--<div class="weui-cell__bd">--}}
+        {{--<p>能量明细</p>--}}
+        {{--</div>--}}
+        {{--<div class="weui-cell__ft">--}}
+        {{--</div>--}}
         {{--</a>--}}
     </div>
 
@@ -241,12 +242,12 @@
             </div>
         </a>
         {{--<a class="weui-cell weui-cell_access" href="tel:{{$aConfig['kefu'] ?? ''}}">--}}
-            {{--<div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>--}}
-            {{--<div class="weui-cell__bd">--}}
-                {{--<p>联系客服</p>--}}
-            {{--</div>--}}
-            {{--<div class="weui-cell__ft">--}}
-            {{--</div>--}}
+        {{--<div class="weui-cell__hd"><i class="iconfont icon-mail"></i></div>--}}
+        {{--<div class="weui-cell__bd">--}}
+        {{--<p>联系客服</p>--}}
+        {{--</div>--}}
+        {{--<div class="weui-cell__ft">--}}
+        {{--</div>--}}
         {{--</a>--}}
     </div>
 
@@ -277,6 +278,7 @@
             @endphp
             @if($errors)
             $.toast("{{$errors}}", 'text');
+
             @endif
             function set_time() {
                 var res = document.getElementById('next_time_f').value;
@@ -295,6 +297,7 @@
                     document.getElementById("next_time_f").value = resa;
                 }
             }
+
             setInterval(function () {
                 set_time();
             }, 1000);
@@ -338,6 +341,7 @@
             if (checkbox.checked == true) {
                 var url = "{{route('add_auto_gold',['type'=>1])}}";
                 document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
+                window.location.reload();
             } else {
                 var url = "{{route('add_auto_gold',['type'=>0])}}";
                 document.getElementById('check_a').innerHTML = "<a href='javascript:;' onclick='draw()' class='weui-btn weui-btn_plain-primary'>手动领取</a>";

@@ -154,8 +154,8 @@
                     },
                     success: function (result) {
                         if(result.code == 200) {
-                            console.log("{{request()->input('url')}}");
-                            window.location.href = "{{request()->input('url')}}";
+                            $.toast('设置成功！', 'text');
+                            window.location.href = "{{request()->input('url')?? route('home')}}";
                         }
                          else
                             $.toast(result.message, 'text');
