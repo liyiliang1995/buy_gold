@@ -341,7 +341,9 @@
             if (checkbox.checked == true) {
                 var url = "{{route('add_auto_gold',['type'=>1])}}";
                 document.getElementById('check_a').innerHTML = "<a class='weui-btn weui-btn_plain-primary' style='color: #666;border: 1px solid #666;'>自动领取中</a>";
-                window.location.reload();
+                setInterval(function () {
+                    window.location.reload();
+                }, 2000);
             } else {
                 var url = "{{route('add_auto_gold',['type'=>0])}}";
                 document.getElementById('check_a').innerHTML = "<a href='javascript:;' onclick='draw()' class='weui-btn weui-btn_plain-primary'>手动领取</a>";
