@@ -272,11 +272,12 @@ class MemberLogic extends BaseLogic
     public function receiveGoldValidate(float $fRnum,float $fNum):bool
     {
         //每日最高领取上限当日日均价价值500元
-        $oHourAvgPriceModel = new HourAvgPrice;
-        $gold_unit_price = $oHourAvgPriceModel->getBestNewAvgPrice();
-        $fLimitNum = bcdiv(500,$gold_unit_price,2);
-        $fTmp = bcadd($fNum,$fRnum,2);
-        return $fLimitNum > $fTmp;
+//        $oHourAvgPriceModel = new HourAvgPrice;
+//        $gold_unit_price = $oHourAvgPriceModel->getBestNewAvgPrice();
+//        $fLimitNum = bcdiv(500,$gold_unit_price,2);
+//        $fTmp = bcadd($fNum,$fRnum,2);
+//        return $fLimitNum > $fTmp;
+        return true;
     }
 
     /**
