@@ -97,6 +97,8 @@ class TradeLogic extends BaseLogic
             $bRes = $this->oBuyGoldDetail->save();
             return $bRes;
         });
+        freeze_member($this->oBuyGoldDetail->seller_id,2);
+        freeze_member($this->oBuyGoldDetail->user_id,3);
         return $bRes;
     }
 
@@ -154,7 +156,6 @@ class TradeLogic extends BaseLogic
             $this->getBuyGoldIntegralFlowDetail(2,userId(),$this->oBuyGoldDetail->consume_integral,"出售金币消耗积分")('App\BuyGoldDetail'),
 
         ]);
-        freeze_member(userId(),2);
     }
 
     /**
