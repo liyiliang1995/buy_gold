@@ -135,7 +135,7 @@ class MemberController extends Controller
      */
     public function helpCenter(News $news)
     {
-        $newslist = $news->where('type', 0)->orderBy('id', 'asc')->get();
+        $newslist = $news->where('type', 0)->orderBy('created_at', 'asc')->get();
 
         return view('czf.helpcenter', compact('newslist'));
     }
@@ -170,12 +170,13 @@ class MemberController extends Controller
      */
     public function phoneCenter(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
+        $member    = \Auth::guard()->user();
         $aParams['_sort'] = 'gold,desc';
         $aParams['status'] = 0;
         $aParams['is_show'] = 1;
         $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query($aParams);
         $avgPrice = $hourAvgPrice->getBestNewAvgPrice();
-        return view('czf.phonecenter',compact('aPhoneBuyGold','avgPrice'));
+        return view('czf.phonecenter',compact('aPhoneBuyGold','avgPrice','member'));
     }
 
     /**

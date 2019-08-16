@@ -25,10 +25,12 @@ class TradeController extends Controller
      */
     public function index(BuyGold $buyGold,HourAvgPrice $hourAvgPrice)
     {
+        $member    = \Auth::guard()->user();
         $aBuyGold       = $this->Logic($buyGold)->query(['_sort' => 'price,desc']);
         $fGuidancePrice = $this->Logic(null)->getGuidancePrice();
         $avgPrice = $hourAvgPrice->getBestNewAvgPrice();
-        return view('czf.tradecenter', compact('aBuyGold', 'fGuidancePrice','avgPrice'));
+
+        return view('czf.tradecenter', compact('aBuyGold', 'fGuidancePrice','avgPrice','member'));
     }
 
     /**

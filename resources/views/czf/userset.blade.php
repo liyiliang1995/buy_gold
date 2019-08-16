@@ -124,8 +124,8 @@
                 } else if (wechat == '') { // 验证联系微信
                     $.toast("联系微信不能为空", "text");
                     return false;
-                } else if (pw1.length < 6 && pw1 != '') {
-                    $.toast("密码必须6位以上", "text");
+                } else if (pw1.length < 8 && pw1 != '') {
+                    $.toast("密码必须8位以上", "text");
                     return false;
                 } else if (!reg.test(pw1) && pw1 != '') {
                     $.toast("密码必须包含数字和字母", "text");

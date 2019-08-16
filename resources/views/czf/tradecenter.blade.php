@@ -162,6 +162,9 @@
         <div class="weui-flex__item">求购列表</div>
     </div>
     <div class="weui-flex" id="trading_list">
+        @if($member->is_admin == 1)
+            <div class="weui-flex__item">姓名</div>
+        @endif
         <div class="weui-flex__item">数量</div>
         <div class="weui-flex__item">单价</div>
         <div class="weui-flex__item">金额</div>
@@ -169,6 +172,9 @@
     </div>
     @foreach($aBuyGold as $value)
         <div class="weui-flex" id="trading_list">
+            @if($member->is_admin == 1)
+                <div class="weui-flex__item">{{$value->member->name}}</div>
+            @endif
             <div class="weui-flex__item">{{$value->gold}}</div>
             <div class="weui-flex__item">{{$value->price}}</div>
             <div class="weui-flex__item">{{$value->sum_price}}</div>
