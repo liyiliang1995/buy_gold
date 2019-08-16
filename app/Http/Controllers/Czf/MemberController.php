@@ -135,7 +135,7 @@ class MemberController extends Controller
      */
     public function helpCenter(News $news)
     {
-        $newslist = $news->where('type', 0)->orderBy('created_at', 'asc')->get();
+        $newslist = $news->where('type', 0)->orderBy('id', 'desc')->get();
 
         return view('czf.helpcenter', compact('newslist'));
     }
