@@ -119,7 +119,7 @@
         <div class="weui-col-50" id="user_gold">
             <p>当前金币总数：{{$member->gold_sum}}</p>
             <p>其中币池剩余：{{$gold_pool}}</p>
-            <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$gold_time}}"
+            <p>距下次领取：<b id="next_time">0</b><input type="text" style="display: none" value="{{$member->next_auto_gold_time}}"
                                                    id="next_time_f"></p>
 
         </div>
