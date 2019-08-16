@@ -79,7 +79,7 @@
                 <div class="weui-col-50" id="user_tx" style="width: 80%">
                     <div class="weui-row">
                         <div class="weui-col-50" style="width: 60px"><img src="./img/logo.png" alt=""></div>
-                        <div class="weui-col-50" style="text-align: left;    width: 70%;"><p>{{$member->name}}<span style="font-size: 14px;">(@if($member->status == 0) 未激活 @elseif($member->status == 1) 已激活 @else 冻结中 @endif )</span></p></div>
+                        <div class="weui-col-50" style="text-align: left;    width: 70%;"><p>{{$member->name}}<span style="font-size: 14px;">({{$member->show_stat}})</span></p></div>
                     </div>
                 </div>
                 <div class="weui-col-50" style="width: 20%">

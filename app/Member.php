@@ -128,9 +128,26 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
             $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #9E9E9E">未激活</a>';
         } else {
             if ($this->status == 1) {
-                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #07C160">已正常</a>';
+                $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #07C160">已激活</a>';
             } else {
                 $sRes = '<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary" style="background: #F44336">冻结</a>';
+            }
+        }
+        return $sRes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShowStatAttribute(): string
+    {
+        if ($this->child_user_num  == 0) {
+            $sRes = "未激活";
+        } else {
+            if ($this->status == 1) {
+                $sRes = "已激活";
+            } else {
+                $sRes = "冻结";
             }
         }
         return $sRes;
