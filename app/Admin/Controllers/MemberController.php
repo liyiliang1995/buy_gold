@@ -128,13 +128,13 @@ class MemberController extends AdminController
     {
         $form = new Form(new Member);
 
-        $form->text('name', __('名称'));
-        $form->mobile('phone', __('手机号码'));
-        $form->text('phone2', __('联系手机'));
+        $form->text('name', __('名称'))->rules('required');
+        $form->mobile('phone', __('手机号码'))->rules('required');
+        $form->text('phone2', __('联系手机'))->rules('required');
         $form->decimal('rate', __('股东金币分成比列(例如输入12为12%)'))->default(0.00);
         $form->text('wechat', __('微信'));
         $form->select('is_admin', __('是否股东'))->options([0 => '否', 1 => '是'])->default(0);
-        $form->password('password', __('密码'));
+        $form->password('password', __('密码'))->rules('required');
         // 去掉`查看`checkbox
         $form->disableViewCheck();
         // 去掉`继续编辑`checkbox
