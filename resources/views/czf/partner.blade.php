@@ -15,13 +15,15 @@
 
 @section('content')
     <style>
-        #partner_list{
+        #partner_list {
             font-size: 12px;
         }
-        .weui-cells{
-         margin-top: 0 !important;
+
+        .weui-cells {
+            margin-top: 0 !important;
         }
-        .weui-input{
+
+        .weui-input {
             font-size: 14px;
         }
     </style>
@@ -33,39 +35,42 @@
     </div>
 
     <div class="weui-flex">
-        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">注册新用户</div>
+        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">注册新用户
+        </div>
     </div>
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" name="phone" value="{{ old('phone') }}" placeholder="请输入手机号">
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" name="name" placeholder="真实姓名">
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="password" name="password" placeholder="请输入密码">
-                </div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__hd"><i class="iconfont icon-safetycertificate" style="font-size: 1rem"></i></div>
-                <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" name="code" pattern="[0-9]*" placeholder="请输入验证码">
-                </div>
-                <div class="weui-cell__ft">
-                    <a href="javascript:void(0)" class="weui-vcode-btn code">获取验证码</a>
-                </div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="phone" value="{{ old('phone') }}" placeholder="请输入手机号">
             </div>
         </div>
-        <div class="weui-flex">
-            <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary" style="width: 90%;margin-top: 30px;">注册</a></div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="name" placeholder="真实姓名">
+            </div>
         </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="password" name="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><i class="iconfont icon-safetycertificate" style="font-size: 1rem"></i></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="code" pattern="[0-9]*" placeholder="请输入验证码">
+            </div>
+            <div class="weui-cell__ft">
+                <a href="javascript:void(0)" class="weui-vcode-btn code">获取验证码</a>
+            </div>
+        </div>
+    </div>
     <div class="weui-flex">
-        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">我的伙伴</div>
+        <div class="weui-flex__item"><a id="rg" href="javascript:;" class="weui-btn weui-btn_primary"
+                                        style="width: 90%;margin-top: 30px;">注册</a></div>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-flex__item" style="line-height: 35px;padding: 10px;font-weight: bold;font-size: 16px;">我的伙伴
+        </div>
     </div>
 
     <div class="weui-flex" id="partner_list">
@@ -74,28 +79,33 @@
 
 
     @foreach($oPartner as $key=>$value)
-    <div class="weui-flex" id="partner_list">
-        <div class="weui-flex__item" id="partner_user">
-            <p style="font-weight: bold">{{$value['name'] ?: $value['phone']}}</p>
-            <p style="width:140px;">{{$value['created_at']}}</p>
+        <div class="weui-flex" id="partner_list">
+            <div class="weui-flex__item" id="partner_user">
+                <p style="font-weight: bold">{{$value['name'] ?: $value['phone']}}</p>
+                <p style="width:140px;">{{$value['created_at']}}</p>
+            </div>
+            <div class="weui-flex__item" style="text-align: center;">
+                <p>金币数</p>
+                <p>{{$value['gold']}}</p>
+            </div>
+            <div class="weui-flex__item" style="">
+                {!! $value['stat'] !!}
+            </div>
         </div>
-        <div class="weui-flex__item" style="text-align: center;">
-            <p>金币数</p><p>{{$value['gold']}}</p>
-        </div>
-        <div class="weui-flex__item" style="">
-            {!! $value['stat'] !!}
-        </div>
-    </div>
     @endforeach
 
     </body>
     <script>
         var rg = {
-            isPhoneNo:function (phone) {
+            isPhoneNo: function (phone) {
                 var pattern = /^1[349578]\d{9}$/;
                 return pattern.test(phone);
             },
-            phone:function () {
+            isPassword: function (pwd) {
+                var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
+                return reg.test(pwd);
+            },
+            phone: function () {
                 var phone = $('input[name="phone"]').val().trim();
                 if (this.isPhoneNo(phone))
                     return phone;
@@ -105,71 +115,83 @@
                 }
 
             },
-            pwd:function () {
+            pwd: function () {
                 var pwd = $('input[name="password"]').val().trim();
-                if (pwd)
-                    return pwd;
-                else{
-                    $.toast("密码不能为空！", 'text');
+                if (pwd.length > 8) {
+                    if (this.isPassword(pwd)) {
+                        return pwd;
+                    } else {
+                        $.toast("密码必须包含数字和字母！", 'text');
+                        return;
+                    }
+                } else {
+                    $.toast("密码必须8位以上！", 'text');
                     return;
                 }
 
             },
-            name:function() {
+            name: function () {
                 var name = $('input[name="name"]').val().trim();
                 if (name)
                     return name;
-                else{
+                else {
                     $.toast("真实姓名不能为空！", 'text');
                     return;
                 }
             },
-            code:function() {
+            code: function () {
                 var code = $('input[name="code"]').val().trim();
                 if (code)
                     return code;
-                else{
+                else {
                     $.toast("验证码不能为空！", 'text');
                     return;
                 }
             },
-            register:function () {
+            register: function () {
                 if (this.pwd() && this.phone() && this.name() && this.code()) {
                     $.ajax({
                         url: "{{route('agentRegister')}}",
-                        type:'post',
+                        type: 'post',
                         dataType: "json",
-                        data:{ name:this.name(),phone:this.phone(),password:this.pwd(),code:this.code(),_method:'post' ,_token:"{{csrf_token()}}"},
-                        error:function(data){
-                            $.toast("服务器繁忙, 请联系管理员！",'text');
+                        data: {
+                            name: this.name(),
+                            phone: this.phone(),
+                            password: this.pwd(),
+                            code: this.code(),
+                            _method: 'post',
+                            _token: "{{csrf_token()}}"
+                        },
+                        error: function (data) {
+                            $.toast("服务器繁忙, 请联系管理员！", 'text');
                             return;
                         },
-                        success:function(result){
-                            if(result.code == 200){
-                                $.toast('注册成功!','text');
+                        success: function (result) {
+                            if (result.code == 200) {
+                                $.toast('注册成功!', 'text');
                                 window.location.reload();
                             } else {
-                                $.toast(result.message,'text')
+                                $.toast(result.message, 'text')
                             }
                         },
                     })
                 }
             },
-            isPhoneNo:function (phone) {
+            isPhoneNo: function (phone) {
                 var pattern = /^1[349578]\d{9}$/;
                 return pattern.test(phone);
             },
-            flag:0,
+            flag: 0,
         }
         $(function () {
             @php
                 $errors = session()->get('lock');
             @endphp
             @if($errors)
-                $.toast("{{$errors}}", 'text');
+            $.toast("{{$errors}}", 'text');
             @endif
 
-            $("#rg").on('click',function() {
+            $("#rg").on('click', function () {
                 rg.register();
             })
             $(".code").on('click', function () {
@@ -188,41 +210,45 @@
             })
             /**
              * @see 计数器
-            */
+             */
             var countdown = 60;
+
             function settime(obj) {
                 if (countdown == 0) {
                     obj.html("获取验证码");
-                    obj.css('background','rgb(255, 255, 255)');
+                    obj.css('background', 'rgb(255, 255, 255)');
                     rg.flag = 0;
                     countdown = 60;
                     return;
                 } else {
-                    obj.css('background','#fff');
+                    obj.css('background', '#fff');
                     obj.html("重新发送(" + countdown + ")");
                     rg.flag = 1;
                     countdown--;
                 }
-                setTimeout(function(){settime(obj)},1000)
+                setTimeout(function () {
+                    settime(obj)
+                }, 1000)
             }
+
             /**
              * @param phone
              */
             function ajaxGetCode(phone) {
                 $.ajax({
                     url: "{{route('sendMsg')}}",
-                    type:'post',
+                    type: 'post',
                     dataType: "json",
-                    data:{phone:phone,_method:'post' ,_token:"{{csrf_token()}}"},
-                    error:function(data){
-                        $.toast("服务器繁忙, 请联系管理员！",'text');
+                    data: {phone: phone, _method: 'post', _token: "{{csrf_token()}}"},
+                    error: function (data) {
+                        $.toast("服务器繁忙, 请联系管理员！", 'text');
                         return;
                     },
-                    success:function(result){
-                        if(result.code == 200){
+                    success: function (result) {
+                        if (result.code == 200) {
                             settime($(".code"));
                         } else {
-                            $.toast(result.message,'text')
+                            $.toast(result.message, 'text')
                         }
                     },
                 })
