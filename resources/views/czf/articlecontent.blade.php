@@ -48,7 +48,7 @@
         <div class="weui-flex__item"><h3>{{$newscontent->title ?? ''}}</h3></div>
     </div>
     <div class="weui-flex" id="article_time">
-        <div class="weui-flex__item">{{$newscontent->updated_at}}</div>
+        <div class="weui-flex__item">{{$newscontent->created_at}}</div>
     </div>
 
     <div class="weui-flex" id="article_main">
