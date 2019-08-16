@@ -73,7 +73,7 @@ class BuyGold extends Model
      */
     public function afterInsert()
     {
-        $this->freezeBuyer();
+        //$this->freezeBuyer();
     }
 
     /**

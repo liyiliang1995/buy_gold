@@ -606,9 +606,12 @@ if (!function_exists('freeze_member')) {
      */
     function freeze_member($id,$status)
     {
-        redis_sadd(config("czf.redis_key.set1"), $id);
         $oMemberModel = new \App\Member;
-        $oMemberModel->where('id',$id)->where('is_admin',0)->increment('time',1,['status'=>$status]);
+        $oMemberDetail = $oMemberModel->where('is_admin',0)->find($id);
+        if ($oMemberDetail) {
+            redis_sadd(config("czf.redis_key.set1"), $id);
+            $oMemberDetail->increment('time',1,['status'=>$status]);
+        }
     }
 }
 
