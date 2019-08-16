@@ -44,10 +44,10 @@ class MemberController extends AdminController
         $grid->column('rate', __('股东分成比列'));
         $grid->column('status', __('状态'))->display(function ($status) {
             if ($this->child_user_num  == 0) {
-                return '待激活';
+                return '未激活';
             } else {
                 if ($status == 1) {
-                    return '正常';
+                    return '已激活';
                 } else {
                     return "冻结";
                 }
