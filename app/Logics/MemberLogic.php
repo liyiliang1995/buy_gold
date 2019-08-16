@@ -442,24 +442,24 @@ class MemberLogic extends BaseLogic
     {
         $aStockholder = $this->model->where('is_admin' ,1)->where('rate','>',0)->get();
 
-        $this->in_tmp_pool = $in_tmp_pool = $aParams['gold'];
+        $this->in_tmp_pool = $aParams['gold'];
         // 是否分配了股东分成
         if(count($aStockholder) > 0) {
             foreach ($aStockholder as $item) {
-                $fStockholderGold  = $this->getGoldByRate($item->rate,$in_tmp_pool);
-                $in_tmp_pool -= $fStockholderGold;
+                $fStockholderGold  = $this->getGoldByRate($item->rate,$aParams['gold']);
+                $this->in_tmp_pool -= $fStockholderGold;
                 // 股东增加金币
                 $item->increment('gold',$fStockholderGold);
                 // 股东奖励
                 $this->getBuyGoldGoldFlowDetail(1,17,$item['id'],$fStockholderGold,"积分兑换金币流向股东");
             }
             // 购物金币流向金币池 0代表系统 这个操作归属用户为系统
-            $this->getBuyGoldGoldFlowDetail(1,16,0,$in_tmp_pool,"金币兑换积分金币流向金币池");
+            $this->getBuyGoldGoldFlowDetail(1,16,0,$this->in_tmp_pool,"金币兑换积分金币流向金币池");
         }
         // 没有股东金币全部流入币池
         else {
             // 购物金币流向金币池 0代表系统 这个操作归属用户为系统
-            $this->getBuyGoldGoldFlowDetail(1,16,0,$in_tmp_pool,"金币兑换积分金币流向金币池");
+            $this->getBuyGoldGoldFlowDetail(1,16,0,$this->in_tmp_pool,"金币兑换积分金币流向金币池");
         }
     }
 
