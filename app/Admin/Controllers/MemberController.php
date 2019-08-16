@@ -42,17 +42,7 @@ class MemberController extends AdminController
         $grid->column('child_user_num', __('代理下级个数'));
         $grid->column('wechat', __('微信'));
         $grid->column('rate', __('股东分成比列'));
-        $grid->column('status', __('状态'))->display(function ($status) {
-            if ($this->child_user_num  == 0) {
-                return '未激活';
-            } else {
-                if ($status == 1) {
-                    return '已激活';
-                } else {
-                    return "冻结";
-                }
-            }
-        });
+        $grid->column('show_stat', __('状态'));
         $grid->column('is_admin', __('是否股东'))->display(function ($is_admin) {
             if ($is_admin == 1) {
                 return '是';
