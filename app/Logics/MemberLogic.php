@@ -42,8 +42,8 @@ class MemberLogic extends BaseLogic
         $bRes = DB::transaction(function () use($aParam){
                 //$this->agentRegisterSave($aParam);
                 $this->member = $this->member->addChildMember(Arr::only($aParam,['password','phone','name']));
-                $this->agentRegisterFlow();
-                $this->agentRegisterIncreaseAndDecrease();
+//                $this->agentRegisterFlow();
+//                $this->agentRegisterIncreaseAndDecrease();
                 return true;
         });
         return $bRes;
