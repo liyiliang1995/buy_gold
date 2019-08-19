@@ -113,7 +113,7 @@
         </form>
     </div>
     <div class="weui-flex" style="padding: 15px;background: #fff;padding-bottom: 0;">
-        <div class="weui-flex__item"><B id="sum_pre">支付金币数量以抢单时的币价计算</B></div>
+        <div class="weui-flex__item" style="text-align: center"><B id="sum_pre">支付金币数量以抢单时的币价计算</B></div>
     </div>
     <div class="weui-flex" style="padding: 30px;background: #fff;">
         <div class="weui-flex__item"><a href="javascript:;" id="submit" class="weui-btn weui-btn_primary"
