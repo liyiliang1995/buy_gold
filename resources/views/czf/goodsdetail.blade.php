@@ -56,7 +56,7 @@
 
         </div>
         <!-- Add Pagination -->
-        <div class="swiper-pagination swiper-pagination-white"></div>
+        {{--<div class="swiper-pagination swiper-pagination-white"></div>--}}
     </div>
     <div class="weui-panel weui-panel_access goods-info">
         <div class="weui-panel__bd">
