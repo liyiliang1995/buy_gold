@@ -9,7 +9,7 @@
     ],
 'js' => [
         'js/jquery-weui.min.js',
-        'js/swiper.min.js',
+    //    'js/swiper.min.js',
         'js/city-picker.min.js'
     ],
 'script' => [
@@ -25,7 +25,6 @@
         });"
     ]
 ])
-
 @section('content')
     <style>
         #goods_detail_but a{
@@ -38,6 +37,7 @@
     </style>
     <body class="details-page">
     <!--头部-->
+    <script src="/js/swiper.min.js"></script>
     <div class="weui-flex" id="header_top">
         <a href="javascript:history.back(-1)"><img src="{{route('home')}}/img/fh.png" alt=""></a>
         <div class="weui-flex__item">商品详情</div>
@@ -88,5 +88,13 @@
             </a>
         </div>
     </div>
+    <script type="text/javascript">
+        var mySwiper  = new Swiper(".swiper-container",{
+
+            autoplay:true//设置自动循环播放
+
+        })
+    </script>
+
     </body>
 @endsection
