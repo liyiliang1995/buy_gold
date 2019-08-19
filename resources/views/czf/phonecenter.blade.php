@@ -126,7 +126,7 @@
             <div class="weui-flex__item">姓名</div>
         @endif
         <div class="weui-flex__item">充值金额</div>
-        <!--<div class="weui-flex__item">金币数</div>-->
+        <div class="weui-flex__item">金币数</div>
         <div class="weui-flex__item">操作</div>
     </div>
     @foreach($aPhoneBuyGold as $value)
