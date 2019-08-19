@@ -248,7 +248,7 @@ class MemberLogic extends BaseLogic
                 });
                 // 用户领取金币数量 redis
                 set_receive_gold_member_info(['id'=>$id,'is_auto'=>1,'gold'=>$fNum]);
-                $this->setParentReceiveGoldMemberInfo($fParentNum);
+                // $this->setParentReceiveGoldMemberInfo($fParentNum);
                 // 金币池变化
                 set_gold_pool(bcadd($fNum,$fParentNum,2),false);
             }
@@ -393,7 +393,7 @@ class MemberLogic extends BaseLogic
             // 上级增加
             $this->parentIncreaseAndDecrease($fParentNum);
         });
-        $this->setParentReceiveGoldMemberInfo($fParentNum);
+       // $this->setParentReceiveGoldMemberInfo($fParentNum);
         // 用户领取金币数量 redis
         set_receive_gold_member_info(['id'=>$id,'is_auto'=>0,'gold'=>$fNum]);
         // 金币池变化
