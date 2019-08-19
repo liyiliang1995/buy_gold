@@ -30,6 +30,7 @@ class MemberLogic extends BaseLogic
      */
     protected $oPhoneBuyGoldDetail;
 
+
     /**
      * @param array $aParam
      * @return bool
@@ -493,16 +494,25 @@ class MemberLogic extends BaseLogic
     public function phoneBuyGold(array $aParams):bool
     {
         $aParams['sum_price'] = $aParams['sum_price'];//bcmul($aParams['gold'],$aParams['price'],2);
-        $aParams['gold'] = bcmul(bcdiv($aParams['sum_price'],$aParams['price'],2),1.2,2);
+        $aParams['gold'] = $this->getPriceToPhoneGold($aParams);
         $this->phoneBuyGoldValidate($aParams);
         $bRes = DB::transaction(function () use ($aParams){
                 $this->phoneBuyGoldSave($aParams);
-                $this->phoneBuyGoldFlow($aParams);
-                $this->phoneBuyGoldIncreaseAndDecrease($aParams);
+//                $this->phoneBuyGoldFlow($aParams);
+//                $this->phoneBuyGoldIncreaseAndDecrease($aParams);
                 return true;
         });
-        freeze_member(userId(),2);
         return $bRes ?? false;
+    }
+
+    /**
+     * @param array $aParams
+     * @return float
+     * @see 手机充值 充值金额换算金币
+     */
+    public function getPriceToPhoneGold(array $aParams):string
+    {
+        return bcmul(bcdiv($aParams['sum_price'],$aParams['price'],2),1.2,2);
     }
 
     /**
@@ -512,8 +522,8 @@ class MemberLogic extends BaseLogic
     public function phoneBuyGoldSave(array $aParams)
     {
         $this->model->user_id = userId();
-        $this->model->gold = $aParams['gold'];
-        $this->model->price = $aParams['price'];
+//        $this->model->gold = $aParams['gold'];
+//        $this->model->price = $aParams['price'];
         $this->model->sum_price = $aParams['sum_price'];
         $this->model->save();
     }
@@ -551,9 +561,12 @@ class MemberLogic extends BaseLogic
     /**
      * @param array $aParams
      */
-    public function phoneBuyGoldIncreaseAndDecrease(array $aParams)
+    public function phoneGrabOrderIncreaseAndDecrease()
     {
-        \Auth::user()->decrement('gold',$aParams['gold']);
+        if ($this->oPhoneBuyGoldDetail->member->gold < $this->oPhoneBuyGoldDetail->gold)
+            throw ValidationException::withMessages(['user'=>["当前订单挂单用户金币数量不足"]]);
+        \Auth::user()->increment("gold",$this->oPhoneBuyGoldDetail->gold);
+        $this->oPhoneBuyGoldDetail->member->decrement('gold',$this->oPhoneBuyGoldDetail->gold);
     }
 
     /**
@@ -565,16 +578,30 @@ class MemberLogic extends BaseLogic
     {
         $this->phoneGrabOrderValidate();
         $bRes = DB::transaction(function () use($id){
+            $fAvgPrice = $this->getBestNewAvgPrice();
             $this->oPhoneBuyGoldDetail = $this->model->where("is_show",1)->where('status',0)->lockForUpdate()->findOrFail($id);
-
+            $this->oPhoneBuyGoldDetail->gold = $this->getPriceToPhoneGold(['price'=>$fAvgPrice,'sum_price'=>$this->oPhoneBuyGoldDetail->sum_price]);
             $this->phoneGrabOrderflow();
-            \Auth::user()->increment("gold",$this->oPhoneBuyGoldDetail->gold);
+            $this->phoneGrabOrderIncreaseAndDecrease();
+            $this->oPhoneBuyGoldDetail->price = $fAvgPrice;
             $this->oPhoneBuyGoldDetail->is_show = 0;
             $this->oPhoneBuyGoldDetail->seller_id = userId();
             return $this->oPhoneBuyGoldDetail->save();
         });
+        freeze_member($this->oPhoneBuyGoldDetail->user_id,2);
         freeze_member(userId(),3);
         return $bRes;
+    }
+
+    /**
+     * @return float
+     * @see 获取最新均价
+     */
+    public function getBestNewAvgPrice():float
+    {
+        $hourAvgPriceModel = new HourAvgPrice;
+        $fAvgPrice = $hourAvgPriceModel->getBestNewAvgPrice();
+        return $fAvgPrice;
     }
 
     /**
@@ -597,6 +624,7 @@ class MemberLogic extends BaseLogic
     {
         $this->oPhoneBuyGoldDetail->phone_buy_gold_details()->saveMany(
             [
+                $this->getBuyGoldGoldFlowDetail(0,18,$this->oPhoneBuyGoldDetail->user_id,$this->oPhoneBuyGoldDetail->gold,"挂单扣除金币")('App\PhoneBuyGoldDetail'),
                 $this->getBuyGoldGoldFlowDetail(1,19,userId(),$this->oPhoneBuyGoldDetail->gold,"抢单获得金币")('App\PhoneBuyGoldDetail'),
             ]
         );
@@ -621,25 +649,25 @@ class MemberLogic extends BaseLogic
      * @判断订单是否是没有在交易中
      * @撤单后解除冻结
      */
-    public function applyCancelOrder(int $id):bool
-    {
-        $bRes =  DB::transaction(function () use($id) {
-            $oOrder = $this->model->lockForUpdate()->findOrFail($id);
-            if ($oOrder->user_id != userId())
-                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
-            if ($oOrder->seller_id)
-                throw ValidationException::withMessages(['user_id' => ['当前订单已处于交易中，无法撤销！']]);
-            if ($oOrder->status != 0)
-                throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
-            $this->applyCancelOrderFlow($oOrder);
-            \Auth::user()->increment('gold',$oOrder->gold);
-            // 下架
-            $oOrder->delete();
-            $this->releaseLock([\Auth::user()->id]);
-            return true;
-        });
-        return $bRes ?? false;
-    }
+//    public function applyCancelOrder(int $id):bool
+//    {
+//        $bRes =  DB::transaction(function () use($id) {
+//            $oOrder = $this->model->lockForUpdate()->findOrFail($id);
+//            if ($oOrder->user_id != userId())
+//                throw ValidationException::withMessages(['user_id' => ['不能操作非本人购买的订单！']]);
+//            if ($oOrder->seller_id)
+//                throw ValidationException::withMessages(['user_id' => ['当前订单已处于交易中，无法撤销！']]);
+//            if ($oOrder->status != 0)
+//                throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
+//            $this->applyCancelOrderFlow($oOrder);
+//            \Auth::user()->increment('gold',$oOrder->gold);
+//            // 下架
+//            $oOrder->delete();
+//            $this->releaseLock([\Auth::user()->id]);
+//            return true;
+//        });
+//        return $bRes ?? false;
+//    }
 
     /**
      * @see 手机充值取消订单流水

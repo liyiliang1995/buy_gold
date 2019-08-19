@@ -159,6 +159,9 @@
             }
         };
         $(function () {
+            @if($errors->has('user_id'))
+                $.toast("{{$errors->get('user_id')[0]}}", 'text');
+            @endif
             @php
                 $errors = session()->get('lock');
             @endphp

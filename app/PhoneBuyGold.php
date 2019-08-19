@@ -93,6 +93,24 @@ class PhoneBuyGold extends Model
     }
 
     /**
+     * @param $price
+     * @return string
+     */
+    public function getPriceAttribute($price):string
+    {
+        return $price > 0 ? $price : (new HourAvgPrice)->getBestNewAvgPrice();
+    }
+
+    /**
+     * @param $price
+     * @return string
+     */
+    public function getGoldAttribute($gold):string
+    {
+        return $gold > 0 ? $gold :bcmul(bcdiv($this->sum_price,$this->price,2),1.2,2);
+    }
+
+    /**
      * @return string
      */
     public function getGiveStatusAttribute():string

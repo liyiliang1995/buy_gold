@@ -126,7 +126,7 @@
             <div class="weui-flex__item">姓名</div>
         @endif
         <div class="weui-flex__item">充值金额</div>
-        <div class="weui-flex__item">金币数</div>
+        <!--<div class="weui-flex__item">金币数</div>-->
         <div class="weui-flex__item">操作</div>
     </div>
     @foreach($aPhoneBuyGold as $value)
@@ -135,7 +135,7 @@
             <div class="weui-flex__item">{{$value->member->name}}</div>
         @endif
         <div class="weui-flex__item">{{$value->sum_price}}</div>
-        <div class="weui-flex__item">{{$value->gold}}</div>
+        {{--<div class="weui-flex__item">{{$value->gold}}</div>--}}
         <div class="weui-flex__item">
             @if(userId() != $value->user_id)
                 <a href="{{route('phone_sell',['id'=>$value->id])}}" class="weui-btn weui-btn_primary"
@@ -177,7 +177,7 @@
             }
         };
         $(document).ready(function(){
-            phone_buy_gold.show_gold();
+            // phone_buy_gold.show_gold();
             @if($errors->has('price'))
                 $.toast("{{$errors->get('price')[0]}}", 'text');
             @endif
@@ -185,7 +185,7 @@
             // 点击选择
             $('input:radio').click(function () {
                 phone_buy_gold.price = $('input[name="money"]:checked').val().trim();
-                phone_buy_gold.show_gold();
+                // phone_buy_gold.show_gold();
             });
 
             $("#submit").on('click',function(){

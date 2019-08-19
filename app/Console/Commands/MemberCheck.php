@@ -69,7 +69,7 @@ class MemberCheck extends Command
         $this->member_model = new Member;
         $this->phone_buy_gold_model = new PhoneBuyGold;
         $this->start_time_oneday = date("Y-m-d H:i:s",strtotime("-1 day"));
-        $this->start_time_twoday = date("Y-m-d H:i:s",strtotime("-2 day"));
+        $this->start_time_twoday = date("Y-m-d H:i:s",strtotime("-3 day"));
         $this->end_time = date("Y-m-d H:i:s");
         // 72小时没人下单的订单撤销
         $this->CancelOrder();
