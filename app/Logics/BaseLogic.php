@@ -279,6 +279,7 @@ class BaseLogic {
      * 18 挂单扣除金币
      * 19 抢单获得金币
      * 20 撤销订单返回金币
+     * 21 下线免费领取金币（含手动和自）上线得20%
      * @param int $iUserId
      * @param float $fGold
      * @return object

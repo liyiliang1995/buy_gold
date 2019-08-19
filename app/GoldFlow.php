@@ -70,8 +70,11 @@ class GoldFlow extends Model
     {
         // 领取扣除
         $fGoldA = $this->getAutoGoldSum();
+        // 下线免费领取金币（含手动和自）上线得20%
+        $fParentGold = $this->getParentAutoGoldSum();
+        // 充值
         $fGoldR = $this->getRechargeNum(9);
-        return bcadd($fGoldA,$fGoldR,2);
+        return bcadd(bcadd($fGoldA,$fGoldR,2),$fParentGold,2);
     }
 
     /**
@@ -152,6 +155,15 @@ class GoldFlow extends Model
     public function getAutoGoldSum():float
     {
         return $this->where(['is_statistical' => 0,'type'=> 4])->sum('gold');
+    }
+
+    /**
+     * @return float
+     * @see 下线免费领取金币（含手动和自）上线得20%
+     */
+    public function getParentAutoGoldSum():float
+    {
+        return $this->where(['is_statistical' => 0,'type'=> 21])->sum('gold') ?? 0.00;
     }
 
     /**

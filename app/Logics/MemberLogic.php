@@ -236,19 +236,37 @@ class MemberLogic extends BaseLogic
 
             // 本次领取数量
             $fNum = $this->getReceiveGoldNum();
+            // 上级领取数量
+            $fParentNum = $this->getParentReceiveGoldNum($fNum);
             // 验证
             $bRes = $this->receiveGoldValidate($fRnum,$fNum);
 
             if ($bRes) {
-                DB::transaction(function () use($fNum,$id) {
-                    $this->receiveGoldFlow($fNum, $id);
-                    $this->IncreaseAndDecrease($fNum);
+                DB::transaction(function () use($fNum,$id,$fParentNum) {
+                    $this->receiveGoldFlow($fNum, $id,$fParentNum);
+                    $this->IncreaseAndDecrease($fNum,$fParentNum);
                 });
                 // 用户领取金币数量 redis
                 set_receive_gold_member_info(['id'=>$id,'is_auto'=>1,'gold'=>$fNum]);
+                $this->setParentReceiveGoldMemberInfo($fParentNum);
                 // 金币池变化
-                set_gold_pool($fNum,false);
+                set_gold_pool(bcadd($fNum,$fParentNum,2),false);
             }
+        }
+    }
+
+    /**
+     * @param float $fParentNum
+     * @see redis 自动领取的信息
+     */
+    public function setParentReceiveGoldMemberInfo(float $fParentNum)
+    {
+        // 上级用户 并且存在 没有冻结
+        if (
+            $this->model->parentuser
+            && !redis_sismember(config('czf.redis_key.set1'),$this->model->parentuser->id))
+        {
+            set_receive_gold_member_info(['id'=>$this->model->parentuser->id,'is_auto'=>1,'gold'=>$fParentNum]);
         }
     }
 
@@ -261,6 +279,17 @@ class MemberLogic extends BaseLogic
         // 自己和代理总金币数量
         $fSumGold = $this->model->self_and_child_gold;
         return compute_autogold($fSumGold,$this->model->gold);
+
+    }
+
+    /**
+     * @return float
+     */
+    public function getParentReceiveGoldNum(float $fNum):float
+    {
+        $fRes = bcmul($fNum,0.2,2);
+        // 上级领取金额
+        return $fRes > 0.02 ? $fRes : 0.02;
 
     }
 
@@ -285,21 +314,51 @@ class MemberLogic extends BaseLogic
      * @param float $fNum 领取数量
      * @see 领取金币流水表
      */
-    public function receiveGoldFlow(float $fNum,int $id)
+    public function receiveGoldFlow(float $fNum,int $id,float $fParentNum)
     {
         // 自动领取一次扣除 1能量值
         $this->getBuyGoldGoldFlowDetail(1,4,$id,$fNum,"领取获得金币");
         $this->getBuyGoldEnergyFlowDetail(1, $id, 1,'自动领取金币消耗能量值');
+        $this->parentReceiveGoldFlow($fParentNum);
+    }
+
+    /**
+     * @param $parent_id
+     * @see 上级粉红流水
+     */
+    public function parentReceiveGoldFlow(float $fParentNum)
+    {
+        // 上级用户 并且存在 没有冻结
+        if (
+            $this->model->parentuser
+            && !redis_sismember(config('czf.redis_key.set1'),$this->model->parentuser->id))
+        {
+            $this->getBuyGoldGoldFlowDetail(1,21,$this->model->parentuser->id,$fParentNum,"下线免费领取金币（含手动和自）上线得20%");
+        }
+    }
+
+    /**
+     * @param float $fParentNum
+     */
+    public function parentIncreaseAndDecrease(float $fParentNum)
+    {
+        if (
+            $this->model->parentuser
+            && !redis_sismember(config('czf.redis_key.set1'),$this->model->parentuser->id))
+        {
+            $this->model->parentuser->increment('gold',$fParentNum);
+        }
     }
 
     /**
      * @param float $fNum
      * @param int $id
      */
-    public function IncreaseAndDecrease(float $fNum)
+    public function IncreaseAndDecrease(float $fNum,float $fParentNum)
     {
         $this->model->increment('gold',$fNum);
         $this->model->decrement('energy',1);
+        $this->parentIncreaseAndDecrease($fParentNum);
 
     }
 
@@ -316,21 +375,29 @@ class MemberLogic extends BaseLogic
         $id = $this->model->id;
         // 已经领取数量
         $result = redis_hget(config("czf.redis_key.h1"),$id);
+
         $fRes = $result['gold'] ?? 0;
         // 本次领取数量
         $fNum = $this->getReceiveGoldNum();
+        // 上级领取数量
+        $fParentNum = $this->getParentReceiveGoldNum($fNum);
         // 验证
         $this->manualGiveGoldValidate($fRes,$fNum,$result);
-        DB::transaction(function () use($fNum,$id) {
+        DB::transaction(function () use($fNum,$id,$fParentNum) {
             // 明细
             $this->getBuyGoldGoldFlowDetail(1, 4, $id, $fNum, "领取获得金币");
+            // 上级分红
+            $this->parentReceiveGoldFlow($fParentNum);
             // 增加
             $this->model->increment('gold', $fNum);
+            // 上级增加
+            $this->parentIncreaseAndDecrease($fParentNum);
         });
+        $this->setParentReceiveGoldMemberInfo($fParentNum);
         // 用户领取金币数量 redis
         set_receive_gold_member_info(['id'=>$id,'is_auto'=>0,'gold'=>$fNum]);
         // 金币池变化
-        set_gold_pool($fNum,false);
+        set_gold_pool(bcadd($fNum,$fParentNum,2),false);
     }
 
     /**

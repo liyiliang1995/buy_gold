@@ -109,12 +109,16 @@ class EveryDayGoldPool extends Command
     {
         // 领取扣除
         $fGoldA = $this->getAutoGoldSum();
+        // 下线免费领取金币（含手动和自）上线得20%
+        $fParentGold = $this->getParentAutoGoldSum();
+        // 金币充值
         $fGoldR = $this->getRechargeNum(9);
-        return bcadd($fGoldA,$fGoldR,2);
+        return bcadd(bcadd($fGoldA,$fGoldR,2),$fParentGold,2);
     }
 
     public function goldPullOutUpdate()
     {
+        $this->model->where(['is_statistical' => 0,'type'=>21])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>9])->update(['is_statistical'=>1]);
         $this->model->where(['is_statistical' => 0,'type'=>4])->update(['is_statistical'=>1]);
     }
@@ -136,6 +140,15 @@ class EveryDayGoldPool extends Command
     public function getAutoGoldSum():float
     {
         return $this->model->where(['is_statistical' => 0,'type'=> 4])->lockForUpdate()->sum('gold') ?? 0.00;
+    }
+
+    /**
+     * @return float
+     * @see 下线免费领取金币（含手动和自）上线得20%
+     */
+    public function getParentAutoGoldSum():float
+    {
+        return $this->model->where(['is_statistical' => 0,'type'=> 21])->lockForUpdate()->sum('gold') ?? 0.00;
     }
 
     /**
