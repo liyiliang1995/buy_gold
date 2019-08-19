@@ -76,8 +76,8 @@ class MemberLogic extends BaseLogic
             throw new CzfException("手机验证码不正确！");
         if ($this->model->checkPhoneOnly($aParam['phone']) || $this->member->isExistsPhone($aParam['phone']))
             throw new CzfException("注册手机号码已经存在！");
-        if (\Auth::user()->gold < $this->agentRegisterGold)
-            throw new CzfException("代理注册需要个人金币数量大于".$this->agentRegisterGold."！");
+//        if (\Auth::user()->gold < $this->agentRegisterGold)
+//            throw new CzfException("代理注册需要个人金币数量大于".$this->agentRegisterGold."！");
     }
     /*
      * @see带注册以后给新用户转入100金币
