@@ -671,6 +671,7 @@ class MemberLogic extends BaseLogic
 
     /**
      * @see 手机充值取消订单流水
+     * @see 暂时作废
      */
     public function applyCancelOrderFlow(object $oOrder)
     {
