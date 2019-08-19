@@ -113,7 +113,7 @@
         </form>
     </div>
     <div class="weui-flex" style="padding: 15px;background: #fff;padding-bottom: 0;">
-        <div class="weui-flex__item">需支付金币：<B id="sum_pre">0</B></div>
+        <div class="weui-flex__item"><B id="sum_pre">支付金币数量以抢单时的币价计算</B></div>
     </div>
     <div class="weui-flex" style="padding: 30px;background: #fff;">
         <div class="weui-flex__item"><a href="javascript:;" id="submit" class="weui-btn weui-btn_primary"
@@ -170,11 +170,11 @@
                 }
                 return val;
             },
-            show_gold:function () {
-                var gold = this.intToFloat(parseFloat(this.price)/parseFloat(this.avg_price));
-                var show_gold = this.intToFloat(parseFloat(gold*1.2));
-                $("#sum_pre").empty().html(show_gold);
-            }
+            // show_gold:function () {
+            //     var gold = this.intToFloat(parseFloat(this.price)/parseFloat(this.avg_price));
+            //     var show_gold = this.intToFloat(parseFloat(gold*1.2));
+            //     $("#sum_pre").empty().html(show_gold);
+            // }
         };
         $(document).ready(function(){
             // phone_buy_gold.show_gold();
