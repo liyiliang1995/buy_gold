@@ -266,7 +266,6 @@
         buy_gold.submit_buy();
         });
     </script>
-    <script src="{{asset("js/echarts.min.js")}}"></script>
     <script>
         var url = "{{route('get_trend')}}";
         $.ajax({
