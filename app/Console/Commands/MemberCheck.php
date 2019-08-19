@@ -141,13 +141,8 @@ class MemberCheck extends Command
     {
         $order = $this->getNotSellBuyGold();
         $phone_order = $this->getNotSellPhoneBuyGold();
-        $member_logic = new MemberLogic($this->phone_buy_gold_model);
         if ($phone_order) {
             foreach ($phone_order as $item) {
-                // 撤销流水
-                $member_logic->applyCancelOrderFlow($item);
-                // 撤销返回金币
-                $item->member->increment('gold',$item->gold);
                 release_lock($item->user_id);
                 $item->delete();
             }
