@@ -135,7 +135,7 @@
             <div class="weui-flex__item">{{$value->member->name}}</div>
         @endif
         <div class="weui-flex__item">{{$value->sum_price}}</div>
-        {{--<div class="weui-flex__item">{{$value->gold}}</div>--}}
+        <div class="weui-flex__item">{{$value->gold}}</div>
         <div class="weui-flex__item">
             @if(userId() != $value->user_id)
                 <a href="{{route('phone_sell',['id'=>$value->id])}}" class="weui-btn weui-btn_primary"
