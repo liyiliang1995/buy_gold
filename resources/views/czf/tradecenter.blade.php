@@ -150,7 +150,7 @@
             @csrf
         </form>
     </div>
-    <div class="weui-flex" style="padding: 30px;background: #fff;">
+    <div class="weui-flex" style="padding:5px 30px;background: #fff;">
         <div class="weui-flex__item"><a href="javascript:;" id="submit" class="weui-btn weui-btn_primary"
                                         style="background: #FF2634;">求购</a></div>
     </div>
