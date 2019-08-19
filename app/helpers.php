@@ -592,7 +592,7 @@ if (!function_exists('compute_autogold')) {
         $iReduceBillion = 20 - ceil($gold_pole/100000000);
         $iReduceGold = bcmul($fNum,0.05*$iReduceBillion,2);
         $fRes = bcsub($fNum,$iReduceGold,2);
-        return $fRes > 0.02 ? $fRes : 0.02;
+        return $fRes > 0.2 ? $fRes : 0.2;
 
     }
 }
