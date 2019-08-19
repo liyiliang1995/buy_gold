@@ -250,7 +250,7 @@ class MemberLogic extends BaseLogic
                 set_receive_gold_member_info(['id'=>$id,'is_auto'=>1,'gold'=>$fNum]);
                 // $this->setParentReceiveGoldMemberInfo($fParentNum);
                 // 金币池变化
-                set_gold_pool(bcadd($fNum,$fParentNum,2),false);
+                $this->setGoldPool($fNum,$fParentNum);
             }
         }
     }
@@ -397,7 +397,24 @@ class MemberLogic extends BaseLogic
         // 用户领取金币数量 redis
         set_receive_gold_member_info(['id'=>$id,'is_auto'=>0,'gold'=>$fNum]);
         // 金币池变化
-        set_gold_pool(bcadd($fNum,$fParentNum,2),false);
+        $this->setGoldPool($fNum,$fParentNum);
+    }
+
+    /**
+     * @param float $fNum
+     * @param float $fParentNum
+     */
+    public function setGoldPool(float $fNum,float $fParentNum)
+    {
+        if (
+            $this->model->parentuser
+            && !redis_sismember(config('czf.redis_key.set1'),$this->model->parentuser->id))
+        {
+            set_gold_pool(bcadd($fNum,$fParentNum,2),false);
+        } else {
+            set_gold_pool($fNum,false);
+        }
+
     }
 
     /**
