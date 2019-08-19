@@ -7,8 +7,6 @@
 'js' => [
         'js/fastclick.js',
         'js/jquery-weui.js',
-        'js/echarts-gl.min.js',
-        'js/ecStat.min.js'
     ],
 
 ])
@@ -108,18 +106,18 @@
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
         <div class="weui-flex__item" id="trading_va">今日均价：￥<b>{{$avgPrice}}</b></div>
     </div>
-    <div class='wrapper' style="position: relative">
-        <div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">
-            近15天币价走势
-        </div>
-        <div class='chart' id='p1'>
+    {{--<div class='wrapper' style="position: relative">--}}
+        {{--<div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">--}}
+            {{--近15天币价走势--}}
+        {{--</div>--}}
+        {{--<div class='chart' id='p1'>--}}
 
-        </div>
-    </div>
+        {{--</div>--}}
+    {{--</div>--}}
     </div>
     <div class="weui-flex"
-         style="padding-top: 20px;padding-left:15px;background: #fff;border-bottom: 1px solid #ccc;font-weight: bold;margin-top: 10px;">
-        <div class="weui-flex__item">金币求购</div>
+         style="padding-top: 20px;padding-left:15px;background: #fff;border-bottom: 1px solid #ccc;font-weight: bold;">
+        <div class="weui-flex__item">金币求购 <span style="font-weight: normal;font-size: 12px;">（成交后请在“我的交易”中联系对方线下收付款）</span></div>
     </div>
 
     <div class="weui-cells weui-cells_form" style="margin-top: 0;">
@@ -152,7 +150,7 @@
             @csrf
         </form>
     </div>
-    <div class="weui-flex" style="padding: 30px;background: #fff;">
+    <div class="weui-flex" style="padding:5px 30px;background: #fff;">
         <div class="weui-flex__item"><a href="javascript:;" id="submit" class="weui-btn weui-btn_primary"
                                         style="background: #FF2634;">求购</a></div>
     </div>
@@ -268,7 +266,6 @@
         buy_gold.submit_buy();
         });
     </script>
-    <script src="{{asset("js/echarts.min.js")}}"></script>
     <script>
         var url = "{{route('get_trend')}}";
         $.ajax({
