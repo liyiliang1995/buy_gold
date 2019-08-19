@@ -27,6 +27,7 @@ class NewsController extends AdminController
         $grid = new Grid(new News);
         $grid->column('id', __('Id'))->width(10)->sortable();
         $grid->column('title', __('标题'));
+        $grid->column('weight', __('权重（越大越靠前）'));
         $grid->column('type',__('类型'))->display(function ($type){
             if ($type==1){
                 return '通知公告';
@@ -78,6 +79,7 @@ class NewsController extends AdminController
         $form = new Form(new News);
 
         $form->text('title', __('标题'));
+        $form->text('weight', __('权重'));
         $form->switch('type', __('公告'));
         $form->textarea('content', __('内容'));
         // 去掉`查看`checkbox

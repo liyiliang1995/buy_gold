@@ -135,7 +135,7 @@ class MemberController extends Controller
      */
     public function helpCenter(News $news)
     {
-        $newslist = $news->where('type', 0)->orderBy('id', 'desc')->get();
+        $newslist = $news->where('type', 0)->orderBy('weight', 'desc')->get();
 
         return view('czf.helpcenter', compact('newslist'));
     }
@@ -146,7 +146,7 @@ class MemberController extends Controller
      */
     public function notificationList(News $news)
     {
-        $newslist = $news->where('type', 1)->orderBy('id', 'desc')->get();
+        $newslist = $news->where('type', 1)->orderBy('weight', 'desc')->get();
 
         return view('czf.notification', compact('newslist'));
     }
