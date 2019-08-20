@@ -289,7 +289,7 @@ class MemberLogic extends BaseLogic
     {
         $fRes = bcmul($fNum,0.2,2);
         // 上级领取金额
-        return $fRes > 0.2 ? $fRes : 0.2;
+        return $fRes;
 
     }
 
