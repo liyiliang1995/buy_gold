@@ -52,7 +52,7 @@
                         <div class="weui-cell__hd"><i class="iconfont icon-lock" style="font-size: 1rem"></i></div>
                         <div class="weui-cell__bd">
                             <input class="weui-input" type="password" name="password" pattern="[0-9]*"
-                                   placeholder="请输入新密码">
+                                   placeholder="请输入新密码(字母+数字  9-18位)">
                         </div>
                     </div>
                     <div class="weui-cell">

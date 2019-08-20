@@ -51,7 +51,7 @@
         </div>
         <div class="weui-cell">
             <div class="weui-cell__bd">
-                <input class="weui-input" type="password" name="password" placeholder="请输入密码">
+                <input class="weui-input" type="password" name="password" placeholder="请输入密码(字母+数字  9-18位)">
             </div>
         </div>
         <div class="weui-cell">

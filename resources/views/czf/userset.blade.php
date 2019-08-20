@@ -83,7 +83,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" name="password2" id="password2" type="password" placeholder="请输入密码">
+                <input class="weui-input" name="password2" id="password2" type="password" placeholder="请输入密码(字母+数字  9-18位)">
             </div>
         </div>
 
