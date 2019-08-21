@@ -171,7 +171,7 @@ class MemberController extends Controller
     public function phoneCenter(PhoneBuyGold $phoneBuyGold,HourAvgPrice $hourAvgPrice)
     {
         $member    = \Auth::guard()->user();
-        $aParams['_sort'] = 'id,desc';
+        $aParams['_sort'] = 'id,asc';
         $aParams['status'] = 0;
         $aParams['is_show'] = 1;
         $aPhoneBuyGold       = $this->Logic($phoneBuyGold)->query($aParams);
