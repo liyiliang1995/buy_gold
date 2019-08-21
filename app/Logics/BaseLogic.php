@@ -355,7 +355,7 @@ class BaseLogic {
                 throw ValidationException::withMessages(['user_id' => ['当前订单无法撤销！']]);
             // 下架
             $oBuyGold->delete();
-            $this->releaseLock([\Auth::user()->id]);
+            //$this->releaseLock([\Auth::user()->id]);
             return true;
         });
         return $bRes ?? false;

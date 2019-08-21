@@ -143,14 +143,14 @@ class MemberCheck extends Command
         $phone_order = $this->getNotSellPhoneBuyGold();
         if ($phone_order) {
             foreach ($phone_order as $item) {
-                release_lock($item->user_id);
+                //release_lock($item->user_id);
                 $item->delete();
             }
         }
 
         if ($order) {
             foreach ($order as $item) {
-                release_lock($item->user_id);
+                //release_lock($item->user_id);
                 $item->delete();
             }
         }
