@@ -19,6 +19,7 @@ return [
         's4' => "str:send_msg:log",     // 短信异常日志
         's5' => 'str:gold_pool_num',    // 金币池总价格
         's6' => 'str:auto_gold_time',
+        's7' => "str:unified_time",     // 领取统一时间
         'h1' => 'hash:auto_gold_members',//自动领取金币的人数
         'set1' => "set:freeze_members",  // 用户冻结人数
     ],
