@@ -67,9 +67,9 @@ class GoodController extends AdminController
         $form->text('name', __('名称'))->rules('required');
         $form->decimal('amount', __('价格'))->default(0.00)->rules('required');
         $form->text('unit', __('单位'))->rules('required');
-        $form->image('list_img', __('缩略图(320*320)'))->rules('required');
+        $form->image('list_img', __('缩略图(320*320)'))->creationRules('required');
         $form->hasMany('goodsimgs', __('轮播图(640*640)'),function(Form\NestedForm $form){
-            $form->image('img',__('轮播图'))->rules('required');
+            $form->image('img',__('轮播图'))->creationRules('required');
         });
         $form->kindeditor('describe', __('描述'));
         // 去掉`查看`checkbox
