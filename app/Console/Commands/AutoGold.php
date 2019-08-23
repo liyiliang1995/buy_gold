@@ -61,8 +61,6 @@ class AutoGold extends Command
                     ) {
                         \Log::channel('script')->info('脚本正在运行', ['自动领取的member_id' => $aInfo]);
                         if ($aInfo['date'] != date('Y-m-d',time())) {
-                            $iUnifiedTime = redis_get(config('czf.redis_key.s7')) ?: 1;
-                            redis_set(config('czf.redis_key.s7'),$iUnifiedTime + 1);
                             set_receive_gold_member_info(['id'=>$aInfo['id'],'is_auto'=>$aInfo['is_auto'],'gold'=>0]);
                         }
                         $oMemberLogic->receiveGold($aInfo);

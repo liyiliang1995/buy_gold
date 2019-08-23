@@ -62,6 +62,7 @@ class EveryDayGoldPool extends Command
         $this->member_model = new Member;
         // 处理15天未登录的
         $this->notLoginLoic();
+        $this->setUnifiedTime();
         DB::transaction(function () {
             // 上一次统计数据
             $oLastGoldPool = $this->model_change_day->getLastData();
@@ -231,6 +232,15 @@ class EveryDayGoldPool extends Command
         $memberLogic = new MemberLogic($this->member_model);
         $memberLogic->notLoginMembersLogic();
 
+    }
+
+    /**
+     * @see 设置统一时间
+     */
+    public function setUnifiedTime()
+    {
+        $iUnifiedTime = redis_get(config('czf.redis_key.s7')) ?: 1;
+        redis_set(config('czf.redis_key.s7'),$iUnifiedTime + 1,3600*24);
     }
 
 
