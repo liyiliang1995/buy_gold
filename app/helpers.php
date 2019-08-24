@@ -503,7 +503,7 @@ if (!function_exists('set_auto_gold_time')) {
     function get_auto_gold_time(int $iAutoDay = 1)
     {
         $iAutoDay = $iAutoDay < 1 ? 1 : $iAutoDay;
-        $interval_time = ($iAutoDay - 1) * 30;
+        $interval_time = ($iAutoDay - 1) * 20;
         $auto_gold_time = config('czf.default_auto_gold') + $interval_time;
         return $auto_gold_time;
     }
