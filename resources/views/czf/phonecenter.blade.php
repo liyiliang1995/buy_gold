@@ -108,11 +108,12 @@
         <form action="{{ route('phone_buy_gold')}}" method="post" id="submit_buy">
             @csrf
             <div class="radio_style">
-                <label><input name="money" @if(old('money') == 50)checked="checked"@endif type="radio" value="50"/><span></span><span></span>50元 </label>
+                <label><input name="money" @if(old('money') == 50)checked="checked"@endif type="radio" value="50" checked/><span></span><span></span>50元 </label>
                 <label><input name="money" @if(old('money') == 100)checked="checked"@endif type="radio" value="100"/><span></span><span></span>100元 </label>
                 <label><input name="money" @if(old('money') == 200)checked="checked"@endif type="radio" value="200"/><span></span><span></span> 200元 </label>
                 <label><input name="money" @if(old('money') == 300)checked="checked"@endif type="radio" value="300"/><span></span><span></span>300元 </label>
-            </div>
+                <label><input name="money" @if(old('money') == 500)checked="checked"@endif type="radio" value="500"/><span></span><span></span>500元 </label>
+    </div>
         </form>
     </div>
     <div class="weui-flex" style="padding: 15px;background: #fff;padding-bottom: 0;">
@@ -156,7 +157,7 @@
     <script>
         var phone_buy_gold = {
             avg_price: "{{$avgPrice}}",
-            price: $('input[name="money"]:checked').val().trim(),
+            price: $('input[name="money"]:checked').val(),
             intToFloat: function (val) {
                 var num = 2;
                 // return new Number(val).toFixed(2);
