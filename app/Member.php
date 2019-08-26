@@ -170,7 +170,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
     public function checkMemberOneHalfGold(float $fGold):bool
     {
         $fHaveGold = bcmul($this->gold,0.5,2);
-        return $fHaveGold > $fGold;
+        return $fHaveGold >= $fGold;
     }
 
     /**
@@ -180,7 +180,7 @@ class Member extends Model implements AuthenticatableContract, CanResetPasswordC
      */
     public function checkMemberIntegral(float $fGold):bool
     {
-        return $this->integral > $fGold;
+        return $this->integral >= $fGold;
     }
 
     /**
