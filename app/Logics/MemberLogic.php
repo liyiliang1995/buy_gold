@@ -630,7 +630,7 @@ class MemberLogic extends BaseLogic
      */
     public function phoneBuyGoldValidate(array $aParams)
     {
-        if (!in_array($aParams['sum_price'],[100,200,300,500]))
+        if (!in_array($aParams['sum_price'],[50,100,200,300,500]))
             throw ValidationException::withMessages(['price'=>["请选择有效的价格！"]]);
         if (\Auth::user()->isNormalMember() == false)
             throw ValidationException::withMessages(['price'=>["请检查当前用户是否处于未激活或者冻结状态！"]]);
