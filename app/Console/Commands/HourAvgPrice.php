@@ -102,7 +102,7 @@ class HourAvgPrice extends Command
         return $this->getBuyGoldModel()
             ->select('price')
             ->where('status',1)
-            ->whereBetween('created_at',[$this->start_time,$this->getEndTime()])
+            ->whereBetween('updated_at',[$this->start_time,$this->getEndTime()])
             ->get('price')
             ->toArray();
     }
