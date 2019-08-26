@@ -106,14 +106,6 @@
     <div class="weui-flex" style="border-bottom: 2px solid #ccc;">
         <div class="weui-flex__item" id="trading_va">今日均价：￥<b>{{$avgPrice}}</b></div>
     </div>
-    {{--<div class='wrapper' style="position: relative">--}}
-        {{--<div style="    text-align: center;   font-size: 14px; line-height: 40px; position: absolute; width: 100%;">--}}
-            {{--近15天币价走势--}}
-        {{--</div>--}}
-        {{--<div class='chart' id='p1'>--}}
-
-        {{--</div>--}}
-    {{--</div>--}}
     </div>
     <div class="weui-flex"
          style="padding-top: 20px;padding-left:15px;background: #fff;border-bottom: 1px solid #ccc;font-weight: bold;">
@@ -123,12 +115,12 @@
     <div class="weui-cells weui-cells_form" style="margin-top: 0;">
         <form action="{{ route('buy_gold')}}" method="post" id="submit_buy">
             <div class="radio_style">
-                <label><input name="gold" type="radio" value="200" checked/><span></span><span></span>200 </label>
+                <label><input name="gold" type="radio" value="50" checked/><span></span><span></span>50 </label>
+                <label><input name="gold" type="radio" value="100"/><span></span><span></span>100 </label>
+                <label><input name="gold" type="radio" value="200"/><span></span><span></span>200 </label>
                 <label><input name="gold" type="radio" value="500"/><span></span><span></span>500 </label>
                 <label><input name="gold" type="radio" value="1000"/><span></span><span></span>1000 </label>
-                <label><input name="gold" type="radio" value="1500"/><span></span><span></span>1500 </label>
                 <label><input name="gold" type="radio" value="2000"/><span></span><span></span>2000 </label>
-                <label><input name="gold" type="radio" value="2500"/><span></span><span></span>2500 </label>
                 <label><input name="gold" type="radio" value="5000"/><span></span><span></span>5000 </label>
                 <label><input name="gold" type="radio" value="10000"/><span></span><span></span>10000 </label>
             </div>
