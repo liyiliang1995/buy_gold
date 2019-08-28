@@ -1,4 +1,4 @@
 # 翠竹坊WEBAPP
 
 #### 介绍
-<p align="center"><img src="https://www.zkteco.com/cn/uploads/image/20190828/c350b80e53d030212c2cccca8282056d.png"></p>
+<p align="center"><img src="https://www.zkteco.in/uploads/image/20190828/eebf83902a56fa6985ba03be334c238b.png"></p>
